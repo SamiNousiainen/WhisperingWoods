@@ -29775,7 +29775,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 421377688757863491, guid: ec4beeecccfbc3844b03ac997efc7db3, type: 3}
       propertyPath: orthographic size
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 421377688757863491, guid: ec4beeecccfbc3844b03ac997efc7db3, type: 3}
       propertyPath: m_BackGroundColor.a
@@ -30301,7 +30301,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1916732418}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 9
+    OrthographicSize: 6
     NearClipPlane: 0
     FarClipPlane: 5000
     Dutch: 0
@@ -30695,7 +30695,7 @@ MonoBehaviour:
   m_Follow: {fileID: 677564497}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 8
+    OrthographicSize: 6
     NearClipPlane: 0
     FarClipPlane: 5000
     Dutch: 0
@@ -31249,7 +31249,7 @@ MonoBehaviour:
   m_Follow: {fileID: 677564497}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 8
+    OrthographicSize: 6
     NearClipPlane: 0
     FarClipPlane: 5000
     Dutch: 0
@@ -31482,7 +31482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 746948505309691611, guid: d824c6f2edfc0304f8db95d8f4cdfa06, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1872235481727938941, guid: d824c6f2edfc0304f8db95d8f4cdfa06, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31522,6 +31522,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1872235481727938941, guid: d824c6f2edfc0304f8db95d8f4cdfa06, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3802475107633321481, guid: d824c6f2edfc0304f8db95d8f4cdfa06, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
