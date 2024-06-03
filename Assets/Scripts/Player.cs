@@ -1,11 +1,12 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
 
     public static Player instance;
 
-    public float moveSpeed = 5f;
-    public float jumpForce = 10f;
+    public float moveSpeed = 3f;
+    public float jumpForce = 6f;
     public float moveInput;
     public float maxFallSpeed = -15f;
 
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour {
 
     private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeTreshold;
+
+    Animator animator;
 
     private void Awake() {
         if (instance == null) {
@@ -36,6 +39,7 @@ public class Player : MonoBehaviour {
     void Start() {
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         if (CameraFollowObject.instance != null) {
             cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
@@ -78,6 +82,7 @@ public class Player : MonoBehaviour {
 
         // Set the player's velocity based on input
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
     }
 
     void Jump() {
