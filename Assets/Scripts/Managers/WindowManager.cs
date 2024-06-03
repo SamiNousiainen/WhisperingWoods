@@ -72,10 +72,10 @@ public class WindowManager : MonoBehaviour {
             window.Init(parameters);
             window.Show();
         }
-        //else if (window != null && SceneLoader.instance.sceneLoadInProgress == false)
-        //{
-        //    window.ReInit(parameters);
-        //}
+        else if (window != null && SceneLoader.instance.sceneLoadInProgress == false)
+        {
+            window.ReInit(parameters);
+        }
         if (window != null)
         {
             window.UpdateUI();

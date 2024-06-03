@@ -47,7 +47,38 @@ namespace Enums {
 
     }
 
-    public enum LocID { 
-    
+    public enum LocID {
+        None = -1,
+        LanguageName = 0,
+        ProfileNameHasInvalidCharacters = 1,
+        ProfileNameOK = 2,
+        SelectProfile = 3,
+        CreateProfile = 4,
+        Options = 5,
+        Create = 6,
+        Select = 7,
+        Accept = 8,
+        Loading = 9,
+        EnterName = 10,
+        EffectsVolume = 11,
+        MusicVolume = 12,
+        Paused = 13,
+        Play = 14,
+        Continue = 15,
+        BackToMain = 16,
+        ExitGame = 17,
+        GoToTheAttic = 18,
+        MouseSensitivity = 31,
+        FOV = 32,
+        MasterVolume = 33,
+        VoiceOverVolume = 34,
+        Interact_Collectible = 35,
+        Interact_Throwable = 36,
+        Interact_WritingTable = 37,
+        Interact_StartMinigame = 38,
+        Interact_Advance = 39,
+        ResetData = 40,
+        Interact_Equipment = 41,
+        Reset = 42,
     }
 }
