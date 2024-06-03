@@ -1,11 +1,10 @@
 using UnityEngine;
-//using ProjectEnums;
 using Enums;
 
 public class MainMenuInitializer : MonoBehaviour {
 
     [SerializeField] protected WindowPanel[] m_windowPanelsAtStart = default;
-    //private Coroutine ambientFadeCoroutine;
+    private Coroutine ambientFadeCoroutine;
 
     void Start()
     {

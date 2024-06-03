@@ -178,6 +178,7 @@ public class UIEventManager : MonoBehaviour {
             //    LevelManager.instance.overrideStartLevel = UserProfile.CurrentProfile.currentLevel;
 
             //}
+            Debug.Log("load level");
             SceneLoader.instance.LoadScene("Gameplay");
 
         };
