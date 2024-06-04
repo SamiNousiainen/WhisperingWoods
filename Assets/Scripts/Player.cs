@@ -11,17 +11,25 @@ public class Player : MonoBehaviour {
     public float maxFallSpeed = -15f;
 
     private Rigidbody2D rb;
-    private bool isGrounded;
     public bool isFacingRight;
 
+    [SerializeField]
+    private PhysicsMaterial2D noFriction;
+    [SerializeField]
+    private PhysicsMaterial2D fullFriction;
+
     public LayerMask groundLayer;
-    public Transform groundCheck;
-    public float groundCheckRadius = 0.3f;
+    public Vector2 groundCheckSize;
+    public float groundCheckCastDistance;
 
     private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeTreshold;
 
     Animator animator;
+
+    CapsuleCollider2D capsuleCollider;
+    //BoxCollider2D boxCollider;
+    Vector2 colliderSize;
 
     private void Awake() {
         if (instance == null) {
@@ -40,6 +48,10 @@ public class Player : MonoBehaviour {
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        //boxCollider = GetComponent<BoxCollider2D>();
+        colliderSize = capsuleCollider.size;
+        //colliderSize = boxCollider.size;
 
         if (CameraFollowObject.instance != null) {
             cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
@@ -51,7 +63,6 @@ public class Player : MonoBehaviour {
     void Update() {
         Move();
         Jump();
-        CheckGrounded();
         if (moveInput > 0f || moveInput < 0f) {
             FlipCheck();
         }
@@ -74,6 +85,8 @@ public class Player : MonoBehaviour {
         if (rb.velocity.y < maxFallSpeed) {
             rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
         }
+
+        SlopeCheck();
     }
 
     void Move() {
@@ -86,7 +99,7 @@ public class Player : MonoBehaviour {
     }
 
     void Jump() {
-        if (Input.GetButtonDown("Jump") && isGrounded == true) {
+        if (Input.GetButtonDown("Jump") && Grounded()) {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
     }
@@ -113,13 +126,26 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void CheckGrounded() {
-        // Check if the groundCheck position overlaps with any ground layer objects
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+    public bool Grounded() {
+        if (Physics2D.BoxCast(transform.position, groundCheckSize, 0, -transform.up, groundCheckCastDistance, groundLayer)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private void SlopeCheck() {
+        //Vector2 checkPosition = transform.position - new Vector3(0f, colliderSize.y / 2);
+        if (moveInput == 0f && Grounded() == true) {
+            capsuleCollider.sharedMaterial = fullFriction;
+        } else {
+            capsuleCollider.sharedMaterial = noFriction;
+        }
     }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        Gizmos.DrawWireCube(transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
     }
 }
