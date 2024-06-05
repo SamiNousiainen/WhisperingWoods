@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-//using ProjectEnums;
-using Enums;
+using ProjectEnums;
 
 public class WindowBase : MonoBehaviour {
 

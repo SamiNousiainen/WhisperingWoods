@@ -1,5 +1,5 @@
 using UnityEngine;
-using Enums;
+using ProjectEnums;
 
 public class MainMenuInitializer : MonoBehaviour {
 

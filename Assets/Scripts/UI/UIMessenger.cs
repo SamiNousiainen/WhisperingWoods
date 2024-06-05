@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using ProjectEnums;
-using Enums;
+using ProjectEnums;
 
 public class UIMessenger : MonoBehaviour {
 

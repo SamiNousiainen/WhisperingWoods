@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using ProjectEnums;
 
 public class Player : MonoBehaviour {
 
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour {
     }
 
     void Start() {
+        WindowManager.instance.ShowWindow(WindowPanel.GameUI);
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();

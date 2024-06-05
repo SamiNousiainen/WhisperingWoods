@@ -1,5 +1,4 @@
-using Enums;
-//using ProjectEnums;
+using ProjectEnums;
 using System.Collections;
 using UnityEngine;
 

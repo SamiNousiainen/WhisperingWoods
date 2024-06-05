@@ -1,4 +1,4 @@
-namespace Enums {
+namespace ProjectEnums {
 
     public enum MessageID {
         ShowWindow,
@@ -28,10 +28,10 @@ namespace Enums {
         LoadingScreen = 0,
         MainMenu = 1,
         OptionsPanel = 2,
-        ProfileCreation = 3,
+        GameUI = 3,
         SplashScreen = 4,
         ProfileSelection = 5,
-        GameUI = 6,
+        ProfileCreation = 6,
         PauseMenu = 7,
         DefaultWindow = 8,
         SubtitlePanel = 9,

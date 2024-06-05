@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//using ProjectEnums;
-using Enums;
+using ProjectEnums;
 
 public class SceneLoader : MonoBehaviour {
 

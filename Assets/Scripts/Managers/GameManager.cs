@@ -1,9 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Enums;
-using static Unity.VisualScripting.Icons;
-using UnityEngine.SocialPlatforms.Impl;
+using ProjectEnums;
 
 public class GameManager : MonoBehaviour {
 
