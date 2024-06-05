@@ -10,7 +10,7 @@ public class WindowManager : MonoBehaviour {
 
     public Stack<WindowPanel> escapeableWindowStack = new Stack<WindowPanel>();
     public List<Transform> panelPrefabs;
-    public Camera uiCamera;
+    //public Camera uiCamera;
 
     private List<WindowBase> currentPanels = new List<WindowBase>();
 
@@ -66,7 +66,7 @@ public class WindowManager : MonoBehaviour {
         if (window == null && SceneLoader.instance.sceneLoadInProgress == false)
         {
             Transform newPanel = Instantiate(panelPrefabs[(int)panel], gameObject.transform);
-            newPanel.GetComponent<Canvas>().worldCamera = uiCamera;
+            newPanel.GetComponent<Canvas>().worldCamera = Camera.main;
             window = newPanel.GetComponent<WindowBase>();
             currentPanels.Add(window);
             window.Init(parameters);

@@ -27,10 +27,10 @@ namespace Enums {
     public enum WindowPanel {
         LoadingScreen = 0,
         MainMenu = 1,
-        ProfileSelection = 2,
+        OptionsPanel = 2,
         ProfileCreation = 3,
         SplashScreen = 4,
-        OptionsPanel = 5,
+        ProfileSelection = 5,
         GameUI = 6,
         PauseMenu = 7,
         DefaultWindow = 8,
