@@ -59,7 +59,7 @@ public class SceneLoader : MonoBehaviour {
             }
         }
         WindowManager.instance.escapeableWindowStack.Clear();
-        if (sceneName != "Gameplay")
+        if (sceneName == "Gameplay" || sceneName == "MainMenu")
         {
             WindowManager.instance.CloseWindow(WindowPanel.LoadingScreen);
         }
