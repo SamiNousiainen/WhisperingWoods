@@ -20,7 +20,7 @@ public class KeyInputManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count == 0 && Player.instance.enabled == true)
             {
-                GameInputLogic.PlayerShowWindow(WindowPanel.OptionsPanel);
+                GameInputLogic.PlayerShowWindow(WindowPanel.PauseMenu);
             }
             else if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count > 0 && Player.instance.enabled == true)
             {

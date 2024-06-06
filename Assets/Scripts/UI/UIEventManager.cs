@@ -45,7 +45,6 @@ public class UIEventManager : MonoBehaviour {
             if (int.TryParse(arg1, out windowInt) == true)
             {
                 WindowManager.instance.ShowWindow((WindowPanel)windowInt);
-                Debug.Log(WindowManager.instance.escapeableWindowStack.Count);
             }
             else
             {

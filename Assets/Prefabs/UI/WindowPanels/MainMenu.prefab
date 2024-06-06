@@ -535,6 +535,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionsButton
       objectReference: {fileID: 0}
+    - target: {fileID: 838292367427382542, guid: 56fa3bec7fdae4d4785dfe0ceea9d1c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1670376263125272950, guid: 56fa3bec7fdae4d4785dfe0ceea9d1c9, type: 3}
       propertyPath: arg1
       value: 2

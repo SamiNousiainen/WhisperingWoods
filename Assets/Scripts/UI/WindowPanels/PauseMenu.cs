@@ -1,8 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class OptionsPanel : WindowBase {
-    public static OptionsPanel instance;
+public class PauseMenu : WindowBase {
+    public static PauseMenu instance;
 
     private void Awake() {
         if (instance == null)
