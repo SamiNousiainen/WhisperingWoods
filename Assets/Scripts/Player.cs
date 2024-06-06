@@ -26,6 +26,8 @@ public class Player : MonoBehaviour {
     private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeTreshold;
 
+    [System.NonSerialized] public bool interactionEnabled = true;
+
     Animator animator;
 
     CapsuleCollider2D capsuleCollider;
@@ -63,23 +65,32 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
-        Move();
-        Jump();
-        if (moveInput > 0f || moveInput < 0f) {
-            FlipCheck();
-        }
+        if (WindowManager.instance.escapeableWindowStack.Count == 0)
+        {
+            if (interactionEnabled == true)
+            {
+                Move();
+                Jump();
+                if (moveInput > 0f || moveInput < 0f)
+                {
+                    FlipCheck();
+                }
 
-        //if player is falling past a set speed treshold
-        if (rb.velocity.y < fallSpeedYDampingChangeTreshold && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == false) {
-            CameraManager.instance.LerpYDamping(true);
-        }
+                //if player is falling past a set speed treshold
+                if (rb.velocity.y < fallSpeedYDampingChangeTreshold && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == false)
+                {
+                    CameraManager.instance.LerpYDamping(true);
+                }
 
-        //if player is standing still or moving up
-        if (rb.velocity.y >= 0f && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == true) {
-            //reset so it can be called again
-            CameraManager.instance.lerpedFromPlayerFalling = false;
+                //if player is standing still or moving up
+                if (rb.velocity.y >= 0f && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == true)
+                {
+                    //reset so it can be called again
+                    CameraManager.instance.lerpedFromPlayerFalling = false;
 
-            CameraManager.instance.LerpYDamping(false);
+                    CameraManager.instance.LerpYDamping(false);
+                }
+            }
         }
     }
 
