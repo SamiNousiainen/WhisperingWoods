@@ -21,16 +21,17 @@ public class KeyInputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count == 0 && Player.instance.enabled == true)
             {
                 GameInputLogic.PlayerShowWindow(WindowPanel.PauseMenu);
+                PauseMenu.instance.mode = PauseMenuMode.Options;
             }
             else if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count > 0 && Player.instance.enabled == true)
             {
                 // Call your method to close a specific window, e.g., WindowPanel.Inventory
                 GameInputLogic.PlayerCloseWindow(WindowManager.instance.escapeableWindowStack.Pop());
             }
-            //else if (Input.GetKeyDown(KeyCode.Tab) && Player.instance.enabled == true)
-            //{
-            //    GameInputLogic.TabPressed();
-            //}
+            else if (Input.GetKeyDown(KeyCode.Tab) && Player.instance.enabled == true)
+            {
+                GameInputLogic.TabPressed();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count > 0)
         {

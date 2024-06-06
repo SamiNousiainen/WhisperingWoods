@@ -47,6 +47,13 @@ namespace ProjectEnums {
 
     }
 
+    public enum PauseMenuMode
+    {
+        Options,
+        Inventory,
+        Map,
+    }
+
     public enum LocID {
         None = -1,
         LanguageName = 0,

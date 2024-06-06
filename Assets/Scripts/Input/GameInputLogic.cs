@@ -15,4 +15,13 @@ public static class GameInputLogic {
         WindowManager.instance.CloseWindow(panel);
     }
 
+    public static void TabPressed()
+    {
+        if (WindowManager.instance.escapeableWindowStack.Count == 0)
+        {
+            PlayerShowWindow(WindowPanel.PauseMenu);
+            PauseMenu.instance.mode = PauseMenuMode.Inventory;
+        }
+    }
+
 }
