@@ -6,13 +6,13 @@ public class PauseMenu : WindowBase {
     public static PauseMenu instance;
 
 
-    public Transform contentParent;
-    public Transform optionsParent;
-    public Transform inventoryParent;
-    public Transform mapParent;
+    //public Transform contentParent;
+    //public Transform optionsParent;
+    //public Transform inventoryParent;
+    //public Transform mapParent;
 
-    [System.NonSerialized]
-    public PauseMenuMode mode;
+    //[System.NonSerialized]
+    //public PauseMenuMode mode;
 
     private void Awake() {
         
@@ -23,63 +23,39 @@ public class PauseMenu : WindowBase {
         {
             instance = this;
             base.Init();
-            if (parameters is PauseMenuMode)
-            {
-                mode = (PauseMenuMode)parameters;
-                if (mode == PauseMenuMode.Options)
-                {
-                    optionsParent.gameObject.SetActive(true);
-                    inventoryParent.gameObject.SetActive(false);
-                    mapParent.gameObject.SetActive(false);
-                    Debug.Log("options");
-                }
-                else if (mode == PauseMenuMode.Inventory)
-                {
-                    inventoryParent.gameObject.SetActive(true);
-                    optionsParent.gameObject.SetActive(false);
-                    mapParent.gameObject.SetActive(false);
-                    Debug.Log("inventory");
-                }
-                else if (mode == PauseMenuMode.Map)
-                {
-                    mapParent.gameObject.SetActive(true);
-                    optionsParent.gameObject.SetActive(false);
-                    inventoryParent.gameObject.SetActive(false);
-                    Debug.Log("map");
-                }
+            //if (parameters is PauseMenuMode)
+            //{
+            //    mode = (PauseMenuMode)parameters;
+            //    if (mode == PauseMenuMode.Options)
+            //    {
+            //        optionsParent.gameObject.SetActive(true);
+            //        inventoryParent.gameObject.SetActive(false);
+            //        mapParent.gameObject.SetActive(false);
+            //        Debug.Log("options");
+            //    }
+            //    else if (mode == PauseMenuMode.Inventory)
+            //    {
+            //        inventoryParent.gameObject.SetActive(true);
+            //        optionsParent.gameObject.SetActive(false);
+            //        mapParent.gameObject.SetActive(false);
+            //        Debug.Log("inventory");
+            //    }
+            //    else if (mode == PauseMenuMode.Map)
+            //    {
+            //        mapParent.gameObject.SetActive(true);
+            //        optionsParent.gameObject.SetActive(false);
+            //        inventoryParent.gameObject.SetActive(false);
+            //        Debug.Log("map");
+            //    }
 
-            }
+            //}
         } else {
             Destroy(gameObject);
         }
     }
 
-    public void ChooseOptionsTab() {
-        
-    }
-
     public override void UpdateUI() {
-        if (mode == PauseMenuMode.Options)
-        {
-            optionsParent.gameObject.SetActive(true);
-            inventoryParent.gameObject.SetActive(false);
-            mapParent.gameObject.SetActive(false);
-            Debug.Log("options");
-        }
-        else if (mode == PauseMenuMode.Inventory)
-        {
-            inventoryParent.gameObject.SetActive(true);
-            optionsParent.gameObject.SetActive(false);
-            mapParent.gameObject.SetActive(false);
-            Debug.Log("inventory");
-        }
-        else if (mode == PauseMenuMode.Map)
-        {
-            mapParent.gameObject.SetActive(true);
-            optionsParent.gameObject.SetActive(false);
-            inventoryParent.gameObject.SetActive(false);
-            Debug.Log("map");
-        }
+      
     }
 
     protected override void OpeningAnimationFinished()

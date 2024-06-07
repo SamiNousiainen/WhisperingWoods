@@ -248,12 +248,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5420987633921165285, guid: d394ad9cd34166f49b6af2dc07d6482d, type: 3}
       propertyPath: panelPrefabs.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5420987633921165285, guid: d394ad9cd34166f49b6af2dc07d6482d, type: 3}
       propertyPath: panelPrefabs.Array.data[3]
       value: 
       objectReference: {fileID: 1282898554050757284, guid: 0ac9196db68a8dd4998e73fe80779cab, type: 3}
+    - target: {fileID: 5420987633921165285, guid: d394ad9cd34166f49b6af2dc07d6482d, type: 3}
+      propertyPath: panelPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 1282898554050757284, guid: 15713bc74f62860429c7758e76585c2f, type: 3}
+    - target: {fileID: 5420987633921165285, guid: d394ad9cd34166f49b6af2dc07d6482d, type: 3}
+      propertyPath: panelPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 1282898554050757284, guid: b2cfae473afd7fc47b226ccb2f1cf2a1, type: 3}
     - target: {fileID: 6899356983994539353, guid: d394ad9cd34166f49b6af2dc07d6482d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -590.0905

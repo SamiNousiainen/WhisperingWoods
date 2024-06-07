@@ -19,8 +19,7 @@ public static class GameInputLogic {
     {
         if (WindowManager.instance.escapeableWindowStack.Count == 0)
         {
-            PlayerShowWindow(WindowPanel.PauseMenu);
-            PauseMenu.instance.mode = PauseMenuMode.Inventory;
+            PlayerShowWindow(WindowPanel.Inventory);
         }
     }
 

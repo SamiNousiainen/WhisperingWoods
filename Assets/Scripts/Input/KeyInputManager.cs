@@ -21,7 +21,6 @@ public class KeyInputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count == 0 && Player.instance.enabled == true)
             {
                 GameInputLogic.PlayerShowWindow(WindowPanel.PauseMenu);
-                PauseMenu.instance.mode = PauseMenuMode.Options;
             }
             else if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count > 0 && Player.instance.enabled == true)
             {
