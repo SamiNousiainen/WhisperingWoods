@@ -1,6 +1,6 @@
+using ProjectEnums;
 using System;
 using UnityEngine;
-using ProjectEnums;
 
 public class Player : MonoBehaviour {
 
@@ -22,6 +22,8 @@ public class Player : MonoBehaviour {
     public LayerMask groundLayer;
     public Vector2 groundCheckSize;
     public float groundCheckCastDistance;
+
+    public bool isGrounded;
 
     private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeTreshold;
@@ -65,26 +67,21 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
-        if (WindowManager.instance.escapeableWindowStack.Count == 0)
-        {
-            if (interactionEnabled == true)
-            {
+        if (WindowManager.instance.escapeableWindowStack.Count == 0) {
+            if (interactionEnabled == true) {
                 Move();
                 Jump();
-                if (moveInput > 0f || moveInput < 0f)
-                {
+                if (moveInput > 0f || moveInput < 0f) {
                     FlipCheck();
                 }
 
                 //if player is falling past a set speed treshold
-                if (rb.velocity.y < fallSpeedYDampingChangeTreshold && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == false)
-                {
+                if (rb.velocity.y < fallSpeedYDampingChangeTreshold && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == false) {
                     CameraManager.instance.LerpYDamping(true);
                 }
 
                 //if player is standing still or moving up
-                if (rb.velocity.y >= 0f && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == true)
-                {
+                if (rb.velocity.y >= 0f && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == true) {
                     //reset so it can be called again
                     CameraManager.instance.lerpedFromPlayerFalling = false;
 
@@ -94,11 +91,19 @@ public class Player : MonoBehaviour {
         }
     }
 
+
     private void FixedUpdate() {
         if (rb.velocity.y < maxFallSpeed) {
             rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
         }
+        animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+        animator.SetFloat("yVelocity", rb.velocity.y);
 
+        if (Grounded() == false) {
+            animator.SetBool("isJumping", true);
+        } else {
+            animator.SetBool("isJumping", false);
+        }
         SlopeCheck();
     }
 
@@ -108,13 +113,19 @@ public class Player : MonoBehaviour {
 
         // Set the player's velocity based on input
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-        animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+        //animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+        //animator.SetFloat("yVelocity", rb.velocity.y);
     }
 
     void Jump() {
-        if (Input.GetButtonDown("Jump") && Grounded()) {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        if (Input.GetButtonDown("Jump") && Grounded() == true) {
+            //rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
+        //if (Grounded() == true) {
+        //    animator.SetBool("isJumping", false);
+        //}
+
     }
 
     void FlipCheck() {
@@ -122,6 +133,14 @@ public class Player : MonoBehaviour {
             Flip();
         } else if (moveInput < 0f && isFacingRight == true) {
             Flip();
+        }
+    }
+
+    public bool Grounded() {
+        if (Physics2D.BoxCast(transform.position, groundCheckSize, 0, -transform.up, groundCheckCastDistance, groundLayer)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -137,15 +156,6 @@ public class Player : MonoBehaviour {
             isFacingRight = !isFacingRight;
             cameraFollowObject.Turn();
         }
-    }
-
-    public bool Grounded() {
-        if (Physics2D.BoxCast(transform.position, groundCheckSize, 0, -transform.up, groundCheckCastDistance, groundLayer)) {
-            return true;
-        } else {
-            return false;
-        }
-
     }
 
     private void SlopeCheck() {
