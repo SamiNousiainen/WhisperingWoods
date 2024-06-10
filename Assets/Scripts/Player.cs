@@ -4,135 +4,132 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    public static Player instance;
+	public static Player instance;
 
 
-    public float playerMaxHealth = 100;
-    public float playerCurrentHealth = 100;
-    public float playerMaxMana = 100;
-    public float playerCurrentMana = 100;
-    public float moveSpeed = 3f;
-    public float jumpForce = 6f;
-    public float moveInput;
-    public float maxFallSpeed = -15f;
+	public float playerMaxHealth = 100;
+	public float playerCurrentHealth = 100;
+	public float playerMaxMana = 100;
+	public float playerCurrentMana = 100;
+	public float moveSpeed = 3f;
+	public float jumpForce = 6f;
+	public float moveInput;
+	public float maxFallSpeed = -15f;
 
-    private Rigidbody2D rb;
-    public bool isFacingRight;
+	private Rigidbody2D rb;
+	public bool isFacingRight;
 
-    [SerializeField]
-    private PhysicsMaterial2D noFriction;
-    [SerializeField]
-    private PhysicsMaterial2D fullFriction;
+	[SerializeField]
+	private PhysicsMaterial2D noFriction;
+	[SerializeField]
+	private PhysicsMaterial2D fullFriction;
 
-    public LayerMask groundLayer;
-    public Vector2 groundCheckSize;
-    public float groundCheckCastDistance;
+	public LayerMask groundLayer;
+	public Vector2 groundCheckSize;
+	public float groundCheckCastDistance;
 
-    public bool isGrounded;
-    public bool canMove;
+	public bool isGrounded;
+	public bool canMove;
 
-    private CameraFollowObject cameraFollowObject;
-    private float fallSpeedYDampingChangeTreshold;
+	private CameraFollowObject cameraFollowObject;
+	private float fallSpeedYDampingChangeTreshold;
 
-    [System.NonSerialized] public bool interactionEnabled = true;
+	[System.NonSerialized] public bool interactionEnabled = true;
 
-    Animator animator;
+	Animator animator;
 
-    CapsuleCollider2D capsuleCollider;
-    //BoxCollider2D boxCollider;
-    Vector2 colliderSize;
+	CapsuleCollider2D capsuleCollider;
+	//BoxCollider2D boxCollider;
+	Vector2 colliderSize;
 
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(gameObject);
-        }
-    }
-    private void OnDestroy() {
-        if (instance == this) {
-            instance = null;
-        }
-    }
+	private void Awake() {
+		if (instance == null) {
+			instance = this;
+		} else {
+			Destroy(gameObject);
+		}
+	}
+	private void OnDestroy() {
+		if (instance == this) {
+			instance = null;
+		}
+	}
 
-    void Start() {
-        WindowManager.instance.ShowWindow(WindowPanel.GameUI);
-        playerCurrentHealth = 100;
-        playerCurrentMana = 100;
-        isFacingRight = true;
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
-        //boxCollider = GetComponent<BoxCollider2D>();
-        colliderSize = capsuleCollider.size;
-        //colliderSize = boxCollider.size;
+	void Start() {
+		WindowManager.instance.ShowWindow(WindowPanel.GameUI);
+		playerCurrentHealth = 100;
+		playerCurrentMana = 100;
+		isFacingRight = true;
+		rb = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
+		capsuleCollider = GetComponent<CapsuleCollider2D>();
+		//boxCollider = GetComponent<BoxCollider2D>();
+		colliderSize = capsuleCollider.size;
+		//colliderSize = boxCollider.size;
 
-        if (CameraFollowObject.instance != null) {
-            cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
-        }
+		if (CameraFollowObject.instance != null) {
+			cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
+		}
 
-        fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
-    }
+		fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
+	}
 
-    void Update() {
-        if (WindowManager.instance.escapeableWindowStack.Count == 0) {
-            if (interactionEnabled == true) {
-                canMove = true;
-                Move();
-                Jump();
-                if (moveInput > 0f || moveInput < 0f) {
-                    FlipCheck();
-                }
+	void Update() {
+		if (WindowManager.instance.escapeableWindowStack.Count == 0) {
+			if (interactionEnabled == true) {
+				canMove = true;
+				Move();
+				Jump();
+				if (moveInput > 0f || moveInput < 0f) {
+					FlipCheck();
+				}
 
-                //if player is falling past a set speed treshold
-                if (rb.velocity.y < fallSpeedYDampingChangeTreshold && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == false) {
-                    CameraManager.instance.LerpYDamping(true);
-                }
+				//if player is falling past a set speed treshold
+				if (rb.velocity.y < fallSpeedYDampingChangeTreshold && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == false) {
+					CameraManager.instance.LerpYDamping(true);
+				}
 
-                //if player is standing still or moving up
-                if (rb.velocity.y >= 0f && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == true) {
-                    //reset so it can be called again
-                    CameraManager.instance.lerpedFromPlayerFalling = false;
+				//if player is standing still or moving up
+				if (rb.velocity.y >= 0f && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == true) {
+					//reset so it can be called again
+					CameraManager.instance.lerpedFromPlayerFalling = false;
 
-                    CameraManager.instance.LerpYDamping(false);
-                }
-            }
-        } else
-        {
-            canMove = false;
-        }
-    }
+					CameraManager.instance.LerpYDamping(false);
+				}
+			}
+		} else {
+			canMove = false;
+			rb.velocity = new Vector2(0f, rb.velocity.y); //purkkafix
+		}
+	}
 
 
-    private void FixedUpdate() {
-        if (rb.velocity.y < maxFallSpeed) {
-            rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
-        }
-        animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
-        animator.SetFloat("yVelocity", rb.velocity.y);
+	private void FixedUpdate() {
+		if (rb.velocity.y < maxFallSpeed) {
+			rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
+		}
+		animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+		animator.SetFloat("yVelocity", rb.velocity.y);
 
-        if (Grounded() == false) {
-            animator.SetBool("isJumping", true);
-        } else {
-            animator.SetBool("isJumping", false);
-        }
-        SlopeCheck();
-    }
+		if (Grounded() == false) {
+			animator.SetBool("isJumping", true);
+		} else {
+			animator.SetBool("isJumping", false);
+		}
+		SlopeCheck();
+	}
 
-    void Move() {
-        if (canMove == true) {
-            // Get the horizontal input (A/D keys or Left/Right arrow keys)
-            moveInput = Input.GetAxis("Horizontal");
+	void Move() {
+		if (canMove == true) {
+			// Get the horizontal input (A/D keys or Left/Right arrow keys)
+			moveInput = Input.GetAxis("Horizontal");
 
-            // Set the player's velocity based on input
-            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-            //animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
-            //animator.SetFloat("yVelocity", rb.velocity.y);
-        } else
-        {
-            //rb.velocity.x = 0f;
-        }
-    }
+			// Set the player's velocity based on input
+			rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+			//animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+			//animator.SetFloat("yVelocity", rb.velocity.y);
+		}
+	}
 
     void Jump() {
         if (Input.GetButtonDown("Jump") && Grounded() == true && canMove == true) {
