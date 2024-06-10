@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
     public float groundCheckCastDistance;
 
     public bool isGrounded;
+    public bool canMove;
 
     private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeTreshold;
@@ -76,6 +77,7 @@ public class Player : MonoBehaviour {
     void Update() {
         if (WindowManager.instance.escapeableWindowStack.Count == 0) {
             if (interactionEnabled == true) {
+                canMove = true;
                 Move();
                 Jump();
                 if (moveInput > 0f || moveInput < 0f) {
@@ -95,6 +97,9 @@ public class Player : MonoBehaviour {
                     CameraManager.instance.LerpYDamping(false);
                 }
             }
+        } else
+        {
+            canMove = false;
         }
     }
 
@@ -115,17 +120,22 @@ public class Player : MonoBehaviour {
     }
 
     void Move() {
-        // Get the horizontal input (A/D keys or Left/Right arrow keys)
-        moveInput = Input.GetAxis("Horizontal");
+        if (canMove == true) {
+            // Get the horizontal input (A/D keys or Left/Right arrow keys)
+            moveInput = Input.GetAxis("Horizontal");
 
-        // Set the player's velocity based on input
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-        //animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
-        //animator.SetFloat("yVelocity", rb.velocity.y);
+            // Set the player's velocity based on input
+            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+            //animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+            //animator.SetFloat("yVelocity", rb.velocity.y);
+        } else
+        {
+            //rb.velocity.x = 0f;
+        }
     }
 
     void Jump() {
-        if (Input.GetButtonDown("Jump") && Grounded() == true) {
+        if (Input.GetButtonDown("Jump") && Grounded() == true && canMove == true) {
             //rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
