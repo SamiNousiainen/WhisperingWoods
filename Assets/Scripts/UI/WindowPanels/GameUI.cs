@@ -1,9 +1,17 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using ProjectEnums;
+using TMPro;
 
 public class GameUI : WindowBase {
     public static GameUI instance;
+
+    //public TextMeshProUGUI playerHealth;
+    public GameObject playerHpBar;
+    public Slider playerHpSlider;
+    public Image playerHpBarFill;
+
     private void Awake()
     {
         if (instance == null)
@@ -19,9 +27,21 @@ public class GameUI : WindowBase {
         base.Init();
     }
 
-    public override void UpdateUI()
-    {
+    public void Update() {
+        UpdateUI();
+    }
 
+    public override void UpdateUI() {
+        PlayerHealth();
+    }
+
+    private void PlayerHealth() {
+        if (Player.instance != null) {
+            //playerHealth.enabled = true;
+            playerHpSlider.enabled = true;
+            playerHpBar.SetActive(true);
+            playerHpSlider.value = Player.instance.playerCurrentHealth;
+        }
     }
 
     protected override void OpeningAnimationFinished()

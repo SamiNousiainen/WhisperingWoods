@@ -6,6 +6,9 @@ public class Player : MonoBehaviour {
 
     public static Player instance;
 
+
+    public float playerMaxHealth = 100;
+    public float playerCurrentHealth = 100;
     public float moveSpeed = 3f;
     public float jumpForce = 6f;
     public float moveInput;
@@ -51,6 +54,8 @@ public class Player : MonoBehaviour {
 
     void Start() {
         WindowManager.instance.ShowWindow(WindowPanel.GameUI);
+        playerCurrentHealth = 100;
+        Debug.Log(playerCurrentHealth);
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
