@@ -11,6 +11,9 @@ public class GameUI : WindowBase {
     public GameObject playerHpBar;
     public Slider playerHpSlider;
     public Image playerHpBarFill;
+    public GameObject playerManaBar;
+    public Slider playerManaSlider;
+    public Image playerManaBarFill;
 
     private void Awake()
     {
@@ -41,6 +44,9 @@ public class GameUI : WindowBase {
             playerHpSlider.enabled = true;
             playerHpBar.SetActive(true);
             playerHpSlider.value = Player.instance.playerCurrentHealth;
+            playerManaSlider.enabled = true;
+            playerManaBar.SetActive(true);
+            playerManaSlider.value = Player.instance.playerCurrentMana;
         }
     }
 

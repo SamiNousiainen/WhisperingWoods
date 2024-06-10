@@ -9,6 +9,8 @@ public class Player : MonoBehaviour {
 
     public float playerMaxHealth = 100;
     public float playerCurrentHealth = 100;
+    public float playerMaxMana = 100;
+    public float playerCurrentMana = 100;
     public float moveSpeed = 3f;
     public float jumpForce = 6f;
     public float moveInput;
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour {
     void Start() {
         WindowManager.instance.ShowWindow(WindowPanel.GameUI);
         playerCurrentHealth = 100;
-        Debug.Log(playerCurrentHealth);
+        playerCurrentMana = 100;
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
