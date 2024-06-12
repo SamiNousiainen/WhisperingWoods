@@ -23,32 +23,9 @@ public class PauseMenu : WindowBase {
         {
             instance = this;
             base.Init();
-            //if (parameters is PauseMenuMode)
-            //{
-            //    mode = (PauseMenuMode)parameters;
-            //    if (mode == PauseMenuMode.Options)
-            //    {
-            //        optionsParent.gameObject.SetActive(true);
-            //        inventoryParent.gameObject.SetActive(false);
-            //        mapParent.gameObject.SetActive(false);
-            //        Debug.Log("options");
-            //    }
-            //    else if (mode == PauseMenuMode.Inventory)
-            //    {
-            //        inventoryParent.gameObject.SetActive(true);
-            //        optionsParent.gameObject.SetActive(false);
-            //        mapParent.gameObject.SetActive(false);
-            //        Debug.Log("inventory");
-            //    }
-            //    else if (mode == PauseMenuMode.Map)
-            //    {
-            //        mapParent.gameObject.SetActive(true);
-            //        optionsParent.gameObject.SetActive(false);
-            //        inventoryParent.gameObject.SetActive(false);
-            //        Debug.Log("map");
-            //    }
-
-            //}
+			if (GameUI.instance != null) {
+				WindowManager.instance.CloseWindow(WindowPanel.GameUI);
+			}
         } else {
             Destroy(gameObject);
         }
@@ -63,9 +40,8 @@ public class PauseMenu : WindowBase {
 
     }
 
-    protected override void Closing()
-    {
-
+    protected override void Closing() {
+		WindowManager.instance.ShowWindow(WindowPanel.GameUI);
     }
 
     protected override void Destroying()
