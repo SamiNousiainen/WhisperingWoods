@@ -22,6 +22,7 @@ namespace ProjectEnums {
         UpdateWindow,
         ShowNotificationText,
         CompleteCurrentTask,
+		ChangeSettingsTab,
     }
 
     public enum WindowPanel {

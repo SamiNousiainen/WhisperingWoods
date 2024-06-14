@@ -188,9 +188,17 @@ public class UIEventManager : MonoBehaviour {
             //WindowManager.instance.ShowWindow(WindowPanel.GenericMessageScreen, window);
         };
 
-        //eventHandlers[(int)MessageID.CompleteCurrentTask] = (arg1, callerTransform) => {
-        //    TaskManager.instance.CompleteCurrentTask(true);
-        //};
+		//eventHandlers[(int)MessageID.CompleteCurrentTask] = (arg1, callerTransform) => {
+		//    TaskManager.instance.CompleteCurrentTask(true);
+		//};
+
+		eventHandlers[(int)MessageID.ChangeSettingsTab] = (arg1, callerTransform) => {
+			int entryIndex = callerTransform.GetSiblingIndex();
+			OptionsPanel optionsPanel = (OptionsPanel)WindowManager.instance.GetWindow(WindowPanel.OptionsPanel);
+			if (optionsPanel != null) {
+				optionsPanel.ChangeTabs(entryIndex);
+			}
+		};
 
     }
 
