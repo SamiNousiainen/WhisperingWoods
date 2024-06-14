@@ -79,8 +79,8 @@ public class Player : MonoBehaviour {
             if (interactionEnabled == true) {
                 canMove = true;
                 Move();
-                Jump();
-                Attack();
+                //Jump();
+                //Attack();
                 if (moveInput > 0f || moveInput < 0f) {
                     FlipCheck();
                 }
@@ -132,8 +132,8 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void Jump() {
-        if (Input.GetButtonDown("Jump") && Grounded() == true && canMove == true) {
+    public void Jump() {
+        if (Grounded() == true && canMove == true) {
             //rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
@@ -143,11 +143,10 @@ public class Player : MonoBehaviour {
 
     }
 
-    void Attack() {
-        if (Input.GetKeyDown(KeyCode.K) && Grounded() == true) {
-            animator.Play("Longsword");
-        }
-
+    public void Attack() {
+		if (Grounded() == true) {
+			animator.Play("Longsword");
+		}
     }
 
     void FlipCheck() {
