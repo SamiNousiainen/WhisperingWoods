@@ -14,6 +14,17 @@ public class KeyInputManager : MonoBehaviour {
     void Update() {
 
         if (SceneManager.GetActiveScene().name == "Gameplay") {
+
+			if (Player.instance != null && WindowManager.instance.escapeableWindowStack.Count == 0) {
+				if (Input.GetKeyDown(KeyCode.K) == true || Input.GetKeyDown(KeyCode.Mouse0)) {
+					GameInputLogic.PlayerAttack();
+				}
+				else if (Input.GetButtonDown("Jump")) {
+					GameInputLogic.PlayerJump();
+				}
+			}
+
+
             if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count == 0 && Player.instance.enabled == true) {
                 GameInputLogic.PlayerShowWindow(WindowPanel.PauseMenu);
             }

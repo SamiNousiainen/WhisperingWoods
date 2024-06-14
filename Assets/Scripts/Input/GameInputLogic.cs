@@ -5,6 +5,14 @@ using ProjectEnums;
 
 public static class GameInputLogic {
 
+	public static void PlayerAttack() {
+		Player.instance.Attack();
+	}
+
+	public static void PlayerJump() {
+		Player.instance.Jump();
+	}
+
     public static void PlayerShowWindow(WindowPanel panel, object parameters = null)
     {
         WindowManager.instance.ShowWindow(panel);
