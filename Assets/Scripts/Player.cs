@@ -19,18 +19,19 @@ public class Player : MonoBehaviour {
     private Rigidbody2D rb;
     public bool isFacingRight;
 
-    [SerializeField]
-    private PhysicsMaterial2D noFriction;
-    [SerializeField]
-    private PhysicsMaterial2D fullFriction;
-
     public LayerMask groundLayer;
     public Vector2 groundCheckSize;
     public float groundCheckCastDistance;
 
-    public bool isGrounded;
+    //public bool isGrounded;
     public bool canMove;
 
+    //combat
+    public Transform attackPoint;
+    private float attackRange = 0.9f;
+    public LayerMask enemyLayer;
+
+    //camera movement
     private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeTreshold;
 
@@ -38,9 +39,15 @@ public class Player : MonoBehaviour {
 
     Animator animator;
 
+    //player character colliders
+    BoxCollider2D boxCollider;
     CapsuleCollider2D capsuleCollider;
-    //BoxCollider2D boxCollider;
     Vector2 colliderSize;
+
+    [SerializeField]
+    private PhysicsMaterial2D noFriction;
+    [SerializeField]
+    private PhysicsMaterial2D fullFriction;
 
     private void Awake() {
         if (instance == null) {
@@ -63,9 +70,9 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
-        //boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         colliderSize = capsuleCollider.size;
-        //colliderSize = boxCollider.size;
+        colliderSize = boxCollider.size;
 
         if (CameraFollowObject.instance != null) {
             cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
@@ -127,26 +134,25 @@ public class Player : MonoBehaviour {
 
             // Set the player's velocity based on input
             rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-            //animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
-            //animator.SetFloat("yVelocity", rb.velocity.y);
         }
     }
 
     public void Jump() {
         if (Grounded() == true && canMove == true) {
-            //rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
-        //if (Grounded() == true) {
-        //    animator.SetBool("isJumping", false);
-        //}
-
     }
 
     public void Attack() {
-		if (Grounded() == true) {
-			animator.Play("Longsword");
-		}
+        if (Grounded() == true) {
+            animator.Play("Longsword");
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+            foreach (Collider2D enemy in hitEnemies) {
+                Debug.Log(enemy.name);
+            }
+        }
     }
 
     void FlipCheck() {
@@ -182,8 +188,10 @@ public class Player : MonoBehaviour {
     private void SlopeCheck() {
         //Vector2 checkPosition = transform.position - new Vector3(0f, colliderSize.y / 2);
         if (moveInput == 0f && Grounded() == true) {
+            boxCollider.sharedMaterial = fullFriction;
             capsuleCollider.sharedMaterial = fullFriction;
         } else {
+            boxCollider.sharedMaterial = noFriction;
             capsuleCollider.sharedMaterial = noFriction;
         }
     }
@@ -191,5 +199,6 @@ public class Player : MonoBehaviour {
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
