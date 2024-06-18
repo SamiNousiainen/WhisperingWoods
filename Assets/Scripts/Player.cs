@@ -4,201 +4,223 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    public static Player instance;
+	public static Player instance;
+
+	[Header("Stats")]
+	public float playerMaxHealth = 100;
+	public float playerCurrentHealth = 100;
+	public float playerMaxMana = 100;
+	public float playerCurrentMana = 100;
+	public float moveSpeed = 3f;
+	public float jumpForce = 6f;
+
+	[Header("Other")]
+	public float moveInput;
+	public float maxFallSpeed = -15f;
+	public bool canMove;
+
+	private Rigidbody2D rb;
+	public bool isFacingRight;
+
+	[Header("Ground Check values")]
+	public LayerMask groundLayer;
+	public Vector2 groundCheckSize;
+	public float groundCheckCastDistance;
+	public Transform groundCheck;
 
 
-    public float playerMaxHealth = 100;
-    public float playerCurrentHealth = 100;
-    public float playerMaxMana = 100;
-    public float playerCurrentMana = 100;
-    public float moveSpeed = 3f;
-    public float jumpForce = 6f;
-    public float moveInput;
-    public float maxFallSpeed = -15f;
+	[Header("Combat")]
+	//combat
+	public float damageCooldownTimer = 0f;
+	private float damageCooldownTime = 1f;
+	public Transform attackPoint;
+	private float attackRange = 0.9f;
+	private float attackDamage = 10f;
+	public LayerMask enemyLayer;
 
-    private Rigidbody2D rb;
-    public bool isFacingRight;
+	//camera movement
+	private CameraFollowObject cameraFollowObject;
+	private float fallSpeedYDampingChangeTreshold;
 
-    public LayerMask groundLayer;
-    public Vector2 groundCheckSize;
-    public float groundCheckCastDistance;
+	[System.NonSerialized] public bool interactionEnabled = true;
 
-    //public bool isGrounded;
-    public bool canMove;
+	Animator animator;
 
-    //combat
-    public Transform attackPoint;
-    private float attackRange = 0.9f;
-    public LayerMask enemyLayer;
+	//player character colliders
+	BoxCollider2D boxCollider;
+	//CapsuleCollider2D capsuleCollider;
+	Vector2 colliderSize;
 
-    //camera movement
-    private CameraFollowObject cameraFollowObject;
-    private float fallSpeedYDampingChangeTreshold;
+	[SerializeField]
+	private PhysicsMaterial2D noFriction;
+	[SerializeField]
+	private PhysicsMaterial2D fullFriction;
 
-    [System.NonSerialized] public bool interactionEnabled = true;
+	private void Awake() {
+		if (instance == null) {
+			instance = this;
+		}
+		else {
+			Destroy(gameObject);
+		}
+	}
+	private void OnDestroy() {
+		if (instance == this) {
+			instance = null;
+		}
+	}
 
-    Animator animator;
+	void Start() {
+		WindowManager.instance.ShowWindow(WindowPanel.GameUI);
+		playerCurrentHealth = playerMaxHealth;
+		playerCurrentMana = playerMaxMana;
+		isFacingRight = true;
+		rb = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
+		//capsuleCollider = GetComponent<CapsuleCollider2D>();
+		boxCollider = GetComponent<BoxCollider2D>();
+		//colliderSize = capsuleCollider.size;
+		colliderSize = boxCollider.size;
 
-    //player character colliders
-    BoxCollider2D boxCollider;
-    CapsuleCollider2D capsuleCollider;
-    Vector2 colliderSize;
+		if (CameraFollowObject.instance != null) {
+			cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
+		}
 
-    [SerializeField]
-    private PhysicsMaterial2D noFriction;
-    [SerializeField]
-    private PhysicsMaterial2D fullFriction;
+		fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
+	}
 
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(gameObject);
-        }
-    }
-    private void OnDestroy() {
-        if (instance == this) {
-            instance = null;
-        }
-    }
+	void Update() {
+		if (WindowManager.instance.escapeableWindowStack.Count == 0) {
+			if (interactionEnabled == true) {
 
-    void Start() {
-        WindowManager.instance.ShowWindow(WindowPanel.GameUI);
-        playerCurrentHealth = 100;
-        playerCurrentMana = 100;
-        isFacingRight = true;
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
-        colliderSize = capsuleCollider.size;
-        colliderSize = boxCollider.size;
+				damageCooldownTimer -= Time.deltaTime;
 
-        if (CameraFollowObject.instance != null) {
-            cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
-        }
+				canMove = true;
+				Move();
+				//Jump();
+				//Attack();
+				if (moveInput > 0f || moveInput < 0f) {
+					FlipCheck();
+				}
 
-        fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
-    }
+				//if player is falling past a set speed treshold
+				if (rb.velocity.y < fallSpeedYDampingChangeTreshold && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == false) {
+					CameraManager.instance.LerpYDamping(true);
+				}
 
-    void Update() {
-        if (WindowManager.instance.escapeableWindowStack.Count == 0) {
-            if (interactionEnabled == true) {
-                canMove = true;
-                Move();
-                //Jump();
-                //Attack();
-                if (moveInput > 0f || moveInput < 0f) {
-                    FlipCheck();
-                }
+				//if player is standing still or moving up
+				if (rb.velocity.y >= 0f && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == true) {
+					//reset so it can be called again
+					CameraManager.instance.lerpedFromPlayerFalling = false;
 
-                //if player is falling past a set speed treshold
-                if (rb.velocity.y < fallSpeedYDampingChangeTreshold && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == false) {
-                    CameraManager.instance.LerpYDamping(true);
-                }
-
-                //if player is standing still or moving up
-                if (rb.velocity.y >= 0f && CameraManager.instance.isLerpingYDamping == false && CameraManager.instance.lerpedFromPlayerFalling == true) {
-                    //reset so it can be called again
-                    CameraManager.instance.lerpedFromPlayerFalling = false;
-
-                    CameraManager.instance.LerpYDamping(false);
-                }
-            }
-        } else {
-            canMove = false;
-            rb.velocity = new Vector2(0f, rb.velocity.y); //purkkafix
-        }
-    }
+					CameraManager.instance.LerpYDamping(false);
+				}
+			}
+		}
+		else {
+			canMove = false;
+			rb.velocity = new Vector2(0f, rb.velocity.y); //purkkafix
+		}
+	}
 
 
-    private void FixedUpdate() {
-        if (rb.velocity.y < maxFallSpeed) {
-            rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
-        }
-        animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
-        animator.SetFloat("yVelocity", rb.velocity.y);
+	private void FixedUpdate() {
+		if (rb.velocity.y < maxFallSpeed) {
+			rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
+		}
+		animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+		animator.SetFloat("yVelocity", rb.velocity.y);
 
-        if (Grounded() == false) {
-            animator.SetBool("isJumping", true);
-        } else {
-            animator.SetBool("isJumping", false);
-        }
-        SlopeCheck();
-    }
+		if (Grounded() == false) {
+			animator.SetBool("isJumping", true);
+		}
+		else {
+			animator.SetBool("isJumping", false);
+		}
+		SlopeCheck();
+	}
 
-    void Move() {
-        if (canMove == true) {
-            // Get the horizontal input (A/D keys or Left/Right arrow keys)
-            moveInput = Input.GetAxis("Horizontal");
+	void Move() {
+		if (canMove == true) {
+			// Get the horizontal input (A/D keys or Left/Right arrow keys)
+			moveInput = Input.GetAxis("Horizontal");
 
-            // Set the player's velocity based on input
-            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-        }
-    }
+			// Set the player's velocity based on input
+			rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+		}
+	}
 
-    public void Jump() {
-        if (Grounded() == true && canMove == true) {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
-    }
+	public void Jump() {
+		if (Grounded() == true && canMove == true) {
+			rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+			//rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+		}
+	}
 
-    public void Attack() {
-        if (Grounded() == true) {
-            animator.Play("Longsword");
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+	public void Attack() {
+		animator.Play("Longsword");
+		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
-            foreach (Collider2D enemy in hitEnemies) {
-                Debug.Log(enemy.name);
-            }
-        }
-    }
+		foreach (Collider2D enemy in hitEnemies) {
+			Debug.Log(enemy.name);
+			enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+		}
+	}
 
-    void FlipCheck() {
-        if (moveInput > 0f && isFacingRight == false) {
-            Flip();
-        } else if (moveInput < 0f && isFacingRight == true) {
-            Flip();
-        }
-    }
+	public void TakeDamage(float damage) {
+		playerCurrentHealth -= damage;
+		damageCooldownTimer = damageCooldownTime;
+		Debug.Log("damage taken = " + damage);
+	}
 
-    public bool Grounded() {
-        if (Physics2D.BoxCast(transform.position, groundCheckSize, 0, -transform.up, groundCheckCastDistance, groundLayer)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+	void FlipCheck() {
+		if (moveInput > 0f && isFacingRight == false) {
+			Flip();
+		}
+		else if (moveInput < 0f && isFacingRight == true) {
+			Flip();
+		}
+	}
 
-    void Flip() {
-        if (isFacingRight == true) {
-            Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
-            transform.rotation = Quaternion.Euler(rotator);
-            isFacingRight = !isFacingRight;
-            cameraFollowObject.Turn();
-        } else {
-            Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
-            transform.rotation = Quaternion.Euler(rotator);
-            isFacingRight = !isFacingRight;
-            cameraFollowObject.Turn();
-        }
-    }
+	public bool Grounded() {
+		if (Physics2D.BoxCast(groundCheck.transform.position, groundCheckSize, 0, -transform.up, groundCheckCastDistance, groundLayer)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
-    private void SlopeCheck() {
-        //Vector2 checkPosition = transform.position - new Vector3(0f, colliderSize.y / 2);
-        if (moveInput == 0f && Grounded() == true) {
-            boxCollider.sharedMaterial = fullFriction;
-            capsuleCollider.sharedMaterial = fullFriction;
-        } else {
-            boxCollider.sharedMaterial = noFriction;
-            capsuleCollider.sharedMaterial = noFriction;
-        }
-    }
+	void Flip() {
+		if (isFacingRight == true) {
+			Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+			transform.rotation = Quaternion.Euler(rotator);
+			isFacingRight = !isFacingRight;
+			cameraFollowObject.Turn();
+		}
+		else {
+			Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+			transform.rotation = Quaternion.Euler(rotator);
+			isFacingRight = !isFacingRight;
+			cameraFollowObject.Turn();
+		}
+	}
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    }
+	private void SlopeCheck() {
+		//Vector2 checkPosition = transform.position - new Vector3(0f, colliderSize.y / 2);
+		if (moveInput == 0f && Grounded() == true) {
+			boxCollider.sharedMaterial = fullFriction;
+			//capsuleCollider.sharedMaterial = fullFriction;
+		}
+		else {
+			boxCollider.sharedMaterial = noFriction;
+			//capsuleCollider.sharedMaterial = noFriction;
+		}
+	}
+
+	private void OnDrawGizmos() {
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireCube(groundCheck.transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
+		Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+	}
 }
