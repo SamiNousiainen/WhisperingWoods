@@ -13,7 +13,7 @@ public class KeyInputManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (SceneManager.GetActiveScene().name == "Gameplay") {
+        if (SceneManager.GetActiveScene().name != "MainMenu" || SceneManager.GetActiveScene().name != "LoadingScreen") {
 
 			if (Player.instance != null && WindowManager.instance.escapeableWindowStack.Count == 0) {
 				if (Input.GetKeyDown(KeyCode.K) == true || Input.GetKeyDown(KeyCode.Mouse0)) {
