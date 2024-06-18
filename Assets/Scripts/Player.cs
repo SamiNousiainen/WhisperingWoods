@@ -1,5 +1,6 @@
 using ProjectEnums;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -33,6 +34,8 @@ public class Player : MonoBehaviour {
 	//combat
 	public float damageCooldownTimer = 0f;
 	private float damageCooldownTime = 1f;
+	private float attackRate = 0.35f;
+	public float attackCooldownTimer = 0f;
 	public Transform attackPoint;
 	private float attackRange = 0.9f;
 	private float attackDamage = 10f;
@@ -92,9 +95,8 @@ public class Player : MonoBehaviour {
 	void Update() {
 		if (WindowManager.instance.escapeableWindowStack.Count == 0) {
 			if (interactionEnabled == true) {
-
+				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
-
 				canMove = true;
 				Move();
 				//Jump();
@@ -158,9 +160,17 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Attack() {
-		animator.Play("Longsword");
+		if (attackCooldownTimer <= 0f) {
+			animator.Play("Longsword");
+			StartCoroutine(DealDamage());
+			attackCooldownTimer = attackRate;
+		}
+	}
+
+	private IEnumerator DealDamage() {
 		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
+		yield return new WaitForSeconds(0.1f);
 		foreach (Collider2D enemy in hitEnemies) {
 			Debug.Log(enemy.name);
 			enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
