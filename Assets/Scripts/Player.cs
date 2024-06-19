@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
 	private float attackRange = 0.9f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
+	public bool isAttacking;
 
 	//camera movement
 	private CameraFollowObject cameraFollowObject;
@@ -119,10 +120,10 @@ public class Player : MonoBehaviour {
 				}
 			}
 		}
-		else {
-			canMove = false;
-			rb.velocity = new Vector2(0f, rb.velocity.y); //purkkafix
-		}
+		//else {
+		//	canMove = false;
+		//	rb.velocity = new Vector2(0f, rb.velocity.y); //purkkafix
+		//}
 	}
 
 
@@ -133,12 +134,14 @@ public class Player : MonoBehaviour {
 		animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
 		animator.SetFloat("yVelocity", rb.velocity.y);
 
+
 		if (Grounded() == false) {
 			animator.SetBool("isJumping", true);
 		}
 		else {
 			animator.SetBool("isJumping", false);
 		}
+
 		SlopeCheck();
 	}
 
@@ -147,8 +150,13 @@ public class Player : MonoBehaviour {
 			// Get the horizontal input (A/D keys or Left/Right arrow keys)
 			moveInput = Input.GetAxis("Horizontal");
 
-			// Set the player's velocity based on input
-			rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+			if (isAttacking == true && Grounded() == true) {
+				rb.velocity = Vector2.zero;
+			}
+			else {
+				// Set the player's velocity based on input
+				rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+			}
 		}
 	}
 
@@ -161,6 +169,14 @@ public class Player : MonoBehaviour {
 
 	public void Attack() {
 		if (attackCooldownTimer <= 0f) {
+			isAttacking = true;
+			//if (Grounded() == true) {
+			//	rb.velocity = new Vector2(0f, 0f);
+			//}
+			//else if (Grounded() == false) {
+			//	canMove = true;
+			//}
+			animator.SetBool("isAttacking", true);
 			animator.Play("Longsword");
 			StartCoroutine(DealDamage());
 			attackCooldownTimer = attackRate;
@@ -175,6 +191,9 @@ public class Player : MonoBehaviour {
 			Debug.Log(enemy.name);
 			enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
 		}
+		yield return new WaitForSeconds(0.24f);
+		isAttacking = false;
+		animator.SetBool("isAttacking", false);
 	}
 
 	public void TakeDamage(float damage) {
@@ -202,17 +221,19 @@ public class Player : MonoBehaviour {
 	}
 
 	void Flip() {
-		if (isFacingRight == true) {
-			Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
-			transform.rotation = Quaternion.Euler(rotator);
-			isFacingRight = !isFacingRight;
-			cameraFollowObject.Turn();
-		}
-		else {
-			Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
-			transform.rotation = Quaternion.Euler(rotator);
-			isFacingRight = !isFacingRight;
-			cameraFollowObject.Turn();
+		if (isAttacking == false) {
+			if (isFacingRight == true) {
+				Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+				transform.rotation = Quaternion.Euler(rotator);
+				isFacingRight = !isFacingRight;
+				cameraFollowObject.Turn();
+			}
+			else {
+				Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+				transform.rotation = Quaternion.Euler(rotator);
+				isFacingRight = !isFacingRight;
+				cameraFollowObject.Turn();
+			}
 		}
 	}
 
