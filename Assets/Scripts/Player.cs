@@ -16,7 +16,8 @@ public class Player : MonoBehaviour {
 	public float jumpForce = 6f;
 
 	[Header("Other")]
-	public float moveInput;
+	public float moveInputX;
+	public float moveInputY;
 	public float maxFallSpeed = -15f;
 	public bool canMove;
 
@@ -37,6 +38,8 @@ public class Player : MonoBehaviour {
 	private float attackRate = 0.35f;
 	public float attackCooldownTimer = 0f;
 	public Transform attackPoint;
+	public Transform attackPointDown;
+	public Transform attackPointUp;
 	private float attackRange = 0.9f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
@@ -102,7 +105,7 @@ public class Player : MonoBehaviour {
 				Move();
 				//Jump();
 				//Attack();
-				if (moveInput > 0f || moveInput < 0f) {
+				if (moveInputX > 0f || moveInputX < 0f) {
 					FlipCheck();
 				}
 
@@ -148,14 +151,15 @@ public class Player : MonoBehaviour {
 	void Move() {
 		if (canMove == true) {
 			// Get the horizontal input (A/D keys or Left/Right arrow keys)
-			moveInput = Input.GetAxis("Horizontal");
+			moveInputX = Input.GetAxis("Horizontal");
+			moveInputY = Input.GetAxis("Vertical");
 
 			if (isAttacking == true && Grounded() == true) {
 				rb.velocity = Vector2.zero;
 			}
 			else {
 				// Set the player's velocity based on input
-				rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+				rb.velocity = new Vector2(moveInputX * moveSpeed, rb.velocity.y);
 			}
 		}
 	}
@@ -170,20 +174,35 @@ public class Player : MonoBehaviour {
 	public void Attack() {
 		if (attackCooldownTimer <= 0f) {
 			isAttacking = true;
-			//if (Grounded() == true) {
-			//	rb.velocity = new Vector2(0f, 0f);
-			//}
-			//else if (Grounded() == false) {
-			//	canMove = true;
-			//}
 			animator.SetBool("isAttacking", true);
 			animator.Play("Longsword");
-			StartCoroutine(DealDamage());
+			if (moveInputY <= -0.1f && Grounded() == false) {
+				StartCoroutine(DealDamageDown());
+			}
+			else {
+				StartCoroutine(DealDamageForward());
+			}
 			attackCooldownTimer = attackRate;
 		}
 	}
 
-	private IEnumerator DealDamage() {
+	private IEnumerator DealDamageDown() {
+		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRange, enemyLayer);
+
+		foreach (Collider2D enemy in hitEnemies) {
+			enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+			if (enemy.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+				rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+			}
+		}
+
+		yield return new WaitForSeconds(0.24f);
+		isAttacking = false;
+		animator.SetBool("isAttacking", false);
+	}
+
+
+	private IEnumerator DealDamageForward() {
 		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
 		yield return new WaitForSeconds(0.1f);
@@ -203,10 +222,10 @@ public class Player : MonoBehaviour {
 	}
 
 	void FlipCheck() {
-		if (moveInput > 0f && isFacingRight == false) {
+		if (moveInputX > 0f && isFacingRight == false) {
 			Flip();
 		}
-		else if (moveInput < 0f && isFacingRight == true) {
+		else if (moveInputX < 0f && isFacingRight == true) {
 			Flip();
 		}
 	}
@@ -239,7 +258,7 @@ public class Player : MonoBehaviour {
 
 	private void SlopeCheck() {
 		//Vector2 checkPosition = transform.position - new Vector3(0f, colliderSize.y / 2);
-		if (moveInput == 0f && Grounded() == true) {
+		if (moveInputX == 0f && Grounded() == true) {
 			boxCollider.sharedMaterial = fullFriction;
 			//capsuleCollider.sharedMaterial = fullFriction;
 		}
@@ -253,5 +272,6 @@ public class Player : MonoBehaviour {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireCube(groundCheck.transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
 		Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+		Gizmos.DrawWireSphere(attackPointDown.position, attackRange);
 	}
 }
