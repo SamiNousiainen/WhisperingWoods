@@ -133,11 +133,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2920074695230930564, guid: 39eb579de3f1ef64aa512bdbedc2b046, type: 3}
       propertyPath: _fadeInSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2920074695230930564, guid: 39eb579de3f1ef64aa512bdbedc2b046, type: 3}
+      propertyPath: fadeOutImage
+      value: 
+      objectReference: {fileID: 135562624}
+    - target: {fileID: 2920074695230930564, guid: 39eb579de3f1ef64aa512bdbedc2b046, type: 3}
       propertyPath: _fadeOutSpeed
-      value: 5
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920074695230930564, guid: 39eb579de3f1ef64aa512bdbedc2b046, type: 3}
+      propertyPath: _fadeOutStartColor.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3776939336887738029, guid: 39eb579de3f1ef64aa512bdbedc2b046, type: 3}
       propertyPath: m_Name
@@ -233,6 +241,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5948274686635795241, guid: 39eb579de3f1ef64aa512bdbedc2b046, type: 3}
   m_PrefabInstance: {fileID: 135562622}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &135562624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6936980093671001059, guid: 39eb579de3f1ef64aa512bdbedc2b046, type: 3}
+  m_PrefabInstance: {fileID: 135562622}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1009656520
 PrefabInstance:
   m_ObjectHideFlags: 0

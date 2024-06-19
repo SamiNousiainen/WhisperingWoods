@@ -13,7 +13,7 @@ public class LevelChangeInteractionTrigger : TriggerInteractionBase {
 
 	[Header("Spawn TO")]
 	[SerializeField] private SpawnPoint SpawnToPoint;
-	[SerializeField] private SceneField _sceneToLoad;
+	[SerializeField] private SceneField sceneToLoad;
 
 	[Space(10f)]
 	[Header("Spawn Point")]
@@ -21,6 +21,6 @@ public class LevelChangeInteractionTrigger : TriggerInteractionBase {
 
 	public override void Interact() {
 		//base.Interact();
-		SceneSwapManager.SwapSceneFromSpawnPoint(_sceneToLoad, SpawnToPoint);
+		SceneSwapManager.SwapSceneFromSpawnPoint(sceneToLoad, SpawnToPoint);
 	}
 }

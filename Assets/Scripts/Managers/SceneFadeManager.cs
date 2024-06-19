@@ -7,15 +7,15 @@ public class SceneFadeManager : MonoBehaviour {
 
 	public static SceneFadeManager instance;
 
-	[SerializeField] private Image _fadeOutImage;
-	[Range(0.1f, 10f), SerializeField] private float _fadeOutSpeed = 5f;
-	[Range(0.1f, 10f), SerializeField] private float _fadeInSpeed = 5f;
+	[SerializeField] private Image fadeOutImage;
+	[Range(0.1f, 10f), SerializeField] private float fadeOutSpeed = 5f;
+	[Range(0.1f, 10f), SerializeField] private float fadeInSpeed = 5f;
 
-	[SerializeField] private Color _fadeOutStartColor;
+	[SerializeField] private Color fadeOutStartColor;
 
-	public bool IsFadingOut { get; private set; }
+	public bool isFadingOut { get; private set; }
 	
-	public bool IsFadingIn { get; private set; }
+	public bool isFadingIn { get; private set; }
 
 	private void Awake() {
         
@@ -23,40 +23,41 @@ public class SceneFadeManager : MonoBehaviour {
 			instance = this;
 		}
 
-		_fadeOutStartColor.a = 0f;
+		fadeOutStartColor.a = 0f;
     }
 
 	private void Update() {
-		if (IsFadingOut) {
-			if (_fadeOutImage.color.a < 1f) {
-				_fadeOutStartColor.a +=Time.deltaTime * _fadeOutSpeed;
-				_fadeOutImage.color = _fadeOutStartColor;
+		if (isFadingOut) {
+			if (fadeOutImage.color.a < 1f) {
+				fadeOutStartColor.a += Time.deltaTime * fadeOutSpeed;
+				fadeOutImage.color = fadeOutStartColor;
 			}
 			else {
-				IsFadingOut = false;
+				isFadingOut = false;
 			}
 		}
 
-		if (IsFadingIn) {
-			if (_fadeOutImage.color.a > 0f) {
-				_fadeOutStartColor.a -= Time.deltaTime * _fadeInSpeed;
-				_fadeOutImage.color = _fadeOutStartColor;
+		if (isFadingIn) {
+			if (fadeOutImage.color.a > 0f) {
+				fadeOutStartColor.a -= Time.deltaTime * fadeInSpeed;
+				fadeOutImage.color = fadeOutStartColor;
 			}
 			else {
-				IsFadingIn = false;
+				isFadingIn = false;
 			}
 		}
 	}
 
 	public void StartFadeOut() {
-		_fadeOutImage.color = _fadeOutStartColor;
-		IsFadingOut = true;
+		fadeOutImage.color = fadeOutStartColor;
+		WindowManager.instance.CloseWindow(ProjectEnums.WindowPanel.GameUI);
+		isFadingOut = true;
 	}
 
 	public void StartFadeIn() {
-		if (_fadeOutImage.color.a >= 1f) {
-			_fadeOutImage.color = _fadeOutStartColor;
-			IsFadingIn = true;
+		if (fadeOutImage.color.a >= 1f) {
+			fadeOutImage.color = fadeOutStartColor;
+			isFadingIn = true;
 		}
 	}
 

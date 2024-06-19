@@ -72771,6 +72771,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1185615203906413464, guid: cf657d5b1a54a254dbf74aeec8e7e09a, type: 3}
+      propertyPath: SpawnToPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1185615203906413464, guid: cf657d5b1a54a254dbf74aeec8e7e09a, type: 3}
+      propertyPath: sceneToLoad._sceneName
+      value: TutorialBossRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 1185615203906413464, guid: cf657d5b1a54a254dbf74aeec8e7e09a, type: 3}
+      propertyPath: sceneToLoad._sceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 6f421f6aaace30142889f361e9df532c, type: 3}
     - target: {fileID: 5153919885439223188, guid: cf657d5b1a54a254dbf74aeec8e7e09a, type: 3}
       propertyPath: m_Name
       value: LevelChangeTrigger
