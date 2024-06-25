@@ -179,6 +179,9 @@ public class Player : MonoBehaviour {
 			if (moveInputY <= -0.1f && Grounded() == false) {
 				StartCoroutine(DealDamageDown());
 			}
+			else if (moveInputY >= 0.1f) {
+				StartCoroutine(DealDamageUp());
+			}
 			else {
 				StartCoroutine(DealDamageForward());
 			}
@@ -204,6 +207,19 @@ public class Player : MonoBehaviour {
 
 	private IEnumerator DealDamageForward() {
 		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+		yield return new WaitForSeconds(0.1f);
+		foreach (Collider2D enemy in hitEnemies) {
+			Debug.Log(enemy.name);
+			enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+		}
+		yield return new WaitForSeconds(0.24f);
+		isAttacking = false;
+		animator.SetBool("isAttacking", false);
+	}
+
+	private IEnumerator DealDamageUp() {
+		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointUp.position, attackRange, enemyLayer);
 
 		yield return new WaitForSeconds(0.1f);
 		foreach (Collider2D enemy in hitEnemies) {
@@ -273,5 +289,6 @@ public class Player : MonoBehaviour {
 		Gizmos.DrawWireCube(groundCheck.transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
 		Gizmos.DrawWireSphere(attackPoint.position, attackRange);
 		Gizmos.DrawWireSphere(attackPointDown.position, attackRange);
+		Gizmos.DrawWireSphere(attackPointUp.position, attackRange);
 	}
 }
