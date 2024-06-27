@@ -175,15 +175,22 @@ public class Player : MonoBehaviour {
 		if (attackCooldownTimer <= 0f) {
 			isAttacking = true;
 			animator.SetBool("isAttacking", true);
-			animator.Play("Longsword");
 			if (moveInputY <= -0.1f && Grounded() == false) {
 				StartCoroutine(DealDamageDown());
+				animator.Play("LongswordJump"); //placeholder
 			}
 			else if (moveInputY >= 0.1f) {
 				StartCoroutine(DealDamageUp());
+				animator.Play("LongswordJump"); //placeholder
 			}
 			else {
 				StartCoroutine(DealDamageForward());
+				if (Grounded() == false) {
+					animator.Play("LongswordJump");
+				}
+				else {
+					animator.Play("Longsword");
+				}
 			}
 			attackCooldownTimer = attackRate;
 		}
