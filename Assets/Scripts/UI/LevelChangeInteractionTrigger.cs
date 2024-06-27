@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelChangeInteractionTrigger : TriggerInteractionBase {
+
+	public Collider2D triggerCollider;
 	public enum SpawnPoint {
 		None,
 		One,
@@ -19,8 +21,12 @@ public class LevelChangeInteractionTrigger : TriggerInteractionBase {
 	[Header("Spawn Point")]
 	public SpawnPoint CurrentSpawnPoint;
 
-	public override void Interact() {
-		//base.Interact();
-		SceneSwapManager.SwapSceneFromSpawnPoint(sceneToLoad, SpawnToPoint);
-	}
+	//private void ontriggerenter() {
+	//	sceneswapmanager.swapscenefromspawnpoint(scenetoload, spawntopoint);
+	//} 
+
+	//public override void interact() {
+	//	//base.interact();
+	//	sceneswapmanager.swapscenefromspawnpoint(scenetoload, spawntopoint);
+	//}
 }

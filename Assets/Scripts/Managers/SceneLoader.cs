@@ -8,7 +8,8 @@ public class SceneLoader : MonoBehaviour {
     public static SceneLoader instance;
     public bool sceneLoadInProgress;
 
-    private void Awake()
+
+	private void Awake()
     {
 
         if (instance == null)
@@ -58,7 +59,13 @@ public class SceneLoader : MonoBehaviour {
                 yield return null;
             }
         }
-        WindowManager.instance.escapeableWindowStack.Clear();
+
+		if (sceneName != "LoadingScreen" && sceneName != "MainMenu") {
+			Debug.Log("Loaded player");
+			Object.DontDestroyOnLoad(Object.Instantiate(Resources.Load("PersistenceObjects")));
+		}
+
+		WindowManager.instance.escapeableWindowStack.Clear();
         if (sceneName == "Gameplay" || sceneName == "MainMenu")
         {
             WindowManager.instance.CloseWindow(WindowPanel.LoadingScreen);

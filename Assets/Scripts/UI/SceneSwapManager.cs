@@ -1,102 +1,105 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SceneSwapManager : MonoBehaviour {
-
 	public static SceneSwapManager instance;
 
-	private static bool loadFromSpawnPoint;
-	private static bool isLoadingScene;
+	private bool loadFromSpawnPoint;
+	private bool isLoadingScene;
 
-	private GameObject player;
+	private Player player;
 	private Collider2D playerCollider;
 	private Collider2D spawnPointCollider;
 	private Vector3 playerSpawnPosition;
-
-	private LevelChangeInteractionTrigger.SpawnPoint spawnPoint;
+	private LevelChangeTrigger.SpawnPoint spawnPoint;
 
 	private void Awake() {
 		if (instance == null) {
 			instance = this;
 		}
-		if (Player.instance != null) { 
-			player = GameObject.FindGameObjectWithTag("Player");
-			playerCollider = player.GetComponent<Collider2D>();
+		else {
+			Destroy(gameObject);
+			return;
 		}
+
+		DontDestroyOnLoad(gameObject);
 	}
 
-	private void OnEnable() {
+	private void Start() {
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
-	private void OnDisable() {
+	private void OnDestroy() {
 		SceneManager.sceneLoaded -= OnSceneLoaded;
 	}
 
-	public static void SwapSceneFromSpawnPoint(SceneField myScene, LevelChangeInteractionTrigger.SpawnPoint spawnPoint) {
-		if (isLoadingScene) return; // Prevent multiple loading
+	public static void SwapSceneFromSpawnPoint(SceneField myScene, LevelChangeTrigger.SpawnPoint spawnPoint) {
+		if (instance.isLoadingScene)
+			return;
 
-		loadFromSpawnPoint = true;
-		isLoadingScene = true;
-		instance.StartCoroutine(instance.FadeOutThenChangeScene(myScene, spawnPoint));
+		instance.loadFromSpawnPoint = true;
+		instance.isLoadingScene = true;
+		instance.spawnPoint = spawnPoint;
+		instance.StartCoroutine(instance.FadeOutThenChangeScene(myScene));
 	}
 
-	private IEnumerator FadeOutThenChangeScene(SceneField myScene, LevelChangeInteractionTrigger.SpawnPoint spawnPoint = LevelChangeInteractionTrigger.SpawnPoint.None) {
-		// start fade to black
+	private IEnumerator FadeOutThenChangeScene(SceneField myScene) {
 		SceneFadeManager.instance.StartFadeOut();
 
-		while (SceneFadeManager.instance.isFadingOut) {
-			// keep fading out 
-			yield return null;
-		}
+		yield return new WaitUntil(() => !SceneFadeManager.instance.isFadingOut);
 
-		// Start loading the scene asynchronously
 		AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(myScene);
 
-		// Wait until the scene is loaded
-		while (!asyncOperation.isDone) {
-			yield return null;
-		}
+		yield return new WaitUntil(() => asyncOperation.isDone);
 
-		// Scene loaded, set the spawn point
-		this.spawnPoint = spawnPoint;
+		yield return null; // Yield to ensure OnSceneLoaded is called after setting sceneLoaded to true
+
+		StartCoroutine(ResetLoadFlagsAfterDelay());
 	}
 
-	// Called whenever a new scene is loaded
+	private IEnumerator ResetLoadFlagsAfterDelay() {
+		yield return new WaitForSeconds(0.5f); // Adjust delay as needed
+		loadFromSpawnPoint = false;
+		isLoadingScene = false;
+	}
+
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 		SceneFadeManager.instance.StartFadeIn();
 
 		if (loadFromSpawnPoint) {
-			// Warp player to correct spawn point
-			//FindSpawnPoint(_spawnPoint);
-			//_player.transform.position = _playerSpawnPosition;
-			loadFromSpawnPoint = false;
-		}
+			FindSpawnPoint(spawnPoint);
 
-		isLoadingScene = false; // Reset loading flag
+			if (player != null && playerCollider != null) {
+				player.transform.position = playerSpawnPosition;
+			}
+			//else {
+			//	Debug.LogError("Player or Player Collider is null in OnSceneLoaded");
+			//}
+		}
 	}
 
-	private void FindSpawnPoint(LevelChangeInteractionTrigger.SpawnPoint spawnPointNumber) {
-		LevelChangeInteractionTrigger[] spawnPoints = FindObjectsOfType<LevelChangeInteractionTrigger>();
+	private void FindSpawnPoint(LevelChangeTrigger.SpawnPoint spawnPointNumber) {
+		LevelChangeTrigger[] spawnPoints = FindObjectsOfType<LevelChangeTrigger>();
 
-		for (int i = 0; i < spawnPoints.Length; i++) {
-			if (spawnPoints[i].CurrentSpawnPoint == spawnPointNumber) {
-				spawnPointCollider = spawnPoints[i].gameObject.GetComponent<Collider2D>();
-
-				// calculate spawn position
+		foreach (LevelChangeTrigger spawn in spawnPoints) {
+			if (spawn.currentSpawnPoint == spawnPointNumber) {
+				spawnPointCollider = spawn.triggerCollider;
 				CalculateSpawnPosition();
 				return;
 			}
 		}
+
+		Debug.LogError($"Spawn point {spawnPointNumber} not found!");
 	}
 
 	private void CalculateSpawnPosition() {
+		if (playerCollider == null || spawnPointCollider == null) {
+			//Debug.LogError("Player Collider or SpawnPoint Collider is null in CalculateSpawnPosition");
+			return;
+		}
+
 		float colliderHeight = playerCollider.bounds.extents.y;
-		playerSpawnPosition = spawnPointCollider.transform.position - new Vector3(0f, colliderHeight, 0f); 
+		playerSpawnPosition = spawnPointCollider.bounds.center - new Vector3(0f, colliderHeight, 0f);
 	}
-
 }
-
-

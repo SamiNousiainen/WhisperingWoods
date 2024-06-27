@@ -15,5 +15,4 @@ public class Persistence : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-
 }

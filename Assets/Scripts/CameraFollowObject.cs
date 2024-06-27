@@ -34,11 +34,13 @@ public class CameraFollowObject : MonoBehaviour {
     }
 
     void Update() {
-        transform.position = Player.instance.transform.position;
+		if (Player.instance != null) {
+			transform.position = Player.instance.transform.position;
+		}
     }
 
     public void Turn() {
-        StartCoroutine(FlipYLerp());
+		StartCoroutine(FlipYLerp());
     }
 
     private IEnumerator FlipYLerp() {

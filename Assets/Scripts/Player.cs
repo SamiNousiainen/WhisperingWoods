@@ -89,15 +89,19 @@ public class Player : MonoBehaviour {
 		//colliderSize = capsuleCollider.size;
 		colliderSize = boxCollider.size;
 
-		if (CameraFollowObject.instance != null) {
-			cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
-		}
+		//if (CameraFollowObject.instance != null) {
+		//	cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
+		//}
 
-		fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
+		//fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
 	}
 
 	void Update() {
 		if (WindowManager.instance.escapeableWindowStack.Count == 0) {
+			if (CameraFollowObject.instance != null && CameraManager.instance != null) {
+				cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
+				fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
+			}
 			if (interactionEnabled == true) {
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
