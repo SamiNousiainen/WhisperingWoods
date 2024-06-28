@@ -249,11 +249,13 @@ public class Player : MonoBehaviour {
 	}
 
 	void FlipCheck() {
-		if (moveInputX > 0f && isFacingRight == false) {
-			Flip();
-		}
-		else if (moveInputX < 0f && isFacingRight == true) {
-			Flip();
+		if (canMove == true) {
+			if (moveInputX > 0f && isFacingRight == false) {
+				Flip();
+			}
+			else if (moveInputX < 0f && isFacingRight == true) {
+				Flip();
+			}
 		}
 	}
 

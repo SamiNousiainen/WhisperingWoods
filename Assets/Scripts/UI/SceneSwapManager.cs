@@ -8,7 +8,6 @@ public class SceneSwapManager : MonoBehaviour {
 	private bool loadFromSpawnPoint;
 	private bool isLoadingScene;
 
-	private Player player;
 	private Collider2D playerCollider;
 	private Collider2D spawnPointCollider;
 	private Vector3 playerSpawnPosition;
@@ -28,10 +27,14 @@ public class SceneSwapManager : MonoBehaviour {
 
 	private void Start() {
 		SceneManager.sceneLoaded += OnSceneLoaded;
+		if (Player.instance != null) {
+		}
 	}
 
 	private void OnDestroy() {
 		SceneManager.sceneLoaded -= OnSceneLoaded;
+		if (Player.instance != null) {
+		}
 	}
 
 	public static void SwapSceneFromSpawnPoint(SceneField myScene, LevelChangeTrigger.SpawnPoint spawnPoint) {
@@ -45,6 +48,7 @@ public class SceneSwapManager : MonoBehaviour {
 	}
 
 	private IEnumerator FadeOutThenChangeScene(SceneField myScene) {
+		Player.instance.enabled = false;
 		SceneFadeManager.instance.StartFadeOut();
 
 		yield return new WaitUntil(() => !SceneFadeManager.instance.isFadingOut);
@@ -68,38 +72,33 @@ public class SceneSwapManager : MonoBehaviour {
 		SceneFadeManager.instance.StartFadeIn();
 
 		if (loadFromSpawnPoint) {
+			//Player.instance.transform.position = LevelScript.instance.spawnPoint.position;
 			FindSpawnPoint(spawnPoint);
 
-			if (player != null && playerCollider != null) {
-				player.transform.position = playerSpawnPosition;
-			}
-			//else {
-			//	Debug.LogError("Player or Player Collider is null in OnSceneLoaded");
+			//if (player != null && playerCollider != null) {
+			//	player.transform.position = playerSpawnPosition;
 			//}
 		}
 	}
 
 	private void FindSpawnPoint(LevelChangeTrigger.SpawnPoint spawnPointNumber) {
 		LevelChangeTrigger[] spawnPoints = FindObjectsOfType<LevelChangeTrigger>();
-
 		foreach (LevelChangeTrigger spawn in spawnPoints) {
 			if (spawn.currentSpawnPoint == spawnPointNumber) {
 				spawnPointCollider = spawn.triggerCollider;
-				CalculateSpawnPosition();
+				//float colliderHeight = playerCollider.bounds.extents.y;
+				//playerSpawnPosition =
+				if (Player.instance.isFacingRight == true) {
+					Player.instance.transform.position = spawnPointCollider.bounds.center - new Vector3(-4f, 0f, 0f);
+				}
+				else {
+					Player.instance.transform.position = spawnPointCollider.bounds.center - new Vector3(4f, 0f, 0f);
+				}
+				Player.instance.enabled = true;
 				return;
 			}
 		}
 
 		Debug.LogError($"Spawn point {spawnPointNumber} not found!");
-	}
-
-	private void CalculateSpawnPosition() {
-		if (playerCollider == null || spawnPointCollider == null) {
-			//Debug.LogError("Player Collider or SpawnPoint Collider is null in CalculateSpawnPosition");
-			return;
-		}
-
-		float colliderHeight = playerCollider.bounds.extents.y;
-		playerSpawnPosition = spawnPointCollider.bounds.center - new Vector3(0f, colliderHeight, 0f);
 	}
 }
