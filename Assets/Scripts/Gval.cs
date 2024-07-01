@@ -12,7 +12,10 @@ public static class Gval {
     // Window panels related
     public static readonly float panelAnimationDuration = 0.3F;
     public static readonly float mininumLoadingScreenDisplayTime = 0.8F;
-	internal static string profileFolder;
+	public static readonly string defaultProfileName = "DefaultProfile";
+	public static readonly string profileListName = "ProfileList";
+	public static readonly string profileListFolder = "ProfileList";
+	public static readonly string profileFolder = "Profiles";
 
 	//public static readonly float minFov = 60f;
 	//public static readonly float maxFov = 120f;

@@ -10,12 +10,16 @@ public class UserProfile {
 	public static UserProfile CurrentProfile = null;
 
 	public string username;
+	public LevelID currentLevel = LevelID.None;
 
 	private UserProfile(string userName) {
 		username = userName;
 	}
 
 	public static void DeleteSaveData() {
+
+		CurrentProfile.currentLevel = LevelID.None;
+
 		SaveCurrent();
 	}
 
@@ -27,44 +31,44 @@ public class UserProfile {
 		profile.username = guidString;
 
 		Save(profile);
-		//AddProfileToListing(profile);
+		AddProfileToListing(profile);
 		PlayerPrefs.SetString("LAST_PROFILE", profile.username);
 		CurrentProfile = profile;
 		Debug.Log("username: " + profile.username);
 		return profile;
 	}
 
-	//public static void GetLatestProfileAtStartup() {
-	//	if (PlayerPrefs.HasKey("LAST_PROFILE") == true) {
-	//		string lastProfile = PlayerPrefs.GetString("LAST_PROFILE");
-	//		string[] profileList = UserProfile.GetProfileListing();
-	//		int selectedProfileIndex = Array.IndexOf(profileList, lastProfile);
-	//		if (selectedProfileIndex > -1) {
-	//			UserProfile.CurrentProfile = UserProfile.Load(profileList[selectedProfileIndex]);
-	//			ProfileSelection.selectedProfileIndex = selectedProfileIndex;
-	//		}
-	//		else {
-	//			// Last Profile moved/deleted/corrupted
-	//			PlayerPrefs.DeleteKey("LAST_PROFILE");
-	//			selectedProfileIndex = Array.IndexOf(profileList, Gval.defaultProfileName);
-	//			if (selectedProfileIndex > -1) {
-	//				// Load previous default profile
-	//				UserProfile.CurrentProfile = UserProfile.Load(profileList[selectedProfileIndex]);
-	//				ProfileSelection.selectedProfileIndex = selectedProfileIndex;
-	//			}
-	//			else {
-	//				// Default profile not found, create default 
-	//				UserProfile defaultProfile = Create(Gval.defaultProfileName);
-	//				Save(defaultProfile);
-	//			}
-	//		}
-	//	}
-	//	else {
-	//		// First startup, create default profile
-	//		UserProfile defaultProfile = Create(Gval.defaultProfileName);
-	//		Save(defaultProfile);
-	//	}
-	//}
+	public static void GetLatestProfileAtStartup() {
+		if (PlayerPrefs.HasKey("LAST_PROFILE") == true) {
+			string lastProfile = PlayerPrefs.GetString("LAST_PROFILE");
+			string[] profileList = UserProfile.GetProfileListing();
+			int selectedProfileIndex = Array.IndexOf(profileList, lastProfile);
+			if (selectedProfileIndex > -1) {
+				UserProfile.CurrentProfile = UserProfile.Load(profileList[selectedProfileIndex]);
+				ProfileSelection.selectedProfileIndex = selectedProfileIndex;
+			}
+			else {
+				// Last Profile moved/deleted/corrupted
+				PlayerPrefs.DeleteKey("LAST_PROFILE");
+				selectedProfileIndex = Array.IndexOf(profileList, Gval.defaultProfileName);
+				if (selectedProfileIndex > -1) {
+					// Load previous default profile
+					UserProfile.CurrentProfile = UserProfile.Load(profileList[selectedProfileIndex]);
+					ProfileSelection.selectedProfileIndex = selectedProfileIndex;
+				}
+				else {
+					// Default profile not found, create default 
+					UserProfile defaultProfile = Create(Gval.defaultProfileName);
+					Save(defaultProfile);
+				}
+			}
+		}
+		else {
+			// First startup, create default profile
+			UserProfile defaultProfile = Create(Gval.defaultProfileName);
+			Save(defaultProfile);
+		}
+	}
 
 	public static UserProfile Load(string identifier) {
 		string json = File.ReadAllText(PrepareProfilePath(identifier));
@@ -80,11 +84,19 @@ public class UserProfile {
 
 	public static void Delete(string profileName) {
 		File.Delete(PrepareProfilePath(profileName));
-		//RemoveProfileFromListing(profileName);
+		RemoveProfileFromListing(profileName);
 	}
 
 	public static void SaveCurrent() {
 		Save(UserProfile.CurrentProfile);
+	}
+
+	public static string[] GetProfileListing() {
+		string directory = Path.Combine(Application.persistentDataPath, Gval.profileListFolder);
+		if (!Directory.Exists(directory)) { return new string[] { }; }
+		string path = Path.Combine(directory, Gval.profileListName);
+		if (!File.Exists(path)) { return new string[] { }; }
+		return File.ReadAllLines(path);
 	}
 
 	private static string PrepareProfilePath(string userIdentifier) {
@@ -93,5 +105,21 @@ public class UserProfile {
 		string path = Path.Combine(directory, userIdentifier);
 		//Debug.Log(path);
 		return path;
+	}
+
+	private static void AddProfileToListing(UserProfile profile) {
+		string directory = Path.Combine(Application.persistentDataPath, Gval.profileListFolder);
+		if (!Directory.Exists(directory)) { Directory.CreateDirectory(directory); }
+		string path = Path.Combine(directory, Gval.profileListName);
+		File.AppendAllLines(path, new string[] { profile.username });
+	}
+
+	private static void RemoveProfileFromListing(string profile) {
+		string directory = Path.Combine(Application.persistentDataPath, Gval.profileListFolder);
+		if (!Directory.Exists(directory)) { Directory.CreateDirectory(directory); }
+		string path = Path.Combine(directory, Gval.profileListName);
+		List<string> profileNames = File.ReadAllLines(path).ToList();
+		profileNames.Remove(profile);
+		File.WriteAllLines(path, profileNames.ToArray());
 	}
 }

@@ -48,6 +48,7 @@ namespace ProjectEnums {
     public enum LevelID { 
 		None = -1,
 		TutorialLevel = 0,
+		TutorialLevelBoss = 1,
     }
 
     public enum PauseMenuMode

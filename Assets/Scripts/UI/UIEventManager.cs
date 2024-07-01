@@ -119,42 +119,40 @@ public class UIEventManager : MonoBehaviour {
 #endif
         };
 
-        //eventHandlers[(int)MessageID.ContinueWithSelectedProfile] = (arg1, callerTransform) => {
-        //    if (UserProfile.CurrentProfile != null)
-        //    {
-        //        MainMenu mainMenuPanel = (MainMenu)WindowManager.instance.GetWindow(WindowPanel.MainMenu);
-        //        if (mainMenuPanel != null)
-        //        {
-        //            mainMenuPanel.ProfileSelected();
-        //        }
-        //    }
-        //};
+		//eventHandlers[(int)MessageID.ContinueWithSelectedProfile] = (arg1, callerTransform) => {
+		//    if (UserProfile.CurrentProfile != null)
+		//    {
+		//        MainMenu mainMenuPanel = (MainMenu)WindowManager.instance.GetWindow(WindowPanel.MainMenu);
+		//        if (mainMenuPanel != null)
+		//        {
+		//            mainMenuPanel.ProfileSelected();
+		//        }
+		//    }
+		//};
 
-        //eventHandlers[(int)MessageID.CheckProfileValidity] = (arg1, callerTransform) => {
-        //    ProfileCreation profileCreationPanel = (ProfileCreation)WindowManager.instance.GetWindow(WindowPanel.ProfileCreation);
-        //    string newProfileName = profileCreationPanel.GetProfileNameString();
-        //    LocID locID = UserProfile.GetValidityLocID(newProfileName);
-        //    profileCreationPanel.SetProfileValidityString(locID);
-        //};
+		//eventHandlers[(int)MessageID.CheckProfileValidity] = (arg1, callerTransform) => {
+		//    ProfileCreation profileCreationPanel = (ProfileCreation)WindowManager.instance.GetWindow(WindowPanel.ProfileCreation);
+		//    string newProfileName = profileCreationPanel.GetProfileNameString();
+		//    LocID locID = UserProfile.GetValidityLocID(newProfileName);
+		//    profileCreationPanel.SetProfileValidityString(locID);
+		//};
 
-        //eventHandlers[(int)MessageID.CreateProfile] = (arg1, callerTransform) => {
-        //    ProfileCreation profileCreationPanel = (ProfileCreation)WindowManager.instance.GetWindow(WindowPanel.ProfileCreation);
-        //    string newProfileName = profileCreationPanel.GetProfileNameString();
-        //    LocID locID = UserProfile.GetValidityLocID(newProfileName);
-        //    if (locID == LocID.ProfileNameOK)
-        //    {
-        //        UserProfile.Create(newProfileName);
-        //        WindowManager.instance.CloseWindow(WindowPanel.ProfileCreation);
-        //        ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.ShowWindow(WindowPanel.ProfileSelection);
-        //        profileSelectionPanel.SelectProfile(UserProfile.GetProfileListing().Length - 1);
-        //    }
-        //    else
-        //    {
-        //        // TODO: Flash error message
-        //    }
-        //};
+		eventHandlers[(int)MessageID.CreateProfile] = (arg1, callerTransform) => {
+			ProfileCreation profileCreationPanel = (ProfileCreation)WindowManager.instance.GetWindow(WindowPanel.ProfileCreation);
+			string newProfileName = profileCreationPanel.GetProfileNameString();
+			//LocID locID = UserProfile.GetValidityLocID(newProfileName);
+			//if (locID == LocID.ProfileNameOK) {
+				UserProfile.Create(newProfileName);
+				WindowManager.instance.CloseWindow(WindowPanel.ProfileCreation);
+				ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.ShowWindow(WindowPanel.ProfileSelection);
+				profileSelectionPanel.SelectProfile(UserProfile.GetProfileListing().Length - 1);
+			//}
+			//else {
+			//	// TODO: Flash error message
+			//}
+		};
 
-        eventHandlers[(int)MessageID.BackToMainMenu] = (arg1, callerTransform) => {
+		eventHandlers[(int)MessageID.BackToMainMenu] = (arg1, callerTransform) => {
             // Setup correct audiolisteners: (OLD WAY BOOO!!)
             //AudioManager.instance.GetComponent<AudioListener>().enabled = true;
             //PickupController.instance.GetComponent<AudioListener>().enabled = false;
@@ -166,18 +164,29 @@ public class UIEventManager : MonoBehaviour {
         };
 
         eventHandlers[(int)MessageID.StartGame] = (arg1, callerTransform) => {
-            //GenericWindow window = new GenericWindow(WindowStyle.SmallNotification, LocID.SelectDifficulty);
-            //window.style.height = window.style.height + 100F;
-            //window.AddButton(LocID.Easy, delegate { GameManager.instance.selectedDifficulty = LocID.Easy; SceneLoader.instance.LoadScene("Gameplay"); WindowManager.instance.CloseWindow(WindowPanel.GenericMessageScreen); });
-            //window.AddButton(LocID.Normal, delegate { GameManager.instance.selectedDifficulty = LocID.Normal; SceneLoader.instance.LoadScene("Gameplay"); WindowManager.instance.CloseWindow(WindowPanel.GenericMessageScreen); });
-            //WindowManager.instance.ShowWindow(WindowPanel.GenericMessageScreen, window);
+			//GenericWindow window = new GenericWindow(WindowStyle.SmallNotification, LocID.SelectDifficulty);
+			//window.style.height = window.style.height + 100F;
+			//window.AddButton(LocID.Easy, delegate { GameManager.instance.selectedDifficulty = LocID.Easy; SceneLoader.instance.LoadScene("Gameplay"); WindowManager.instance.CloseWindow(WindowPanel.GenericMessageScreen); });
+			//window.AddButton(LocID.Normal, delegate { GameManager.instance.selectedDifficulty = LocID.Normal; SceneLoader.instance.LoadScene("Gameplay"); WindowManager.instance.CloseWindow(WindowPanel.GenericMessageScreen); });
+			//WindowManager.instance.ShowWindow(WindowPanel.GenericMessageScreen, window);
 
-            //if (UserProfile.CurrentProfile.currentLevel != LevelID.None)
-            //{
-            //    LevelManager.instance.overrideStartLevel = UserProfile.CurrentProfile.currentLevel;
+			//if (UserProfile.CurrentProfile.currentLevel != LevelID.None)
+			//{
+			//    LevelManager.instance.overrideStartLevel = UserProfile.CurrentProfile.currentLevel;
 
-            //}
-            SceneLoader.instance.LoadScene("Gameplay");
+			//}
+			if (UserProfile.CurrentProfile != null) {
+				SceneLoader.instance.LoadScene("Gameplay");
+				//if (UserProfile.CurrentProfile.currentLevel != LevelID.None) {
+				//	Debug.Log("aaa");
+				//	SceneSwapManager.instance.overrideStartLevel = UserProfile.CurrentProfile.currentLevel;
+
+				//} else {
+				//	SceneLoader.instance.LoadScene("Gameplay");
+				//}
+			} else {
+				SceneLoader.instance.LoadScene("Gameplay");
+			}
 
         };
 

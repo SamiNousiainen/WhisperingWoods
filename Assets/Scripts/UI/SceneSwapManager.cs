@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using ProjectEnums;
 
 public class SceneSwapManager : MonoBehaviour {
 	public static SceneSwapManager instance;
 
 	private bool loadFromSpawnPoint;
 	private bool isLoadingScene;
+	public LevelID currentLevel;
+	public LevelID overrideStartLevel = LevelID.None;
 
 	private Collider2D playerCollider;
 	private Collider2D spawnPointCollider;
@@ -70,6 +73,15 @@ public class SceneSwapManager : MonoBehaviour {
 
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 		SceneFadeManager.instance.StartFadeIn();
+		LevelScript levelScript = GetComponent<LevelScript>();
+		if (UserProfile.CurrentProfile != null && LevelScript.instance != null) {
+			if (LevelScript.instance.currentLevel != LevelID.None) {
+				UserProfile.CurrentProfile.currentLevel = instance.currentLevel;
+				UserProfile.SaveCurrent();
+				Debug.Log(currentLevel);
+			}
+		}
+
 
 		if (loadFromSpawnPoint) {
 			//Player.instance.transform.position = LevelScript.instance.spawnPoint.position;
@@ -80,6 +92,8 @@ public class SceneSwapManager : MonoBehaviour {
 			//}
 		}
 	}
+
+
 
 	private void FindSpawnPoint(LevelChangeTrigger.SpawnPoint spawnPointNumber) {
 		LevelChangeTrigger[] spawnPoints = FindObjectsOfType<LevelChangeTrigger>();

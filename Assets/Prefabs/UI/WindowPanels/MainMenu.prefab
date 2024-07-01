@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 1620187040397498694}
   - component: {fileID: 52402769521040625}
   - component: {fileID: 8681385993304900464}
+  - component: {fileID: 6907810008414506198}
   m_Layer: 5
   m_Name: LoadButton
   m_TagString: Untagged
@@ -494,7 +495,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 52402769521040625}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6907810008414506198}
+        m_TargetAssemblyTypeName: UIMessenger, Assembly-CSharp
+        m_MethodName: ButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6907810008414506198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2871631429181347601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4d796dbbe5d344fbe5fcf386d35e70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arg1: 6
+  messageID: 0
 --- !u!1 &4717104100102596976
 GameObject:
   m_ObjectHideFlags: 0
