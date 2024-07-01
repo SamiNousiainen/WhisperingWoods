@@ -67,9 +67,8 @@ public class MainMenu : WindowBase {
         yield return null;
     }
 
-    //public void ProfileSelected()
-    //{
-    //    _profileSelectedThisStartUp = true;
-    //}
+	public void ProfileSelected() {
+		_profileSelectedThisStartUp = true;
+	}
 
 }

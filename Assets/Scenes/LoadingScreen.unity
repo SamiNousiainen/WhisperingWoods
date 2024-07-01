@@ -411,7 +411,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1235750070490520795, guid: 13ebb4d374ea985468256088b63781ef, type: 3}
       propertyPath: panelPrefabs.Array.size
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1235750070490520795, guid: 13ebb4d374ea985468256088b63781ef, type: 3}
       propertyPath: panelPrefabs.Array.data[4]
@@ -421,6 +421,14 @@ PrefabInstance:
       propertyPath: panelPrefabs.Array.data[5]
       value: 
       objectReference: {fileID: 1282898554050757284, guid: b2cfae473afd7fc47b226ccb2f1cf2a1, type: 3}
+    - target: {fileID: 1235750070490520795, guid: 13ebb4d374ea985468256088b63781ef, type: 3}
+      propertyPath: panelPrefabs.Array.data[6]
+      value: 
+      objectReference: {fileID: 1282898554050757284, guid: e16ad54d44e550843909eda6ce775502, type: 3}
+    - target: {fileID: 1235750070490520795, guid: 13ebb4d374ea985468256088b63781ef, type: 3}
+      propertyPath: panelPrefabs.Array.data[7]
+      value: 
+      objectReference: {fileID: 1282898554050757284, guid: 5ffa982a4940daf4a9e5452448daac60, type: 3}
     - target: {fileID: 3696057030571888457, guid: 13ebb4d374ea985468256088b63781ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.085507
