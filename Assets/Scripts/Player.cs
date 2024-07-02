@@ -181,7 +181,7 @@ public class Player : MonoBehaviour {
 			animator.SetBool("isAttacking", true);
 			if (moveInputY <= -0.1f && Grounded() == false) {
 				StartCoroutine(DealDamageDown());
-				animator.Play("LongswordJump"); //placeholder
+				animator.Play("LongswordDown");
 			}
 			else if (moveInputY >= 0.1f) {
 				StartCoroutine(DealDamageUp());
