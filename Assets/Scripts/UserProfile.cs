@@ -9,6 +9,7 @@ public class UserProfile {
 
 	public static UserProfile CurrentProfile = null;
 
+	public string userID;
 	public string username;
 	public LevelID currentLevel = LevelID.None;
 
@@ -28,7 +29,7 @@ public class UserProfile {
 
 		Guid g = Guid.NewGuid(); // Create profile ID for each user.
 		string guidString = g.ToString().Substring(0, 20); // Limit to 20 characters
-		profile.username = guidString;
+		profile.userID = guidString;
 
 		Save(profile);
 		AddProfileToListing(profile);

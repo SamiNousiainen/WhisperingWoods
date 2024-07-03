@@ -95,40 +95,37 @@ public class UIEventManager : MonoBehaviour {
             }
         };
 
-        //eventHandlers[(int)MessageID.SelectProfile] = (arg1, callerTransform) => {
-        //    int profileIndex = callerTransform.GetSiblingIndex();
-        //    ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
-        //    if (profileSelectionPanel != null)
-        //    {
-        //        profileSelectionPanel.SelectProfile(profileIndex);
-        //    }
-        //};
+		eventHandlers[(int)MessageID.SelectProfile] = (arg1, callerTransform) => {
+			int profileIndex = callerTransform.GetSiblingIndex();
+			ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
+			if (profileSelectionPanel != null) {
+				profileSelectionPanel.SelectProfile(profileIndex);
+			}
+			SceneLoader.instance.LoadScene("Gameplay");
+		};
 
-        //eventHandlers[(int)MessageID.DeleteProfile] = (arg1, callerTransform) => {
-        //    int profileIndex = callerTransform.parent.GetSiblingIndex();
-        //    ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
-        //    if (profileSelectionPanel != null)
-        //    {
-        //        profileSelectionPanel.DeleteProfile(profileIndex);
-        //    }
-        //};
+		eventHandlers[(int)MessageID.DeleteProfile] = (arg1, callerTransform) => {
+			int profileIndex = callerTransform.parent.GetSiblingIndex();
+			ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
+			if (profileSelectionPanel != null) {
+				profileSelectionPanel.DeleteProfile(profileIndex);
+			}
+		};
 
-        eventHandlers[(int)MessageID.ExitGame] = (arg1, callerTransform) => {
+		eventHandlers[(int)MessageID.ExitGame] = (arg1, callerTransform) => {
 #if !UNITY_EDITOR
 			Application.Quit();
 #endif
         };
 
-		//eventHandlers[(int)MessageID.ContinueWithSelectedProfile] = (arg1, callerTransform) => {
-		//    if (UserProfile.CurrentProfile != null)
-		//    {
-		//        MainMenu mainMenuPanel = (MainMenu)WindowManager.instance.GetWindow(WindowPanel.MainMenu);
-		//        if (mainMenuPanel != null)
-		//        {
-		//            mainMenuPanel.ProfileSelected();
-		//        }
-		//    }
-		//};
+		eventHandlers[(int)MessageID.ContinueWithSelectedProfile] = (arg1, callerTransform) => {
+			if (UserProfile.CurrentProfile != null) {
+				MainMenu mainMenuPanel = (MainMenu)WindowManager.instance.GetWindow(WindowPanel.MainMenu);
+				if (mainMenuPanel != null) {
+					mainMenuPanel.ProfileSelected();
+				}
+			}
+		};
 
 		//eventHandlers[(int)MessageID.CheckProfileValidity] = (arg1, callerTransform) => {
 		//    ProfileCreation profileCreationPanel = (ProfileCreation)WindowManager.instance.GetWindow(WindowPanel.ProfileCreation);
@@ -142,10 +139,11 @@ public class UIEventManager : MonoBehaviour {
 			string newProfileName = profileCreationPanel.GetProfileNameString();
 			//LocID locID = UserProfile.GetValidityLocID(newProfileName);
 			//if (locID == LocID.ProfileNameOK) {
-				UserProfile.Create(newProfileName);
-				WindowManager.instance.CloseWindow(WindowPanel.ProfileCreation);
-				ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.ShowWindow(WindowPanel.ProfileSelection);
-				profileSelectionPanel.SelectProfile(UserProfile.GetProfileListing().Length - 1);
+			UserProfile.Create(newProfileName);
+			WindowManager.instance.CloseWindow(WindowPanel.ProfileCreation);
+			ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.ShowWindow(WindowPanel.ProfileSelection);
+			profileSelectionPanel.SelectProfile(UserProfile.GetProfileListing().Length - 1);
+			SceneLoader.instance.LoadScene("Gameplay");
 			//}
 			//else {
 			//	// TODO: Flash error message

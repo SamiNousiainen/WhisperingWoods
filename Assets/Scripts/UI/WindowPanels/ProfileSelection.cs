@@ -78,6 +78,7 @@ public class ProfileSelection : WindowBase {
 		if (mainMenu != null) {
 			mainMenu.ProfileSelected();
 		}
+		Debug.Log(selectedProfileIndex);
 	}
 
     protected override void Destroying()

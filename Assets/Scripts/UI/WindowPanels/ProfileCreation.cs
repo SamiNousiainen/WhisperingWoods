@@ -38,10 +38,14 @@ public class ProfileCreation : WindowBase {
 
     }
 
-    protected override void Closing()
-    {
+    protected override void Closing() {
+		MainMenu mainMenu = (MainMenu)WindowManager.instance.GetWindow(ProjectEnums.WindowPanel.MainMenu);
+		if (mainMenu != null) {
+			mainMenu.ProfileSelected();
+		}
 
-    }
+
+	}
 
     protected override void Destroying()
     {
