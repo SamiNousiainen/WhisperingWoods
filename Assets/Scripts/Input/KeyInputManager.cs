@@ -18,10 +18,16 @@ public class KeyInputManager : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.K) == true || Input.GetButtonDown("Fire1")) {
 					GameInputLogic.PlayerAttack();
 				}
-				else if (Input.GetButtonDown("Jump")) {
+				else if (Input.GetButtonDown("Jump") /*|| Player.instance.jumpBufferTimer > 0*/) {
+					//Player.instance.jumpBufferTimer = Player.instance.jumpBufferTime;
 					GameInputLogic.PlayerJump();
 				}
-			} else if (Player.instance != null && WindowManager.instance.escapeableWindowStack.Count > 0) {
+				else if (Input.GetButtonUp("Jump")) {
+					GameInputLogic.PlayerDecreaseYVelocity();
+				}
+
+			}
+			else if (Player.instance != null && WindowManager.instance.escapeableWindowStack.Count > 0) {
 				Time.timeScale = 0f;
 			}
 

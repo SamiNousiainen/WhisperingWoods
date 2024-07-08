@@ -21,6 +21,13 @@ public class Player : MonoBehaviour {
 	public float maxFallSpeed = -15f;
 	public bool canMove;
 
+	public float coyoteTime = 0.1f;
+	private bool coyoteTimeActive;
+	private float lastTimeGrounded;
+
+	public float jumpBufferTime = 0.5f;
+	public float jumpBufferTimer;
+
 	private Rigidbody2D rb;
 	public bool isFacingRight;
 
@@ -105,10 +112,14 @@ public class Player : MonoBehaviour {
 			if (interactionEnabled == true) {
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
+				jumpBufferTimer -= Time.deltaTime;
+
+				if (jumpBufferTimer > 0f) {
+					//BufferJump();
+				}
+
 				canMove = true;
 				Move();
-				//Jump();
-				//Attack();
 				if (moveInputX > 0f || moveInputX < 0f) {
 					FlipCheck();
 				}
@@ -127,10 +138,6 @@ public class Player : MonoBehaviour {
 				}
 			}
 		}
-		//else {
-		//	canMove = false;
-		//	rb.velocity = new Vector2(0f, rb.velocity.y); //purkkafix
-		//}
 	}
 
 
@@ -150,13 +157,24 @@ public class Player : MonoBehaviour {
 		}
 
 		SlopeCheck();
+
+		// Update last time grounded
+		if (Grounded() == true) {
+			lastTimeGrounded = Time.time;
+			coyoteTimeActive = true; // Activate coyote time when grounded
+		}
+		else {
+			if (Time.time - lastTimeGrounded > coyoteTime) {
+				coyoteTimeActive = false;
+			}
+		}
 	}
 
 	void Move() {
 		if (canMove == true) {
 			// Get the horizontal input (A/D keys or Left/Right arrow keys)
-			moveInputX = Input.GetAxis("Horizontal");
-			moveInputY = Input.GetAxis("Vertical");
+			moveInputX = Input.GetAxisRaw("Horizontal");
+			moveInputY = Input.GetAxisRaw("Vertical");
 
 			if (isAttacking == true && Grounded() == true) {
 				rb.velocity = Vector2.zero;
@@ -169,9 +187,18 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Jump() {
-		if (Grounded() == true && canMove == true) {
-			rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-			//rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+		//jumpBufferTimer = jumpBufferTime;
+		if (canMove == true && (Grounded() == true || coyoteTimeActive == true)) {
+			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+			coyoteTimeActive = false; // Disable coyote time after a jump
+			jumpBufferTimer = 0f; // Reset the jump buffer timer
+		}
+	}
+
+	public void DecreaseYVelocity() {
+		//variable jump height
+		if (rb.velocity.y > 0f) {
+			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 		}
 	}
 
@@ -259,15 +286,6 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public bool Grounded() {
-		if (Physics2D.BoxCast(groundCheck.transform.position, groundCheckSize, 0, -transform.up, groundCheckCastDistance, groundLayer)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	void Flip() {
 		if (isAttacking == false) {
 			if (isFacingRight == true) {
@@ -282,6 +300,15 @@ public class Player : MonoBehaviour {
 				isFacingRight = !isFacingRight;
 				cameraFollowObject.Turn();
 			}
+		}
+	}
+
+	public bool Grounded() {
+		if (Physics2D.BoxCast(groundCheck.transform.position, groundCheckSize, 0, -transform.up, groundCheckCastDistance, groundLayer)) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 
