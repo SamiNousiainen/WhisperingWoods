@@ -114,10 +114,6 @@ public class Player : MonoBehaviour {
 				damageCooldownTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
 
-				if (jumpBufferTimer > 0f) {
-					//BufferJump();
-				}
-
 				canMove = true;
 				Move();
 				if (moveInputX > 0f || moveInputX < 0f) {

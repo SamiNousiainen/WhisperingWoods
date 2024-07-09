@@ -18,8 +18,10 @@ public class KeyInputManager : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.K) == true || Input.GetButtonDown("Fire1")) {
 					GameInputLogic.PlayerAttack();
 				}
-				else if (Input.GetButtonDown("Jump") /*|| Player.instance.jumpBufferTimer > 0*/) {
-					//Player.instance.jumpBufferTimer = Player.instance.jumpBufferTime;
+				else if (Input.GetButtonDown("Jump")) {
+					Player.instance.jumpBufferTimer = Player.instance.jumpBufferTime;
+				}
+				if (Player.instance.jumpBufferTimer > 0) {
 					GameInputLogic.PlayerJump();
 				}
 				else if (Input.GetButtonUp("Jump")) {
