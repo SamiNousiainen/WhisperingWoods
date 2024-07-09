@@ -28,7 +28,6 @@ public class CameraFollowObject : MonoBehaviour {
 	}
 
 	private void Start() {
-		isLookingRight = true;
 		if (Player.instance != null) {
 			//player = Player.instance.GetComponent<Player>();
 			isLookingRight = Player.instance.isFacingRight;
@@ -42,6 +41,7 @@ public class CameraFollowObject : MonoBehaviour {
 	}
 
 	void Update() {
+		isLookingRight = Player.instance.isFacingRight;
 		if (Player.instance != null) {
 			transform.position = Player.instance.transform.position;
 		}
@@ -73,7 +73,7 @@ public class CameraFollowObject : MonoBehaviour {
 			return 0f;
 		}
 		else {
-			return -180f;
+			return 180f;
 		}
 	}
 }

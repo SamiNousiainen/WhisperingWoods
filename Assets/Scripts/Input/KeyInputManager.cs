@@ -21,7 +21,7 @@ public class KeyInputManager : MonoBehaviour {
 				else if (Input.GetButtonDown("Jump")) {
 					Player.instance.jumpBufferTimer = Player.instance.jumpBufferTime;
 				}
-				if (Player.instance.jumpBufferTimer > 0) {
+				if (Player.instance.jumpBufferTimer > 0 && Player.instance.Grounded() == true) {
 					GameInputLogic.PlayerJump();
 				}
 				if (!Input.GetButton("Jump") && Player.instance.isAttacking == false) {
