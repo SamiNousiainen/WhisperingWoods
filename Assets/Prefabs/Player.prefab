@@ -208,6 +208,9 @@ MonoBehaviour:
   moveInputY: 0
   maxFallSpeed: -15
   canMove: 0
+  coyoteTime: 0.1
+  jumpBufferTime: 0.1
+  jumpBufferTimer: 0
   isFacingRight: 0
   groundLayer:
     serializedVersion: 2

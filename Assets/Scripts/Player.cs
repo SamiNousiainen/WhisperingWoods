@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
 	private bool coyoteTimeActive;
 	private float lastTimeGrounded;
 
-	public float jumpBufferTime = 0.5f;
+	public float jumpBufferTime = 0.1f;
 	public float jumpBufferTimer;
 
 	private Rigidbody2D rb;
@@ -183,7 +183,6 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Jump() {
-		//jumpBufferTimer = jumpBufferTime;
 		if (canMove == true && (Grounded() == true || coyoteTimeActive == true)) {
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 			coyoteTimeActive = false; // Disable coyote time after a jump

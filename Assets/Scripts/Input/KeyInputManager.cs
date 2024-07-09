@@ -24,7 +24,7 @@ public class KeyInputManager : MonoBehaviour {
 				if (Player.instance.jumpBufferTimer > 0) {
 					GameInputLogic.PlayerJump();
 				}
-				else if (Input.GetButtonUp("Jump")) {
+				if (!Input.GetButton("Jump") && Player.instance.isAttacking == false) {
 					GameInputLogic.PlayerDecreaseYVelocity();
 				}
 
