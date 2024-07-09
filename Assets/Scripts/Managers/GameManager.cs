@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour {
     private IEnumerator StartUpRoutine()
     {
         //LoadLocalizations();
-        //UserProfile.GetLatestProfileAtStartup();
+        UserProfile.GetLatestProfileAtStartup();
         //AudioManager.LoadAudioSettings();
         bool showSplashScreen = false;
         if (showSplashScreen == true)

@@ -101,8 +101,62 @@ public class UIEventManager : MonoBehaviour {
 			if (profileSelectionPanel != null) {
 				profileSelectionPanel.SelectProfile(profileIndex);
 			}
-			SceneLoader.instance.LoadScene("Gameplay");
+			//if (UserProfile.CurrentProfile != null && UserProfile.CurrentProfile.currentLevel != LevelID.None) {
+			//	SceneLoader.instance.LoadScene(UserProfile.CurrentProfile.currentLevel.ToString());
+			//	Debug.Log("Loaded profile and scene: " + UserProfile.CurrentProfile.username + " - " + UserProfile.CurrentProfile.currentLevel.ToString());
+			//}
+			//else {
+			//	SceneLoader.instance.LoadScene("Gameplay");
+			//	Debug.Log("No profile selected, loading default Gameplay scene.");
+			//}
 		};
+
+
+		//eventHandlers[(int)MessageID.SelectProfile] = (arg1, callerTransform) => {
+		//	int profileIndex = callerTransform.GetSiblingIndex();
+		//	ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
+		//	if (profileSelectionPanel != null) {
+		//		profileSelectionPanel.SelectProfile(profileIndex);
+		//	}
+
+		//	// Check if the profile is selected and has a valid current level
+		//	if (UserProfile.CurrentProfile != null) {
+		//		Debug.Log("Profile selected: " + UserProfile.CurrentProfile.userID);
+		//		Debug.Log("Current level: " + UserProfile.CurrentProfile.currentLevel);
+
+		//		if (UserProfile.CurrentProfile.currentLevel != LevelID.None) {
+		//			string levelToLoad = UserProfile.CurrentProfile.currentLevel.ToString();
+		//			Debug.Log("Loading saved level: " + levelToLoad);
+		//			SceneLoader.instance.LoadScene(levelToLoad);
+		//		}
+		//		else {
+		//			Debug.Log("No saved level found, loading default Gameplay scene.");
+		//			SceneLoader.instance.LoadScene("Gameplay");
+		//		}
+		//	}
+		//	else {
+		//		Debug.Log("No profile selected, loading default Gameplay scene.");
+		//		SceneLoader.instance.LoadScene("Gameplay");
+		//	}
+		//};
+
+
+
+		//eventHandlers[(int)MessageID.SelectProfile] = (arg1, callerTransform) => {
+		//	int profileIndex = callerTransform.GetSiblingIndex();
+		//	ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
+		//	if (profileSelectionPanel != null) {
+		//		profileSelectionPanel.SelectProfile(profileIndex);
+		//	}
+		//	if (UserProfile.CurrentProfile != null && UserProfile.CurrentProfile.currentLevel != LevelID.None) {
+		//		SceneLoader.instance.LoadScene(UserProfile.CurrentProfile.currentLevel.ToString());
+		//		Debug.Log("aaaa " + UserProfile.CurrentProfile.currentLevel.ToString());
+		//	}
+		//	else {
+		//		SceneLoader.instance.LoadScene("Gameplay");
+		//		Debug.Log("bbbb");
+		//	}
+		//};
 
 		eventHandlers[(int)MessageID.DeleteProfile] = (arg1, callerTransform) => {
 			int profileIndex = callerTransform.parent.GetSiblingIndex();
@@ -143,7 +197,9 @@ public class UIEventManager : MonoBehaviour {
 			WindowManager.instance.CloseWindow(WindowPanel.ProfileCreation);
 			ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.ShowWindow(WindowPanel.ProfileSelection);
 			profileSelectionPanel.SelectProfile(UserProfile.GetProfileListing().Length - 1);
-			SceneLoader.instance.LoadScene("Gameplay");
+			
+			//if (UserProfile.CurrentProfile != null) {
+			//	SceneLoader.instance.LoadScene("Gameplay");
 			//}
 			//else {
 			//	// TODO: Flash error message
@@ -162,6 +218,15 @@ public class UIEventManager : MonoBehaviour {
         };
 
         eventHandlers[(int)MessageID.StartGame] = (arg1, callerTransform) => {
+
+			if (UserProfile.CurrentProfile.currentLevel != LevelID.None) {
+				SceneLoader.instance.LoadScene(UserProfile.CurrentProfile.currentLevel.ToString());
+				Debug.Log("Loaded profile and scene: " + UserProfile.CurrentProfile.username + " - " + UserProfile.CurrentProfile.currentLevel.ToString());
+			}
+			else {
+				SceneLoader.instance.LoadScene("Gameplay");
+				Debug.Log("No profile selected, loading default Gameplay scene.");
+			}
 			//GenericWindow window = new GenericWindow(WindowStyle.SmallNotification, LocID.SelectDifficulty);
 			//window.style.height = window.style.height + 100F;
 			//window.AddButton(LocID.Easy, delegate { GameManager.instance.selectedDifficulty = LocID.Easy; SceneLoader.instance.LoadScene("Gameplay"); WindowManager.instance.CloseWindow(WindowPanel.GenericMessageScreen); });
@@ -173,20 +238,26 @@ public class UIEventManager : MonoBehaviour {
 			//    LevelManager.instance.overrideStartLevel = UserProfile.CurrentProfile.currentLevel;
 
 			//}
-			if (UserProfile.CurrentProfile != null) {
-				SceneLoader.instance.LoadScene("Gameplay");
-				//if (UserProfile.CurrentProfile.currentLevel != LevelID.None) {
-				//	Debug.Log("aaa");
-				//	SceneSwapManager.instance.overrideStartLevel = UserProfile.CurrentProfile.currentLevel;
+			//if (UserProfile.CurrentProfile != null) {
+			//	SceneLoader.instance.LoadScene("Gameplay");
+			//	//if (UserProfile.CurrentProfile.currentLevel != LevelID.None) {
+			//	//	Debug.Log("aaa");
+			//	//	SceneSwapManager.instance.overrideStartLevel = UserProfile.CurrentProfile.currentLevel;
 
-				//} else {
-				//	SceneLoader.instance.LoadScene("Gameplay");
-				//}
-			} else {
-				SceneLoader.instance.LoadScene("Gameplay");
-			}
+			//	//} else {
+			//	//	SceneLoader.instance.LoadScene("Gameplay");
+			//	//}
+			//} else {
+			//	SceneLoader.instance.LoadScene("Gameplay");
+			//}
+			//if (UserProfile.CurrentProfile != null && UserProfile.CurrentProfile.currentLevel != LevelID.None) {
+			//	SceneLoader.instance.LoadScene(UserProfile.CurrentProfile.currentLevel.ToString());
+			//}
+			//else {
+			//	SceneLoader.instance.LoadScene("Gameplay");
+			//}
 
-        };
+		};
 
         eventHandlers[(int)MessageID.ResetData] = (arg1, callerTransform) => {
             //GenericWindow window = new GenericWindow(WindowStyle.SmallNotification, LocID.ResetInfo);

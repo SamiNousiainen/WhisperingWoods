@@ -12,11 +12,7 @@ public class LevelScript : MonoBehaviour {
 	private void Awake() {
 		if (instance == null) {
 			instance = this;
-			//if (instance.currentLevel != LevelID.None ) {
-			//	UserProfile.CurrentProfile.currentLevel = instance.currentLevel;
-			//	UserProfile.SaveCurrent();
-			//	Debug.Log(currentLevel);
-			//}
+			Debug.Log(currentLevel.ToString());
 		}
 		else {
 			Destroy(gameObject);

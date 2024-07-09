@@ -70155,7 +70155,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 0
-  overrideStartLevel: -1
 --- !u!1 &1916732417
 GameObject:
   m_ObjectHideFlags: 0
@@ -70463,6 +70462,14 @@ PrefabInstance:
     - target: {fileID: 4129562264340333784, guid: f1ca8d581e46b4845b76e91da3bda840, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6023062335508311862, guid: f1ca8d581e46b4845b76e91da3bda840, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107297902029063908, guid: f1ca8d581e46b4845b76e91da3bda840, type: 3}
+      propertyPath: m_BodyType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6411977915822621565, guid: f1ca8d581e46b4845b76e91da3bda840, type: 3}
       propertyPath: m_LocalPosition.x
