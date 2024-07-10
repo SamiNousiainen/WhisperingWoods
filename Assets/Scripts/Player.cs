@@ -21,7 +21,9 @@ public class Player : MonoBehaviour {
 	public float maxFallSpeed = -15f;
 	public bool canMove;
 
-	public float coyoteTime = 0.1f;
+	[SerializeField]
+	private float coyoteTime = 0.3f;
+	[SerializeField]
 	private bool coyoteTimeActive;
 	private float lastTimeGrounded;
 
@@ -30,6 +32,11 @@ public class Player : MonoBehaviour {
 
 	private Rigidbody2D rb;
 	public bool isFacingRight;
+
+	[SerializeField]
+	private PhysicsMaterial2D noFriction;
+	[SerializeField]
+	private PhysicsMaterial2D fullFriction;
 
 	[Header("Ground Check values")]
 	public LayerMask groundLayer;
@@ -50,7 +57,7 @@ public class Player : MonoBehaviour {
 	private float attackRange = 0.9f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
-	public bool isAttacking;
+	public bool isAttacking { get; private set; } = false;
 
 	//camera movement
 	private CameraFollowObject cameraFollowObject;
@@ -62,13 +69,8 @@ public class Player : MonoBehaviour {
 
 	//player character colliders
 	BoxCollider2D boxCollider;
-	//CapsuleCollider2D capsuleCollider;
 	Vector2 colliderSize;
 
-	[SerializeField]
-	private PhysicsMaterial2D noFriction;
-	[SerializeField]
-	private PhysicsMaterial2D fullFriction;
 
 	private void Awake() {
 		if (instance == null) {
@@ -91,16 +93,9 @@ public class Player : MonoBehaviour {
 		isFacingRight = true;
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
-		//capsuleCollider = GetComponent<CapsuleCollider2D>();
 		boxCollider = GetComponent<BoxCollider2D>();
-		//colliderSize = capsuleCollider.size;
 		colliderSize = boxCollider.size;
 
-		//if (CameraFollowObject.instance != null) {
-		//	cameraFollowObject = CameraFollowObject.instance.GetComponent<CameraFollowObject>();
-		//}
-
-		//fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
 	}
 
 	void Update() {
@@ -169,8 +164,8 @@ public class Player : MonoBehaviour {
 	void Move() {
 		if (canMove == true) {
 			// Get the horizontal input (A/D keys or Left/Right arrow keys)
-			moveInputX = Input.GetAxisRaw("Horizontal");
-			moveInputY = Input.GetAxisRaw("Vertical");
+			moveInputX = Input.GetAxis("Horizontal");
+			moveInputY = Input.GetAxis("Vertical");
 
 			if (isAttacking == true && Grounded() == true) {
 				rb.velocity = Vector2.zero;
@@ -197,12 +192,14 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	#region combat
+
 	public void Attack() {
 		if (attackCooldownTimer <= 0f) {
 			isAttacking = true;
 			animator.SetBool("isAttacking", true);
 			if (moveInputY <= -0.1f && Grounded() == false) {
-				StartCoroutine(DealDamageDown());
+				//StartCoroutine(DealDamageDown());
 				animator.Play("LongswordDown");
 			}
 			else if (moveInputY >= 0.1f) {
@@ -210,7 +207,7 @@ public class Player : MonoBehaviour {
 				animator.Play("LongswordJump"); //placeholder
 			}
 			else {
-				StartCoroutine(DealDamageForward());
+				//StartCoroutine(DealDamageForward());
 				if (Grounded() == false) {
 					animator.Play("LongswordJump");
 				}
@@ -223,32 +220,44 @@ public class Player : MonoBehaviour {
 	}
 
 	private IEnumerator DealDamageDown() {
+
+		isAttacking = true;
+
 		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRange, enemyLayer);
 
-		foreach (Collider2D enemy in hitEnemies) {
-			enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
-			if (enemy.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
-				rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+		while (isAttacking == true) {
+			foreach (Collider2D hitEnemy in hitEnemies) {
+				if (hitEnemy != null) {
+					Enemy enemy = hitEnemy.GetComponent<Enemy>();
+					if (enemy.hasTakenDamage == false) {
+						enemy.TakeDamage(attackDamage);
+						rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+					}
+				}
 			}
+			yield return null;
 		}
 
-		yield return new WaitForSeconds(0.24f);
-		isAttacking = false;
-		animator.SetBool("isAttacking", false);
 	}
 
 
-	private IEnumerator DealDamageForward() {
+	public IEnumerator DealDamageForward() {
+
+		isAttacking = true;
+
 		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
-		yield return new WaitForSeconds(0.1f);
-		foreach (Collider2D enemy in hitEnemies) {
-			Debug.Log(enemy.name);
-			enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+		while (isAttacking == true) {
+			foreach (Collider2D hitEnemy in hitEnemies) {
+				if (hitEnemy != null) {
+					Enemy enemy = hitEnemy.GetComponent<Enemy>();
+					if (enemy.hasTakenDamage == false) {
+						enemy.TakeDamage(attackDamage);
+					}
+				}
+			}
+			yield return null;
 		}
-		yield return new WaitForSeconds(0.24f);
-		isAttacking = false;
-		animator.SetBool("isAttacking", false);
 	}
 
 	private IEnumerator DealDamageUp() {
@@ -257,9 +266,11 @@ public class Player : MonoBehaviour {
 		yield return new WaitForSeconds(0.1f);
 		foreach (Collider2D enemy in hitEnemies) {
 			Debug.Log(enemy.name);
-			enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+			if (enemy != null) {
+				enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+			}
 		}
-		yield return new WaitForSeconds(0.24f);
+		yield return new WaitForSeconds(0.2f);
 		isAttacking = false;
 		animator.SetBool("isAttacking", false);
 	}
@@ -269,6 +280,14 @@ public class Player : MonoBehaviour {
 		damageCooldownTimer = damageCooldownTime;
 		Debug.Log("damage taken = " + damage);
 	}
+
+	//stop attacking with animation trigger
+	public void StopAttcking() {
+		isAttacking = false;
+		animator.SetBool("isAttacking", false);
+	}
+
+	#endregion
 
 	void FlipCheck() {
 		if (canMove == true) {
@@ -311,11 +330,9 @@ public class Player : MonoBehaviour {
 		//Vector2 checkPosition = transform.position - new Vector3(0f, colliderSize.y / 2);
 		if (moveInputX == 0f && Grounded() == true) {
 			boxCollider.sharedMaterial = fullFriction;
-			//capsuleCollider.sharedMaterial = fullFriction;
 		}
 		else {
 			boxCollider.sharedMaterial = noFriction;
-			//capsuleCollider.sharedMaterial = noFriction;
 		}
 	}
 

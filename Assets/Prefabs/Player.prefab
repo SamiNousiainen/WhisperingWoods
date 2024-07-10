@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 6541503432499280682}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: -1.3, z: 0}
+  m_LocalPosition: {x: 0.05, y: -1.012, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -208,10 +208,13 @@ MonoBehaviour:
   moveInputY: 0
   maxFallSpeed: -15
   canMove: 0
-  coyoteTime: 0.1
+  coyoteTime: 0.3
+  coyoteTimeActive: 0
   jumpBufferTime: 0.1
   jumpBufferTimer: 0
   isFacingRight: 0
+  noFriction: {fileID: 6200000, guid: 98de5bb3e73fe714dbfed14eaa67a54e, type: 2}
+  fullFriction: {fileID: 6200000, guid: d167d2e9f31f79d47b36a9a2c6484897, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -227,8 +230,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isAttacking: 0
-  noFriction: {fileID: 6200000, guid: 98de5bb3e73fe714dbfed14eaa67a54e, type: 2}
-  fullFriction: {fileID: 6200000, guid: d167d2e9f31f79d47b36a9a2c6484897, type: 2}
 --- !u!50 &6289671509982558219
 Rigidbody2D:
   serializedVersion: 4
