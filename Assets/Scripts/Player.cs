@@ -237,9 +237,7 @@ public class Player : MonoBehaviour {
 			}
 			yield return null;
 		}
-
 	}
-
 
 	public IEnumerator DealDamageForward() {
 
