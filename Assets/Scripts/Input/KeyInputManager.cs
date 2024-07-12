@@ -15,18 +15,22 @@ public class KeyInputManager : MonoBehaviour {
 
 			if (Player.instance != null && WindowManager.instance.escapeableWindowStack.Count == 0) {
 				Time.timeScale = 1.0f;
-				if (Input.GetKeyDown(KeyCode.K) == true || Input.GetButtonDown("Fire1")) {
+				if (Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire1")) {
 					GameInputLogic.PlayerAttack();
 				}
 				else if (Input.GetButtonDown("Jump")) {
 					Player.instance.jumpBufferTimer = Player.instance.jumpBufferTime;
 				}
+				if (Input.GetButtonUp("Jump")) {
+					Player.instance.coyoteTimeTimer = 0f;
+				}
 				if (Player.instance.jumpBufferTimer > 0) {
 					GameInputLogic.PlayerJump();
 				}
-				if (!Input.GetButton("Jump") && Player.instance.isAttacking == false) {
+				if (Input.GetButton("Jump") == false && Player.instance.isAttacking == false/*make this pogo jump only*/) {
 					GameInputLogic.PlayerDecreaseYVelocity();
 				}
+
 
 			}
 			else if (Player.instance != null && WindowManager.instance.escapeableWindowStack.Count > 0) {

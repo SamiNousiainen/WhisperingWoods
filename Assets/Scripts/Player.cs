@@ -21,14 +21,11 @@ public class Player : MonoBehaviour {
 	public float maxFallSpeed = -15f;
 	public bool canMove;
 
-	[SerializeField]
-	private float coyoteTime = 0.3f;
-	[SerializeField]
-	private bool coyoteTimeActive;
-	private float lastTimeGrounded;
-
 	public float jumpBufferTime = 0.1f;
 	public float jumpBufferTimer;
+
+	public float coyoteTime = 0.2f;
+	public float coyoteTimeTimer;
 
 	private Rigidbody2D rb;
 	public bool isFacingRight;
@@ -105,11 +102,18 @@ public class Player : MonoBehaviour {
 				fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
 			}
 			if (interactionEnabled == true) {
+				canMove = true;
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
 
-				canMove = true;
+				if (Grounded() == true) {
+					coyoteTimeTimer = coyoteTime;
+				}
+				else {
+					coyoteTimeTimer -= Time.deltaTime;
+				}
+
 				Move();
 				if (moveInputX > 0f || moveInputX < 0f) {
 					FlipCheck();
@@ -148,17 +152,6 @@ public class Player : MonoBehaviour {
 		}
 
 		SlopeCheck();
-
-		// Update last time grounded
-		if (Grounded() == true) {
-			lastTimeGrounded = Time.time;
-			coyoteTimeActive = true; // Activate coyote time when grounded
-		}
-		else {
-			if (Time.time - lastTimeGrounded > coyoteTime) {
-				coyoteTimeActive = false;
-			}
-		}
 	}
 
 	void Move() {
@@ -178,16 +171,16 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Jump() {
-		if (canMove == true && (Grounded() == true || coyoteTimeActive == true)) {
+		if (canMove == true && coyoteTimeTimer > 0f) {
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-			coyoteTimeActive = false; // Disable coyote time after a jump
 			jumpBufferTimer = 0f; // Reset the jump buffer timer
+			coyoteTimeTimer = 0f;
 		}
 	}
 
 	public void DecreaseYVelocity() {
 		//variable jump height
-		if (rb.velocity.y > 0f) {
+		if (rb.velocity.y > 0f && Grounded() == false) {
 			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 		}
 	}
