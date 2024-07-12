@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
 	public float jumpBufferTime = 0.1f;
 	public float jumpBufferTimer;
 
-	public float coyoteTime = 0.2f;
+	public float coyoteTime = 0.1f;
 	public float coyoteTimeTimer;
 
 	private Rigidbody2D rb;
