@@ -46,23 +46,22 @@ public class MainMenu : WindowBase {
 
     private IEnumerator FirstStartUp()
     {
-        // Show ToS if not agreed already
-        //yield return new WaitForSeconds(0.3F);
-        //WindowManager.instance.ShowWindow(WindowPanel.ProfileCreation);
-        yield return null;
+		// Show ToS if not agreed already
+		yield return new WaitForSeconds(0.3F);
+		WindowManager.instance.ShowWindow(WindowPanel.ProfileCreation);
+		yield return null;
 
     }
 
     private IEnumerator NormalStartUp()
     {
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
-        //yield return new WaitForSeconds(0.3F);
-        //if (_profileSelectedThisStartUp == false)
-        //{
-        //    WindowManager.instance.ShowWindow(WindowPanel.ProfileSelection);
-        //}
-        yield return null;
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+		yield return new WaitForSeconds(0.3F);
+		if (_profileSelectedThisStartUp == false) {
+			WindowManager.instance.ShowWindow(WindowPanel.ProfileSelection);
+		}
+		yield return null;
     }
 
 	public void ProfileSelected() {

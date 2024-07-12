@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using ProjectEnums;
+using static LevelChangeTrigger;
 
 public class SceneLoader : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class SceneLoader : MonoBehaviour {
 	public bool sceneLoadInProgress;
 
 	private GameObject persistentObject;
+	private SpawnPoint spawnPoint;
 
 	private void Awake() {
 		if (instance == null) {
@@ -66,7 +68,15 @@ public class SceneLoader : MonoBehaviour {
 			Debug.Log("Loaded player");
 			if (persistentObject == null) {
 				persistentObject = Object.Instantiate(Resources.Load<GameObject>("PersistenceObjects"));
+				if (UserProfile.CurrentProfile.spawnPoint != LevelChangeTrigger.SpawnPoint.None) {
+					spawnPoint = UserProfile.CurrentProfile.spawnPoint; // Retrieve saved spawn point
+				} else {
+					UserProfile.CurrentProfile.spawnPoint = LevelChangeTrigger.SpawnPoint.One;
+					spawnPoint = UserProfile.CurrentProfile.spawnPoint;
+				}
+				SceneSwapManager.instance.FindSpawnPoint(spawnPoint);
 				Object.DontDestroyOnLoad(persistentObject);
+				UserProfile.SaveCurrent();
 			}
 		}
 		else if (sceneName == "MainMenu") {

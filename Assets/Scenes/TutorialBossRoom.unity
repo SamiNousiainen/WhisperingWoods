@@ -30530,7 +30530,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1208496588850008688, guid: f1ca8d581e46b4845b76e91da3bda840, type: 3}
       propertyPath: pointToSpawn
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1208496588850008688, guid: f1ca8d581e46b4845b76e91da3bda840, type: 3}
       propertyPath: currentSpawnPoint

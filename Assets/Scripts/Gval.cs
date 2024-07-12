@@ -16,6 +16,8 @@ public static class Gval {
 	public static readonly string profileListName = "ProfileList";
 	public static readonly string profileListFolder = "ProfileList";
 	public static readonly string profileFolder = "Profiles";
+	public static readonly Color selectedColor = new Color(0.4745098F, 0.4980392F, 0.2313726F, 1F);
+	public static readonly Color unselectedColor = new Color(0.6705883F, 0.509804F, 0.427451F, 0.5F);
 
 	//public static readonly float minFov = 60f;
 	//public static readonly float maxFov = 120f;

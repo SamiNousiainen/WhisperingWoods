@@ -79,11 +79,11 @@ public class ProfileSelection : WindowBase {
 			mainMenu.ProfileSelected();
 		}
 		Debug.Log(selectedProfileIndex);
+		Debug.Log("paskaaaaaaaaa Loaded profile: " + UserProfile.CurrentProfile.username + UserProfile.CurrentProfile.spawnPoint);
 	}
 
-    protected override void Destroying()
-    {
+	protected override void Destroying() {
 
-    }
+	}
 
 }

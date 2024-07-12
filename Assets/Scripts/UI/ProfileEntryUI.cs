@@ -8,12 +8,12 @@ public class ProfileEntryUI : MonoBehaviour {
 	[System.NonSerialized] public string nameString;
 
 	public void UpdateUI(bool profileSelected) {
-		//if (profileSelected == true) {
-		//	profileNameText.color = Gval.selectedColor;
-		//}
-		//else {
-		//	profileNameText.color = Gval.unselectedColor;
-		//}
+		if (profileSelected == true) {
+			profileNameText.color = Gval.selectedColor;
+		}
+		else {
+			profileNameText.color = Gval.unselectedColor;
+		}
 		profileNameText.text = nameString;
 	}
 }

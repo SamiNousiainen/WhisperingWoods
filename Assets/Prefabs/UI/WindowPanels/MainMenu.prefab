@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Game
+  m_text: Start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1146,11 +1146,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 1c489298a9279b34ea5bd68df6fd2293, type: 3}
     - target: {fileID: 4901870778724718319, guid: 2265d48108f7f5943af7670d31f36a29, type: 3}
       propertyPath: arg1
-      value: 7
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4901870778724718319, guid: 2265d48108f7f5943af7670d31f36a29, type: 3}
       propertyPath: messageID
-      value: 0
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

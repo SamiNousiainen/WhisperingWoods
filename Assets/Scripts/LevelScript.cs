@@ -12,7 +12,6 @@ public class LevelScript : MonoBehaviour {
 	private void Awake() {
 		if (instance == null) {
 			instance = this;
-			Debug.Log(currentLevel.ToString());
 		}
 		else {
 			Destroy(gameObject);

@@ -207,13 +207,12 @@ public class UIEventManager : MonoBehaviour {
 		};
 
 		eventHandlers[(int)MessageID.BackToMainMenu] = (arg1, callerTransform) => {
-            // Setup correct audiolisteners: (OLD WAY BOOO!!)
-            //AudioManager.instance.GetComponent<AudioListener>().enabled = true;
-            //PickupController.instance.GetComponent<AudioListener>().enabled = false;
-            //Debug.Log(GameManager.instance.GetComponent<GameObject>());
+			// Setup correct audiolisteners: (OLD WAY BOOO!!)
+			//AudioManager.instance.GetComponent<AudioListener>().enabled = true;
+			//PickupController.instance.GetComponent<AudioListener>().enabled = false;
+			//Debug.Log(GameManager.instance.GetComponent<GameObject>());
 
-            //AudioManager.instance.ParentAudioListenerToObject(GameManager.instance.gameObject);
-
+			//AudioManager.instance.ParentAudioListenerToObject(GameManager.instance.gameObject);
             SceneLoader.instance.LoadScene("MainMenu");
         };
 
@@ -225,7 +224,7 @@ public class UIEventManager : MonoBehaviour {
 			}
 			else {
 				SceneLoader.instance.LoadScene("Gameplay");
-				Debug.Log("No profile selected, loading default Gameplay scene.");
+				Debug.Log("Loaded profile: " + UserProfile.CurrentProfile.username);
 			}
 			//GenericWindow window = new GenericWindow(WindowStyle.SmallNotification, LocID.SelectDifficulty);
 			//window.style.height = window.style.height + 100F;
