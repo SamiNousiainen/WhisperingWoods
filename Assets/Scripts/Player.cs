@@ -133,6 +133,9 @@ public class Player : MonoBehaviour {
 				}
 			}
 		}
+		if (WindowManager.instance.escapeableWindowStack.Count > 0 && Grounded() == true) {
+			rb.velocity = new Vector2(0, 0);
+		}
 	}
 
 

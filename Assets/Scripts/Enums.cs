@@ -34,7 +34,7 @@ namespace ProjectEnums {
         OptionsPanel = 5,
         ProfileSelection = 6,
         ProfileCreation = 7,
-        unused = 8,
+		CheckpointPanel = 8,
         DefaultWindow = 9,
         InteractInfoPanel = 10,
         AnnounceScreen = 11,

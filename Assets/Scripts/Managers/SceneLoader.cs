@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using ProjectEnums;
-using static LevelChangeTrigger;
 
 public class SceneLoader : MonoBehaviour {
 
@@ -10,13 +9,14 @@ public class SceneLoader : MonoBehaviour {
 	public bool sceneLoadInProgress;
 
 	private GameObject persistentObject;
-	private SpawnPoint spawnPoint;
+	private Checkpoint.CheckpointNumber checkpoint;
+	private LevelChangeTrigger.SpawnPoint spawnPoint;
 
 	private void Awake() {
 		if (instance == null) {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
-			SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to sceneLoaded event
+			SceneManager.sceneLoaded += OnSceneLoaded;
 		}
 		else {
 			Destroy(gameObject);
@@ -26,7 +26,7 @@ public class SceneLoader : MonoBehaviour {
 	private void OnDestroy() {
 		if (instance == this) {
 			instance = null;
-			SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe from sceneLoaded event
+			SceneManager.sceneLoaded -= OnSceneLoaded;
 		}
 	}
 
@@ -68,14 +68,27 @@ public class SceneLoader : MonoBehaviour {
 			Debug.Log("Loaded player");
 			if (persistentObject == null) {
 				persistentObject = Object.Instantiate(Resources.Load<GameObject>("PersistenceObjects"));
-				if (UserProfile.CurrentProfile.spawnPoint != LevelChangeTrigger.SpawnPoint.None) {
-					spawnPoint = UserProfile.CurrentProfile.spawnPoint; // Retrieve saved spawn point
-				} else {
-					UserProfile.CurrentProfile.spawnPoint = LevelChangeTrigger.SpawnPoint.One;
-					spawnPoint = UserProfile.CurrentProfile.spawnPoint;
+				if (UserProfile.CurrentProfile.currentCheckpoint != Checkpoint.CheckpointNumber.None) {
+					checkpoint = UserProfile.CurrentProfile.currentCheckpoint; // Retrieve saved checkpoint
+					SceneSwapManager.instance.FindCheckpoint(checkpoint);
+					Debug.Log("checkpoint found");
 				}
-				SceneSwapManager.instance.FindSpawnPoint(spawnPoint);
+				else {
+					Debug.Log("checkpoint not found");
+					//SceneSwapManager.instance.FindSpawnPoint(spawnPoint);
+				}
 				Object.DontDestroyOnLoad(persistentObject);
+				UserProfile.SaveCurrent();
+			} else {
+				if (UserProfile.CurrentProfile.currentCheckpoint != Checkpoint.CheckpointNumber.None) {
+					checkpoint = UserProfile.CurrentProfile.currentCheckpoint; // Retrieve saved checkpoint
+					SceneSwapManager.instance.FindCheckpoint(checkpoint);
+					Debug.Log("checkpoint found");
+				}
+				else {
+					Debug.Log("checkpoint not found");
+					//SceneSwapManager.instance.FindSpawnPoint(spawnPoint);
+				}
 				UserProfile.SaveCurrent();
 			}
 		}
@@ -83,7 +96,7 @@ public class SceneLoader : MonoBehaviour {
 			if (persistentObject != null) {
 				Debug.Log("Destroying persistent object in MainMenu");
 				Destroy(persistentObject);
-				persistentObject = null; // Reset the reference
+				persistentObject = null;
 			}
 		}
 	}

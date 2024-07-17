@@ -33,7 +33,7 @@ public class KeyInputManager : MonoBehaviour {
 
 
 			}
-			else if (Player.instance != null && WindowManager.instance.escapeableWindowStack.Count > 0) {
+			else if (Player.instance != null && WindowManager.instance.WindowIsOpen(WindowPanel.PauseMenu)) {
 				Time.timeScale = 0f;
 			}
 

@@ -2,6 +2,7 @@ using ProjectEnums;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 public class SceneSwapManager : MonoBehaviour {
 	public static SceneSwapManager instance;
@@ -15,6 +16,7 @@ public class SceneSwapManager : MonoBehaviour {
 	private Collider2D spawnPointCollider;
 	public Vector3 spawnPosition;
 	public LevelChangeTrigger.SpawnPoint spawnPoint;
+	public Checkpoint.CheckpointNumber Checkpoint;
 
 	private void Awake() {
 		if (instance == null) {
@@ -85,7 +87,7 @@ public class SceneSwapManager : MonoBehaviour {
 
 		// Use FindObjectOfType to find the LevelScript component in the scene
 		LevelScript levelScript = FindObjectOfType<LevelScript>();
-		Debug.Log("Saved current level: " + currentLevel);
+		//Debug.Log("Saved current level: " + currentLevel);
 		if (levelScript != null) {
 			currentLevel = levelScript.currentLevel;
 			if (UserProfile.CurrentProfile != null) {
@@ -126,12 +128,12 @@ public class SceneSwapManager : MonoBehaviour {
 
 					Player.instance.enabled = true;
 					UserProfile.CurrentProfile.spawnPoint = spawnPointNumber;
-					UserProfile.SaveCurrent();
-					Debug.Log(UserProfile.CurrentProfile.spawnPoint);
+					//UserProfile.SaveCurrent();
+					//Debug.Log(UserProfile.CurrentProfile.spawnPoint);
 					return;
 				}
 			}
-			else {
+			else if (UserProfile.CurrentProfile.spawnPoint == LevelChangeTrigger.SpawnPoint.None)  {
 				UserProfile.CurrentProfile.spawnPoint = LevelChangeTrigger.SpawnPoint.One;
 				spawn.currentSpawnPoint = spawnPointNumber;
 				Transform childWithCollider = spawn.transform.Find("SpawnPoint");
@@ -151,11 +153,37 @@ public class SceneSwapManager : MonoBehaviour {
 
 				Player.instance.enabled = true;
 				UserProfile.CurrentProfile.spawnPoint = spawnPointNumber;
-				UserProfile.SaveCurrent();
-				Debug.Log("aaaa " + UserProfile.CurrentProfile.spawnPoint);
+				//UserProfile.SaveCurrent();
+				//Debug.Log(UserProfile.CurrentProfile.spawnPoint);
 				return;
 			}
 		}
 		//Debug.LogError($"Spawn point {spawnPointNumber} not found!");
+	}
+	public void FindCheckpoint(Checkpoint.CheckpointNumber checkpointNumber) {
+		Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();
+		foreach (Checkpoint checkpoint in checkpoints) {
+				if (checkpoint.checkPoint == checkpointNumber) {
+				Transform childWithCollider = checkpoint.transform.Find("Checkpoint");
+				if (childWithCollider == null) {
+					Debug.LogError($"Child object with BoxCollider not found under checkpoint {checkpointNumber}");
+					return;
+				}
+
+				BoxCollider2D boxCollider = childWithCollider.GetComponent<BoxCollider2D>();
+				if (boxCollider == null) {
+					Debug.LogError($"BoxCollider not found on child object under checkpoint {checkpointNumber}");
+					return;
+				}
+
+				Vector3 spawnPosition = boxCollider.bounds.center;
+				Player.instance.transform.position = spawnPosition;
+
+				//Player.instance.enabled = true;
+				Debug.Log("Spawned at checkpoint: " + checkpointNumber);
+				return;
+			}
+		}
+		//Debug.LogError($"Checkpoint {checkpointNumber} not found!");
 	}
 }

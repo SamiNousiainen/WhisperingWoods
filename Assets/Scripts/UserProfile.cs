@@ -12,6 +12,7 @@ public class UserProfile {
 	public string userID;
 	public string username;
 	public LevelID currentLevel = LevelID.None;
+	public Checkpoint.CheckpointNumber currentCheckpoint;
 	public LevelChangeTrigger.SpawnPoint spawnPoint;
 
 	private UserProfile(string userName) {
@@ -20,7 +21,7 @@ public class UserProfile {
 
 	public static void DeleteSaveData() {
 		CurrentProfile.currentLevel = LevelID.None;
-		CurrentProfile.spawnPoint = LevelChangeTrigger.SpawnPoint.None; 
+		CurrentProfile.currentCheckpoint = Checkpoint.CheckpointNumber.None; 
 		SaveCurrent();
 	}
 
@@ -34,14 +35,14 @@ public class UserProfile {
 		AddProfileToListing(profile);
 		PlayerPrefs.SetString("LAST_PROFILE", profile.username);
 		CurrentProfile = profile;
-		CurrentProfile.spawnPoint = LevelChangeTrigger.SpawnPoint.None;
+		//CurrentProfile.spawnPoint = LevelChangeTrigger.SpawnPoint.None;
 		Debug.Log("username: " + profile.username);
 		return profile;
 	}
 
 	public static void SaveCurrent() {
 		Save(CurrentProfile);
-		Debug.Log("Saved current profile: " + CurrentProfile.username);
+		//Debug.Log("Saved current profile: " + CurrentProfile.username);
 	}
 
 	public static void GetLatestProfileAtStartup() {
