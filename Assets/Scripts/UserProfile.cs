@@ -46,7 +46,7 @@ public class UserProfile {
 	}
 
 	public static void GetLatestProfileAtStartup() {
-		if (PlayerPrefs.HasKey("LAST_PROFILE")) {
+		if (PlayerPrefs.HasKey("LAST_PROFILE")  == true) {
 			//Debug.Log("get the last profile");
 			string lastProfile = PlayerPrefs.GetString("LAST_PROFILE");
 			string[] profileList = UserProfile.GetProfileListing();
@@ -112,7 +112,8 @@ public class UserProfile {
 	private static string PrepareProfilePath(string userIdentifier) {
 		string directory = Path.Combine(Application.persistentDataPath, Gval.profileFolder);
 		if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
-		return Path.Combine(directory, userIdentifier);
+		string path = Path.Combine(directory, userIdentifier);
+		return path;
 	}
 
 	private static void AddProfileToListing(UserProfile profile) {

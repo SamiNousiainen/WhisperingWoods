@@ -111,53 +111,6 @@ public class UIEventManager : MonoBehaviour {
 			//}
 		};
 
-
-		//eventHandlers[(int)MessageID.SelectProfile] = (arg1, callerTransform) => {
-		//	int profileIndex = callerTransform.GetSiblingIndex();
-		//	ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
-		//	if (profileSelectionPanel != null) {
-		//		profileSelectionPanel.SelectProfile(profileIndex);
-		//	}
-
-		//	// Check if the profile is selected and has a valid current level
-		//	if (UserProfile.CurrentProfile != null) {
-		//		Debug.Log("Profile selected: " + UserProfile.CurrentProfile.userID);
-		//		Debug.Log("Current level: " + UserProfile.CurrentProfile.currentLevel);
-
-		//		if (UserProfile.CurrentProfile.currentLevel != LevelID.None) {
-		//			string levelToLoad = UserProfile.CurrentProfile.currentLevel.ToString();
-		//			Debug.Log("Loading saved level: " + levelToLoad);
-		//			SceneLoader.instance.LoadScene(levelToLoad);
-		//		}
-		//		else {
-		//			Debug.Log("No saved level found, loading default Gameplay scene.");
-		//			SceneLoader.instance.LoadScene("Gameplay");
-		//		}
-		//	}
-		//	else {
-		//		Debug.Log("No profile selected, loading default Gameplay scene.");
-		//		SceneLoader.instance.LoadScene("Gameplay");
-		//	}
-		//};
-
-
-
-		//eventHandlers[(int)MessageID.SelectProfile] = (arg1, callerTransform) => {
-		//	int profileIndex = callerTransform.GetSiblingIndex();
-		//	ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
-		//	if (profileSelectionPanel != null) {
-		//		profileSelectionPanel.SelectProfile(profileIndex);
-		//	}
-		//	if (UserProfile.CurrentProfile != null && UserProfile.CurrentProfile.currentLevel != LevelID.None) {
-		//		SceneLoader.instance.LoadScene(UserProfile.CurrentProfile.currentLevel.ToString());
-		//		Debug.Log("aaaa " + UserProfile.CurrentProfile.currentLevel.ToString());
-		//	}
-		//	else {
-		//		SceneLoader.instance.LoadScene("Gameplay");
-		//		Debug.Log("bbbb");
-		//	}
-		//};
-
 		eventHandlers[(int)MessageID.DeleteProfile] = (arg1, callerTransform) => {
 			int profileIndex = callerTransform.parent.GetSiblingIndex();
 			ProfileSelection profileSelectionPanel = (ProfileSelection)WindowManager.instance.GetWindow(WindowPanel.ProfileSelection);
@@ -219,6 +172,7 @@ public class UIEventManager : MonoBehaviour {
         eventHandlers[(int)MessageID.StartGame] = (arg1, callerTransform) => {
 
 			if (UserProfile.CurrentProfile.currentLevel != LevelID.None) {
+				SceneSwapManager.instance.overrideStartLevel = UserProfile.CurrentProfile.currentLevel;
 				SceneLoader.instance.LoadScene(UserProfile.CurrentProfile.currentLevel.ToString());
 				Debug.Log("Loaded profile and scene: " + UserProfile.CurrentProfile.username + " - " + UserProfile.CurrentProfile.currentLevel.ToString());
 			}

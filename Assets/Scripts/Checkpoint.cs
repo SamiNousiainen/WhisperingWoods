@@ -28,7 +28,7 @@ public class Checkpoint : MonoBehaviour {
 			// Handle interaction if needed
 			UserProfile.CurrentProfile.currentCheckpoint = checkPoint;
 			UserProfile.SaveCurrent();
-			Debug.Log("Checkpoint saved: " + checkPoint);
+			Debug.Log("Checkpoint saved: " + checkPoint + "current level: " + SceneSwapManager.instance.overrideStartLevel);
 		}
 	}
 

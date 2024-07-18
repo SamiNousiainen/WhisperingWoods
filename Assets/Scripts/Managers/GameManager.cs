@@ -10,29 +10,23 @@ public class GameManager : MonoBehaviour {
     //public SettingsAsset settings;
     //public LocID selectedDifficulty = LocID.None;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
+    private void Awake() {
+        if (instance == null) {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
-        {
+        else {
             Destroy(gameObject);
         }
     }
 
-    private void OnDestroy()
-    {
-        if (instance == this)
-        {
+    private void OnDestroy() {
+        if (instance == this) {
             instance = null;
         }
     }
 
-    private void Start()
-    {
+    private void Start() {
         StartCoroutine(StartUpRoutine());
     }
 
@@ -46,7 +40,6 @@ public class GameManager : MonoBehaviour {
     {
         //LoadLocalizations();
         UserProfile.GetLatestProfileAtStartup();
-        //AudioManager.LoadAudioSettings();
         bool showSplashScreen = false;
         if (showSplashScreen == true)
         {

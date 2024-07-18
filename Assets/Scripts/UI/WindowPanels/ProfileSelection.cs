@@ -77,6 +77,7 @@ public class ProfileSelection : WindowBase {
 		MainMenu mainMenu = (MainMenu)WindowManager.instance.GetWindow(ProjectEnums.WindowPanel.MainMenu);
 		if (mainMenu != null) {
 			mainMenu.ProfileSelected();
+			Debug.Log("profile selected");
 		}
 		Debug.Log(selectedProfileIndex);
 		//Debug.Log("paskaaaaaaaaa Loaded profile: " + UserProfile.CurrentProfile.username + UserProfile.CurrentProfile.spawnPoint);
