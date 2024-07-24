@@ -89,11 +89,11 @@ public class SceneSwapManager : MonoBehaviour {
 
 		LevelScript levelScript = FindObjectOfType<LevelScript>();
 		if (levelScript != null) {
-			currentLevel = levelScript.currentLevel;
-			if (UserProfile.CurrentProfile != null) {
-				UserProfile.CurrentProfile.currentLevel = currentLevel;
-				UserProfile.SaveCurrent();
-			}
+			//currentLevel = levelScript.currentLevel;
+			//if (UserProfile.CurrentProfile != null) {
+			//	UserProfile.CurrentProfile.currentLevel = currentLevel;
+			//	UserProfile.SaveCurrent();
+			//}
 
 			if (loadFromSpawnPoint) {
 				FindSpawnPoint(spawnPoint);
@@ -141,7 +141,7 @@ public class SceneSwapManager : MonoBehaviour {
 				return;
 			}
 		}
-		Debug.LogError($"Spawn point {spawnPointNumber} not found!");
+		//Debug.LogError($"Spawn point {spawnPointNumber} not found!");
 	}
 
 	public void FindCheckpoint(Checkpoint.CheckpointNumber checkpointNumber) {

@@ -1,3 +1,4 @@
+using ProjectEnums;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,6 +8,7 @@ public class Checkpoint : MonoBehaviour {
 
 	public Collider2D triggerCollider;
 	public TextMeshProUGUI interactText;
+	public LevelID currentLevel;
 
 	public enum CheckpointNumber {
 		None,
@@ -25,8 +27,17 @@ public class Checkpoint : MonoBehaviour {
 
 	private void Update() {
 		if (interactText.enabled && Input.GetKeyDown(KeyCode.E)) {
-			// Handle interaction if needed
-			UserProfile.CurrentProfile.currentCheckpoint = checkPoint;
+			LevelScript levelScript = FindObjectOfType<LevelScript>();
+			if (levelScript != null) {
+				currentLevel = levelScript.currentLevel;
+				if (UserProfile.CurrentProfile != null) {
+					SceneSwapManager.instance.overrideStartLevel = LevelID.None;
+					UserProfile.CurrentProfile.currentLevel = currentLevel;
+					UserProfile.SaveCurrent();
+				}
+			}
+				// Handle interaction if needed
+				UserProfile.CurrentProfile.currentCheckpoint = checkPoint;
 			UserProfile.SaveCurrent();
 			Debug.Log("Checkpoint saved: " + checkPoint + "current level: " + SceneSwapManager.instance.overrideStartLevel);
 		}
