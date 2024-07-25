@@ -47,6 +47,37 @@ public class SceneSwapManager : MonoBehaviour {
 		SceneManager.sceneLoaded -= OnSceneLoaded;
 	}
 
+	private IEnumerator FadeOutThenChangeScene(string sceneName) {
+		Player.instance.StopPlayer(true);
+		SceneFadeManager.instance.StartFadeOut();
+
+		yield return new WaitUntil(() => !SceneFadeManager.instance.isFadingOut);
+
+		AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+		asyncOperation.allowSceneActivation = false;
+
+		yield return new WaitUntil(() => asyncOperation.progress >= 0.9f);
+
+		asyncOperation.allowSceneActivation = true;
+
+		yield return new WaitUntil(() => asyncOperation.isDone);
+
+		SceneFadeManager.instance.StartFadeIn();
+		yield return new WaitUntil(() => !SceneFadeManager.instance.isFadingIn);
+
+		Player.instance.StopPlayer(false);
+
+		// Reset flags immediately after fade-in is complete
+		ResetLoadFlags();
+	}
+
+	private void ResetLoadFlags() {
+		loadFromSpawnPoint = false;
+		isLoadingScene = false;
+	}
+
+	// Remove the ResetLoadFlagsAfterDelay coroutine if it exists
+
 	public static void SwapSceneFromSpawnPoint(SceneField myScene, LevelChangeTrigger.SpawnPoint spawnPoint) {
 		if (instance.isLoadingScene)
 			return;
@@ -57,32 +88,44 @@ public class SceneSwapManager : MonoBehaviour {
 		instance.StartCoroutine(instance.FadeOutThenChangeScene(myScene));
 	}
 
-	private IEnumerator FadeOutThenChangeScene(string sceneName) {
-		Player.instance.enabled = false;
-		SceneFadeManager.instance.StartFadeOut();
+	//public static void SwapSceneFromSpawnPoint(SceneField myScene, LevelChangeTrigger.SpawnPoint spawnPoint) {
+	//	if (instance.isLoadingScene)
+	//		return;
 
-		yield return new WaitUntil(() => !SceneFadeManager.instance.isFadingOut);
+	//	instance.loadFromSpawnPoint = true;
+	//	instance.isLoadingScene = true;
+	//	instance.spawnPoint = spawnPoint;
+	//	instance.StartCoroutine(instance.FadeOutThenChangeScene(myScene));
+	//}
 
-		AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-		asyncOperation.allowSceneActivation = false;
+	//private IEnumerator FadeOutThenChangeScene(string sceneName) {
+	//	Player.instance.StopPlayer(true);
+	//	SceneFadeManager.instance.StartFadeOut();
 
-		yield return new WaitUntil(() => asyncOperation.progress >= 0.9f);
+	//	yield return new WaitUntil(() => !SceneFadeManager.instance.isFadingOut);
 
-		SceneFadeManager.instance.StartFadeIn();
-		yield return new WaitUntil(() => !SceneFadeManager.instance.isFadingIn);
+	//	AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+	//	asyncOperation.allowSceneActivation = false;
 
-		asyncOperation.allowSceneActivation = true;
+	//	yield return new WaitUntil(() => asyncOperation.progress >= 0.9f);
 
-		yield return new WaitUntil(() => asyncOperation.isDone);
+	//	asyncOperation.allowSceneActivation = true;
 
-		StartCoroutine(ResetLoadFlagsAfterDelay());
-	}
+	//	yield return new WaitUntil(() => asyncOperation.isDone);
 
-	private IEnumerator ResetLoadFlagsAfterDelay() {
-		yield return new WaitForSeconds(0.5f);
-		loadFromSpawnPoint = false;
-		isLoadingScene = false;
-	}
+	//	SceneFadeManager.instance.StartFadeIn();
+	//	yield return new WaitUntil(() => !SceneFadeManager.instance.isFadingIn);
+
+	//	Player.instance.StopPlayer(false);  // Allow the player to move after fade-in is complete
+
+	//	StartCoroutine(ResetLoadFlagsAfterDelay());
+	//}
+
+	//private IEnumerator ResetLoadFlagsAfterDelay() {
+	//	yield return new WaitForSeconds(0.5f);
+	//	loadFromSpawnPoint = false;
+	//	isLoadingScene = false;
+	//}
 
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 		SceneFadeManager.instance.StartFadeIn();
@@ -135,7 +178,7 @@ public class SceneSwapManager : MonoBehaviour {
 				Vector3 spawnPosition = boxCollider.bounds.center;
 				Player.instance.transform.position = spawnPosition;
 
-				Player.instance.enabled = true;
+				//Player.instance.enabled = true;
 				UserProfile.CurrentProfile.spawnPoint = spawnPointNumber;
 				Debug.Log("Spawn point found and set: " + spawnPointNumber);
 				return;
@@ -163,7 +206,7 @@ public class SceneSwapManager : MonoBehaviour {
 				Vector3 spawnPosition = boxCollider.bounds.center;
 				Player.instance.transform.position = spawnPosition;
 
-				Player.instance.enabled = true;
+				//Player.instance.enabled = true;
 				Debug.Log("Spawned at checkpoint: " + checkpointNumber);
 				return;
 			}

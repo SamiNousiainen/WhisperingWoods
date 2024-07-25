@@ -115,10 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d4b32ab4419454380aff45fc26c98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeOutImage: {fileID: 6936980093671001059}
-  _fadeOutSpeed: 5
-  _fadeInSpeed: 5
-  _fadeOutStartColor: {r: 0.17254902, g: 0.17254902, b: 0.17254902, a: 0}
+  fadeOutImage: {fileID: 6936980093671001059}
+  fadeOutSpeed: 3
+  fadeInSpeed: 3
+  fadeOutStartColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &7488032747259533926
 GameObject:
   m_ObjectHideFlags: 0

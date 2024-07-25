@@ -7,11 +7,11 @@ public class SceneFadeManager : MonoBehaviour {
 
 	public static SceneFadeManager instance;
 
-	[SerializeField] private Image fadeOutImage;
-	[Range(0.1f, 10f), SerializeField] private float fadeOutSpeed = 5f;
-	[Range(0.1f, 10f), SerializeField] private float fadeInSpeed = 5f;
+	[SerializeField] public Image fadeOutImage;
+	[Range(0.1f, 20f), SerializeField] private float fadeOutSpeed = 10f;
+	[Range(0.1f, 20f), SerializeField] private float fadeInSpeed = 10f;
 
-	[SerializeField] private Color fadeOutStartColor;
+	[SerializeField] public Color fadeOutStartColor;
 
 	public bool isFadingOut { get; private set; }
 	
@@ -44,6 +44,7 @@ public class SceneFadeManager : MonoBehaviour {
 			}
 			else {
 				isFadingIn = false;
+				Player.instance.enabled = true;
 			}
 		}
 	}
@@ -52,12 +53,14 @@ public class SceneFadeManager : MonoBehaviour {
 		fadeOutImage.color = fadeOutStartColor;
 		WindowManager.instance.CloseWindow(ProjectEnums.WindowPanel.GameUI);
 		isFadingOut = true;
+		Debug.Log("fading out");
 	}
 
 	public void StartFadeIn() {
 		if (fadeOutImage.color.a >= 1f) {
 			fadeOutImage.color = fadeOutStartColor;
 			isFadingIn = true;
+			Debug.Log("fading in");
 		}
 	}
 

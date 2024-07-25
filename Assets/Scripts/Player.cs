@@ -164,6 +164,17 @@ public class Player : MonoBehaviour {
 		SlopeCheck();
 	}
 
+	public void StopPlayer(bool stopPlayer) {
+		if (stopPlayer == true) {
+			canMove = false;
+			rb.velocity = new Vector2(0, 0);
+		}
+		else {
+			canMove = true;
+			rb.velocity = new Vector2(moveInputX * moveSpeed, rb.velocity.y);
+		}
+	}
+
 	void Move() {
 		if (canMove == true) {
 			// Get the horizontal input (A/D keys or Left/Right arrow keys)
