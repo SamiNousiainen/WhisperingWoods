@@ -54,6 +54,8 @@ public class Player : MonoBehaviour {
 	private float attackRange = 0.9f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
+	public float knockbackForceX = 10f;
+	public float knockbackForceY = 10f;
 	public bool isAttacking { get; private set; } = false;
 
 	//camera movement
@@ -102,7 +104,12 @@ public class Player : MonoBehaviour {
 				fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
 			}
 			if (interactionEnabled == true) {
-				canMove = true;
+				if (damageCooldownTimer > 0.5f) {
+					canMove = false;
+				}
+				else {
+					canMove = true;
+				}
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
@@ -269,16 +276,21 @@ public class Player : MonoBehaviour {
 		animator.SetBool("isAttacking", false);
 	}
 
-	public void TakeDamage(float damage) {
-		playerCurrentHealth -= damage;
-		damageCooldownTimer = damageCooldownTime;
-		Debug.Log("damage taken = " + damage);
-	}
-
 	//stop attacking with animation trigger
 	public void StopAttcking() {
 		isAttacking = false;
 		animator.SetBool("isAttacking", false);
+	}
+
+	public void TakeDamage(float damage, Transform damageSource) {
+		playerCurrentHealth -= damage;
+		damageCooldownTimer = damageCooldownTime;
+		Debug.Log("damage taken = " + damage);
+
+		//Vector2 knockbackDirection = (transform.position - damageSource.position).normalized;
+		//knockbackDirection.y = 1;
+		////rb.AddForce(new Vector2(knockbackDirection.x * knockbackForceX, knockbackForceY), ForceMode2D.Impulse);
+		//rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackForceY);
 	}
 
 	#endregion
