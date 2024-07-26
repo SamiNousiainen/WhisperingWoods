@@ -27,7 +27,7 @@ public class Player : MonoBehaviour {
 	public float coyoteTime = 0.1f;
 	public float coyoteTimeTimer;
 
-	private Rigidbody2D rb;
+	public Rigidbody2D rb;
 	public bool isFacingRight;
 
 	[SerializeField]
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour {
 	public Transform attackPoint;
 	public Transform attackPointDown;
 	public Transform attackPointUp;
-	private float attackRange = 0.9f;
+	private float attackRange = 1.1f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
 	public float knockbackForceX = 10f;
@@ -210,18 +210,15 @@ public class Player : MonoBehaviour {
 
 	public void Attack() {
 		if (attackCooldownTimer <= 0f) {
-			isAttacking = true;
+			//isAttacking = true;
 			animator.SetBool("isAttacking", true);
 			if (moveInputY <= -0.1f && Grounded() == false) {
-				//StartCoroutine(DealDamageDown());
 				animator.Play("LongswordDown");
 			}
 			else if (moveInputY >= 0.1f) {
-				StartCoroutine(DealDamageUp());
-				animator.Play("LongswordJump"); //placeholder
+				animator.Play("LongswordUp");
 			}
 			else {
-				//StartCoroutine(DealDamageForward());
 				if (Grounded() == false) {
 					animator.Play("LongswordJump");
 				}
@@ -233,7 +230,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	private IEnumerator DealDamageDown() {
+	public IEnumerator DealDamageDown() {
 
 		isAttacking = true;
 
@@ -242,10 +239,10 @@ public class Player : MonoBehaviour {
 		while (isAttacking == true) {
 			foreach (Collider2D hitEnemy in hitEnemies) {
 				if (hitEnemy != null) {
+					rb.velocity = new Vector2(rb.velocity.x, jumpForce); //t‰‰ ei toimi oikein koska while loop
 					Enemy enemy = hitEnemy.GetComponent<Enemy>();
 					if (enemy.hasTakenDamage == false) {
 						enemy.TakeDamage(attackDamage);
-						rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 					}
 				}
 			}
@@ -272,23 +269,27 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	private IEnumerator DealDamageUp() {
+	public IEnumerator DealDamageUp() {
+
+		isAttacking = true;
+
 		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointUp.position, attackRange, enemyLayer);
 
-		yield return new WaitForSeconds(0.1f);
-		foreach (Collider2D enemy in hitEnemies) {
-			Debug.Log(enemy.name);
-			if (enemy != null) {
-				enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+		while (isAttacking == true) {
+			foreach (Collider2D hitEnemy in hitEnemies) {
+				if (hitEnemy != null) {
+					Enemy enemy = hitEnemy.GetComponent<Enemy>();
+					if (enemy.hasTakenDamage == false) {
+						enemy.TakeDamage(attackDamage);
+					}
+				}
 			}
+			yield return null;
 		}
-		yield return new WaitForSeconds(0.2f);
-		isAttacking = false;
-		animator.SetBool("isAttacking", false);
 	}
 
 	//stop attacking with animation trigger
-	public void StopAttcking() {
+	public void StopAttacking() {
 		isAttacking = false;
 		animator.SetBool("isAttacking", false);
 	}
@@ -318,20 +319,20 @@ public class Player : MonoBehaviour {
 	}
 
 	void Flip() {
-		if (isAttacking == false) {
-			if (isFacingRight == true) {
-				Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
-				transform.rotation = Quaternion.Euler(rotator);
-				isFacingRight = !isFacingRight;
-				cameraFollowObject.Turn();
-			}
-			else {
-				Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
-				transform.rotation = Quaternion.Euler(rotator);
-				isFacingRight = !isFacingRight;
-				cameraFollowObject.Turn();
-			}
+		//if (isAttacking == false) {
+		if (isFacingRight == true) {
+			Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+			transform.rotation = Quaternion.Euler(rotator);
+			isFacingRight = !isFacingRight;
+			cameraFollowObject.Turn();
 		}
+		else {
+			Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+			transform.rotation = Quaternion.Euler(rotator);
+			isFacingRight = !isFacingRight;
+			cameraFollowObject.Turn();
+		}
+		//}
 	}
 
 	public bool Grounded() {

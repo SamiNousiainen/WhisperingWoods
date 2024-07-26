@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 2646389253773978025}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.076, y: 1, z: 0}
+  m_LocalPosition: {x: 0.38, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 6541503432499280682}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: -1.012, z: 0}
+  m_LocalPosition: {x: 0.05, y: -1.252, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -229,6 +229,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  knockbackForceX: 10
+  knockbackForceY: 10
 --- !u!50 &6289671509982558219
 Rigidbody2D:
   serializedVersion: 4
