@@ -27,9 +27,9 @@ public class KeyInputManager : MonoBehaviour {
 				if (Player.instance.jumpBufferTimer > 0) {
 					GameInputLogic.PlayerJump();
 				}
-				//if (Input.GetButton("Jump") == false && Player.instance.isAttacking == false/*make this pogo jump only*/) {
-				//	GameInputLogic.PlayerDecreaseYVelocity();
-				//}
+				if (Input.GetButton("Jump") == false && Player.instance.isAttacking == false/*make this pogo jump only*/) {
+					GameInputLogic.PlayerDecreaseYVelocity();
+				}
 
 
 			}
