@@ -104,12 +104,13 @@ public class Player : MonoBehaviour {
 				fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
 			}
 			if (interactionEnabled == true) {
-				if (damageCooldownTimer > 0.5f) {
-					canMove = false;
-				}
-				else {
-					canMove = true;
-				}
+				//if (damageCooldownTimer > 0.5f) {
+				//	canMove = false;
+				//}
+				//else {
+				//	canMove = true;
+				//}
+				canMove = true;
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
@@ -236,10 +237,15 @@ public class Player : MonoBehaviour {
 
 		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRange, enemyLayer);
 
+		foreach (Collider2D hitEnemy in hitEnemies) {
+			if (hitEnemy != null) {
+				rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+			}
+		}
+
 		while (isAttacking == true) {
 			foreach (Collider2D hitEnemy in hitEnemies) {
 				if (hitEnemy != null) {
-					rb.velocity = new Vector2(rb.velocity.x, jumpForce); //t‰‰ ei toimi oikein koska while loop
 					Enemy enemy = hitEnemy.GetComponent<Enemy>();
 					if (enemy.hasTakenDamage == false) {
 						enemy.TakeDamage(attackDamage);
@@ -294,7 +300,7 @@ public class Player : MonoBehaviour {
 		animator.SetBool("isAttacking", false);
 	}
 
-	public void TakeDamage(float damage, Transform damageSource) {
+	public void TakeDamage(float damage) {
 		playerCurrentHealth -= damage;
 		damageCooldownTimer = damageCooldownTime;
 		Debug.Log("damage taken = " + damage);

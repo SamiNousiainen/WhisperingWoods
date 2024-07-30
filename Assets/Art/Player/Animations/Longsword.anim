@@ -26,17 +26,17 @@ AnimationClip:
       value: {fileID: 21300000, guid: 5ccafb8204bd8054987ed734a5d90a0f, type: 3}
     - time: 0.033333335
       value: {fileID: 21300000, guid: 241ccb0700c5baf4daf3bcccdf56e73b, type: 3}
-    - time: 0.05
+    - time: 0.06666667
       value: {fileID: 21300000, guid: c96ffe023ef211a4c88783ddd9c0e01c, type: 3}
     - time: 0.1
-      value: {fileID: 21300000, guid: 0b6d928ed5c0a1649bffd82d2b93e0b1, type: 3}
-    - time: 0.16666667
-      value: {fileID: 21300000, guid: 1e84d0dc75c6a454e98292c5723c6a5f, type: 3}
+      value: {fileID: 21300000, guid: a92e051e857f17c478ae3a8b55fab707, type: 3}
+    - time: 0.15
+      value: {fileID: 21300000, guid: 0f814fc2c4d82ce4f92eea827c280af8, type: 3}
     - time: 0.23333333
-      value: {fileID: 21300000, guid: 9382f465e7f1bbe4b8f6100242f0468e, type: 3}
-    - time: 0.28333333
+      value: {fileID: 21300000, guid: 57478e9cadc9a8547949722d755e7988, type: 3}
+    - time: 0.3
       value: {fileID: 21300000, guid: 19b65bfbd89c5cc4fa22873c1d4eb986, type: 3}
-    - time: 0.33333334
+    - time: 0.35
       value: {fileID: 21300000, guid: 8f9f0c5687fea8d41be2ca1dc747c0b1, type: 3}
     attribute: m_Sprite
     path: 
@@ -64,9 +64,9 @@ AnimationClip:
     - {fileID: 21300000, guid: 5ccafb8204bd8054987ed734a5d90a0f, type: 3}
     - {fileID: 21300000, guid: 241ccb0700c5baf4daf3bcccdf56e73b, type: 3}
     - {fileID: 21300000, guid: c96ffe023ef211a4c88783ddd9c0e01c, type: 3}
-    - {fileID: 21300000, guid: 0b6d928ed5c0a1649bffd82d2b93e0b1, type: 3}
-    - {fileID: 21300000, guid: 1e84d0dc75c6a454e98292c5723c6a5f, type: 3}
-    - {fileID: 21300000, guid: 9382f465e7f1bbe4b8f6100242f0468e, type: 3}
+    - {fileID: 21300000, guid: a92e051e857f17c478ae3a8b55fab707, type: 3}
+    - {fileID: 21300000, guid: 0f814fc2c4d82ce4f92eea827c280af8, type: 3}
+    - {fileID: 21300000, guid: 57478e9cadc9a8547949722d755e7988, type: 3}
     - {fileID: 21300000, guid: 19b65bfbd89c5cc4fa22873c1d4eb986, type: 3}
     - {fileID: 21300000, guid: 8f9f0c5687fea8d41be2ca1dc747c0b1, type: 3}
   m_AnimationClipSettings:
@@ -74,7 +74,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.35000002
+    m_StopTime: 0.36666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -101,7 +101,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.28333333
+  - time: 0.31666666
     functionName: StopAttacking
     data: 
     objectReferenceParameter: {fileID: 0}
