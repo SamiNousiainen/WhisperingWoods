@@ -211,13 +211,15 @@ public class Player : MonoBehaviour {
 
 	public void Attack() {
 		if (attackCooldownTimer <= 0f) {
-			//isAttacking = true;
 			animator.SetBool("isAttacking", true);
-			if (moveInputY <= -0.1f && Grounded() == false) {
+			if (moveInputY <= -0.2f && Grounded() == false) {
 				animator.Play("LongswordDown");
 			}
-			else if (moveInputY >= 0.1f) {
+			else if (moveInputY >= 0.2f && Grounded() == false) {
 				animator.Play("LongswordUp");
+			}
+			else if (moveInputY >= 0.2f && Grounded() == true) {
+				animator.Play("LongswordUp2"); //retarded animation names fr
 			}
 			else {
 				if (Grounded() == false) {
