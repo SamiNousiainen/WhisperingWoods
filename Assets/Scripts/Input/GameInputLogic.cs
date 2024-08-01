@@ -11,7 +11,7 @@ public static class GameInputLogic {
 	}
 
 	public static void PlayerDecreaseYVelocity() {
-		Player.instance.DecreaseYVelocity();
+		//Player.instance.DecreaseYVelocity();
 	}
 
 	public static void PlayerShowWindow(WindowPanel panel, object parameters = null) {

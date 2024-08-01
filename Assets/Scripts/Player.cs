@@ -122,6 +122,10 @@ public class Player : MonoBehaviour {
 					coyoteTimeTimer -= Time.deltaTime;
 				}
 
+				if (!Input.GetButton("Jump") && isAttacking == false) {
+					DecreaseYVelocity(); //pitää ehkä tehä joku timer hyppyyn, tätä ei kutsuta jos hyppää ja lyö heti perään
+				}
+
 				Move();
 				if (moveInputX > 0f || moveInputX < 0f) {
 					FlipCheck();
@@ -212,10 +216,10 @@ public class Player : MonoBehaviour {
 	public void Attack() {
 		if (attackCooldownTimer <= 0f) {
 			animator.SetBool("isAttacking", true);
-			if (moveInputY <= -0.2f && Grounded() == false) {
+			if (moveInputY <= -0.5f && Grounded() == false) {
 				animator.Play("LongswordDown");
 			}
-			else if (moveInputY >= 0.2f && Grounded() == false) {
+			else if (moveInputY >= 0.5f && Grounded() == false) {
 				animator.Play("LongswordUp");
 			}
 			else if (moveInputY >= 0.2f && Grounded() == true) {
@@ -241,7 +245,7 @@ public class Player : MonoBehaviour {
 
 		foreach (Collider2D hitEnemy in hitEnemies) {
 			if (hitEnemy != null) {
-				rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+				rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
 			}
 		}
 
@@ -300,6 +304,7 @@ public class Player : MonoBehaviour {
 	public void StopAttacking() {
 		isAttacking = false;
 		animator.SetBool("isAttacking", false);
+		DecreaseYVelocity();
 	}
 
 	public void TakeDamage(float damage) {
@@ -327,20 +332,20 @@ public class Player : MonoBehaviour {
 	}
 
 	void Flip() {
-		//if (isAttacking == false) {
-		if (isFacingRight == true) {
-			Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
-			transform.rotation = Quaternion.Euler(rotator);
-			isFacingRight = !isFacingRight;
-			cameraFollowObject.Turn();
+		if (isAttacking == false) {
+			if (isFacingRight == true) {
+				Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+				transform.rotation = Quaternion.Euler(rotator);
+				isFacingRight = !isFacingRight;
+				cameraFollowObject.Turn();
+			}
+			else {
+				Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+				transform.rotation = Quaternion.Euler(rotator);
+				isFacingRight = !isFacingRight;
+				cameraFollowObject.Turn();
+			}
 		}
-		else {
-			Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
-			transform.rotation = Quaternion.Euler(rotator);
-			isFacingRight = !isFacingRight;
-			cameraFollowObject.Turn();
-		}
-		//}
 	}
 
 	public bool Grounded() {
