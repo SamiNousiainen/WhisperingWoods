@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1641552483379359956}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1053873368031673966}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttackPointUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4466572830892994530}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttackPointDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 1348319661718690007}
   - component: {fileID: 6751860548379643205}
   - component: {fileID: 8288913583060143638}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -202,8 +202,8 @@ MonoBehaviour:
   playerCurrentHealth: 100
   playerMaxMana: 100
   playerCurrentMana: 100
-  moveSpeed: 10
-  jumpForce: 15
+  moveSpeed: 8
+  jumpForce: 17
   moveInputX: 0
   moveInputY: 0
   maxFallSpeed: -15
@@ -369,7 +369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9119801554769217}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

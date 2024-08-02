@@ -16,8 +16,10 @@ public class Player : MonoBehaviour {
 	public float jumpForce = 6f;
 
 	[Header("Other")]
-	public float moveInputX;
-	public float moveInputY;
+	[SerializeField]
+	private float moveInputX;
+	[SerializeField]
+	private float moveInputY;
 	public float maxFallSpeed = -15f;
 	public bool canMove;
 
@@ -126,7 +128,7 @@ public class Player : MonoBehaviour {
 					DecreaseYVelocity(); //pitää ehkä tehä joku timer hyppyyn, tätä ei kutsuta jos hyppää ja lyö heti perään
 				}
 
-				Move();
+				//Move();
 				if (moveInputX > 0f || moveInputX < 0f) {
 					FlipCheck();
 				}
@@ -165,7 +167,7 @@ public class Player : MonoBehaviour {
 		else {
 			animator.SetBool("isJumping", false);
 		}
-
+		Move();
 		SlopeCheck();
 	}
 
@@ -222,7 +224,7 @@ public class Player : MonoBehaviour {
 			else if (moveInputY >= 0.5f && Grounded() == false) {
 				animator.Play("LongswordUp");
 			}
-			else if (moveInputY >= 0.2f && Grounded() == true) {
+			else if (moveInputY >= 0.5f && Grounded() == true) {
 				animator.Play("LongswordUp2"); //retarded animation names fr
 			}
 			else {
