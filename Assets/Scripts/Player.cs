@@ -107,12 +107,6 @@ public class Player : MonoBehaviour {
 				fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
 			}
 			if (interactionEnabled == true) {
-				//if (damageCooldownTimer > 0.5f) {
-				//	canMove = false;
-				//}
-				//else {
-				//	canMove = true;
-				//}
 				canMove = true;
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
@@ -126,8 +120,8 @@ public class Player : MonoBehaviour {
 					coyoteTimeTimer -= Time.deltaTime;
 				}
 
-				if (Input.GetButtonUp("Jump") || (jumpTimer <= 0f && Input.GetButton("Jump") == false)) {
-					DecreaseYVelocity(); //pitää ehkä tehä joku timer hyppyyn, tätä ei kutsuta jos hyppää ja lyö heti perään
+				if (jumpTimer <= 0f && Input.GetButton("Jump") == false) {
+					DecreaseYVelocity();
 				}
 
 				//Move();
@@ -225,10 +219,10 @@ public class Player : MonoBehaviour {
 				animator.Play("LongswordDown");
 			}
 			else if (moveInputY >= 0.5f && Grounded() == false) {
-				animator.Play("LongswordUp");
+				animator.Play("LongswordUp"); //mid air upward slash
 			}
 			else if (moveInputY >= 0.5f && Grounded() == true) {
-				animator.Play("LongswordUp2"); //retarded animation names fr
+				animator.Play("LongswordUp2"); //upward slash while grounded (retarded animation names fr)
 			}
 			else {
 				if (Grounded() == false) {
