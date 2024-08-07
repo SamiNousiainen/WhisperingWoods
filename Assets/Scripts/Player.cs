@@ -28,6 +28,7 @@ public class Player : MonoBehaviour {
 
 	public float coyoteTime = 0.1f;
 	public float coyoteTimeTimer;
+	private float jumpTimer;
 
 	public Rigidbody2D rb;
 	public bool isFacingRight;
@@ -116,6 +117,7 @@ public class Player : MonoBehaviour {
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
+				jumpTimer -= Time.deltaTime;
 
 				if (Grounded() == true) {
 					coyoteTimeTimer = coyoteTime;
@@ -124,7 +126,7 @@ public class Player : MonoBehaviour {
 					coyoteTimeTimer -= Time.deltaTime;
 				}
 
-				if (!Input.GetButton("Jump") && isAttacking == false) {
+				if (Input.GetButtonUp("Jump") || (jumpTimer <= 0f && Input.GetButton("Jump") == false)) {
 					DecreaseYVelocity(); //pitää ehkä tehä joku timer hyppyyn, tätä ei kutsuta jos hyppää ja lyö heti perään
 				}
 
@@ -199,10 +201,11 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Jump() {
-		if (canMove == true && coyoteTimeTimer > 0f) {
+		if (canMove == true && coyoteTimeTimer > 0f && isAttacking == false) {
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 			jumpBufferTimer = 0f; // Reset the jump buffer timer
 			coyoteTimeTimer = 0f;
+			jumpTimer = 0.1f;
 		}
 	}
 
@@ -242,6 +245,7 @@ public class Player : MonoBehaviour {
 	public IEnumerator DealDamageDown() {
 
 		isAttacking = true;
+		jumpTimer = 0.24f;
 
 		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRange, enemyLayer);
 
