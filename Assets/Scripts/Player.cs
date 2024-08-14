@@ -48,7 +48,7 @@ public class Player : MonoBehaviour {
 	[Header("Combat")]
 	//combat
 	public float damageCooldownTimer = 0f;
-	private float damageCooldownTime = 1f;
+	private float damageCooldownTime = 0.5f;
 	private float attackRate = 0.35f;
 	public float attackCooldownTimer = 0f;
 	public Transform attackPoint;
@@ -57,8 +57,8 @@ public class Player : MonoBehaviour {
 	private float attackRange = 1.1f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
-	public float knockbackForceX = 10f;
-	public float knockbackForceY = 10f;
+	public float knockbackForceX = 7f;
+	public float knockbackForceY = 14f;
 	public bool isAttacking { get; private set; } = false;
 
 	//camera movement
@@ -107,7 +107,12 @@ public class Player : MonoBehaviour {
 				fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
 			}
 			if (interactionEnabled == true) {
-				canMove = true;
+				if (damageCooldownTimer <= 0) {
+					canMove = true;
+				}
+				else {
+					canMove = false;
+				}
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
@@ -120,11 +125,10 @@ public class Player : MonoBehaviour {
 					coyoteTimeTimer -= Time.deltaTime;
 				}
 
-				if (jumpTimer <= 0f && Input.GetButton("Jump") == false) {
+				if (jumpTimer <= 0f && Input.GetButton("Jump") == false && damageCooldownTimer <= 0f) {
 					DecreaseYVelocity();
 				}
 
-				//Move();
 				if (moveInputX > 0f || moveInputX < 0f) {
 					FlipCheck();
 				}
@@ -307,15 +311,17 @@ public class Player : MonoBehaviour {
 		DecreaseYVelocity();
 	}
 
-	public void TakeDamage(float damage) {
+	public void TakeDamage(float damage, Transform damageSource) {
 		playerCurrentHealth -= damage;
 		damageCooldownTimer = damageCooldownTime;
+		attackCooldownTimer = damageCooldownTime;
 		Debug.Log("damage taken = " + damage);
 
-		//Vector2 knockbackDirection = (transform.position - damageSource.position).normalized;
-		//knockbackDirection.y = 1;
-		////rb.AddForce(new Vector2(knockbackDirection.x * knockbackForceX, knockbackForceY), ForceMode2D.Impulse);
-		//rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackForceY);
+		Vector2 knockbackDirection = (transform.position - damageSource.position).normalized;
+		knockbackDirection.y = 1;
+		//rb.AddForce(new Vector2(knockbackDirection.x * knockbackForceX, knockbackForceY), ForceMode2D.Impulse);
+		rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY);
+		//rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
 	}
 
 	#endregion
