@@ -57,8 +57,9 @@ public class Player : MonoBehaviour {
 	private float attackRange = 1.1f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
-	public float knockbackForceX = 7f;
-	public float knockbackForceY = 14f;
+	private float knockbackForceX = 7f;
+	private float knockbackForceY = 12f;
+	private bool takingDamage;
 	public bool isAttacking { get; private set; } = false;
 
 	//camera movement
@@ -113,6 +114,15 @@ public class Player : MonoBehaviour {
 				else {
 					canMove = false;
 				}
+				//if (damageCooldownTimer <= 0 && Grounded() == true) {
+				//	takingDamage = false;
+				//}
+				//if (takingDamage == true) {
+				//	canMove = false;
+				//}
+				//else {
+				//	canMove = true;
+				//}
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
@@ -312,6 +322,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void TakeDamage(float damage, Transform damageSource) {
+		takingDamage = true;
 		playerCurrentHealth -= damage;
 		damageCooldownTimer = damageCooldownTime;
 		attackCooldownTimer = damageCooldownTime;
@@ -319,8 +330,8 @@ public class Player : MonoBehaviour {
 
 		Vector2 knockbackDirection = (transform.position - damageSource.position).normalized;
 		knockbackDirection.y = 1;
-		//rb.AddForce(new Vector2(knockbackDirection.x * knockbackForceX, knockbackForceY), ForceMode2D.Impulse);
-		rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY);
+		rb.AddForce(new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY), ForceMode2D.Impulse);
+		//rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY);
 		//rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
 	}
 
