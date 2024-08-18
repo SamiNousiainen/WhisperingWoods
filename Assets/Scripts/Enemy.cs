@@ -17,18 +17,19 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void Update() {
-		damageCooldownTimer -= Time.deltaTime;
-		if (damageCooldownTimer <= 0) {
-			hasTakenDamage = false;
-		}
+		//damageCooldownTimer -= Time.deltaTime;
+		//if (damageCooldownTimer <= 0) {
+		//	hasTakenDamage = false;
+		//}
 	}
 
 	public void TakeDamage(float damage) {
 		hasTakenDamage = true;
 		health -= damage;
 		Debug.Log(damage);
-		damageCooldownTimer = damageCooldownTime;
+		//damageCooldownTimer = damageCooldownTime;
 		//play damage animation
+		StartCoroutine(Player.instance.FreezeFrame());
 		StartCoroutine(FlashRed());
 		if (health <= 0) {
 			Debug.Log("enemy dead");

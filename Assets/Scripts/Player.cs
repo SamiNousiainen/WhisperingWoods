@@ -1,6 +1,7 @@
 using ProjectEnums;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -59,8 +60,10 @@ public class Player : MonoBehaviour {
 	public LayerMask enemyLayer;
 	private float knockbackForceX = 7f;
 	private float knockbackForceY = 12f;
-	private bool takingDamage;
+	//private bool takingDamage;
 	public bool isAttacking { get; private set; } = false;
+
+	private List<Enemy> damagedEnemies = new List<Enemy>();
 
 	//camera movement
 	private CameraFollowObject cameraFollowObject;
@@ -195,7 +198,7 @@ public class Player : MonoBehaviour {
 	void Move() {
 		if (canMove == true) {
 			// Get the horizontal input (A/D keys or Left/Right arrow keys)
-			moveInputX = Input.GetAxis("Horizontal");
+			moveInputX = Input.GetAxisRaw("Horizontal");
 			moveInputY = Input.GetAxis("Vertical");
 
 			if (isAttacking == true && Grounded() == true) {
@@ -269,6 +272,7 @@ public class Player : MonoBehaviour {
 					Enemy enemy = hitEnemy.GetComponent<Enemy>();
 					if (enemy.hasTakenDamage == false) {
 						enemy.TakeDamage(attackDamage);
+						damagedEnemies.Add(enemy);
 					}
 				}
 			}
@@ -288,6 +292,7 @@ public class Player : MonoBehaviour {
 					Enemy enemy = hitEnemy.GetComponent<Enemy>();
 					if (enemy.hasTakenDamage == false) {
 						enemy.TakeDamage(attackDamage);
+						damagedEnemies.Add(enemy);
 					}
 				}
 			}
@@ -307,6 +312,7 @@ public class Player : MonoBehaviour {
 					Enemy enemy = hitEnemy.GetComponent<Enemy>();
 					if (enemy.hasTakenDamage == false) {
 						enemy.TakeDamage(attackDamage);
+						damagedEnemies.Add(enemy);
 					}
 				}
 			}
@@ -319,10 +325,18 @@ public class Player : MonoBehaviour {
 		isAttacking = false;
 		animator.SetBool("isAttacking", false);
 		DecreaseYVelocity();
+		ReturnEnemyToDamageable();
+	}
+
+	private void ReturnEnemyToDamageable() {
+		foreach (Enemy damagedEnemy in damagedEnemies) {
+			damagedEnemy.hasTakenDamage = false;
+		}
+		damagedEnemies.Clear();
 	}
 
 	public void TakeDamage(float damage, Transform damageSource) {
-		takingDamage = true;
+		//takingDamage = true;
 		playerCurrentHealth -= damage;
 		damageCooldownTimer = damageCooldownTime;
 		attackCooldownTimer = damageCooldownTime;
@@ -330,9 +344,15 @@ public class Player : MonoBehaviour {
 
 		Vector2 knockbackDirection = (transform.position - damageSource.position).normalized;
 		knockbackDirection.y = 1;
-		rb.AddForce(new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY), ForceMode2D.Impulse);
-		//rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY);
-		//rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
+		rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY)/*, ForceMode2D.Impulse)*/;
+
+		StartCoroutine(FreezeFrame());
+	}
+
+	public IEnumerator FreezeFrame() {
+		Time.timeScale = 0;
+		yield return new WaitForSecondsRealtime(0.05f);
+		Time.timeScale = 1;
 	}
 
 	#endregion

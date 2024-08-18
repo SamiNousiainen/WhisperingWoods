@@ -14,7 +14,7 @@ public class KeyInputManager : MonoBehaviour {
 		if (SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "LoadingScreen") {
 
 			if (Player.instance != null && WindowManager.instance.escapeableWindowStack.Count == 0) {
-				Time.timeScale = 1.0f;
+				//Time.timeScale = 1.0f;
 				if (Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire1")) {
 					GameInputLogic.PlayerAttack();
 				}
@@ -33,9 +33,9 @@ public class KeyInputManager : MonoBehaviour {
 
 
 			}
-			else if (Player.instance != null && WindowManager.instance.WindowIsOpen(WindowPanel.PauseMenu)) {
-				Time.timeScale = 0f;
-			}
+			//else if (Player.instance != null && WindowManager.instance.WindowIsOpen(WindowPanel.PauseMenu)) {
+			//	Time.timeScale = 0f;
+			//}
 
 			if (Input.GetKeyDown(KeyCode.Escape) && WindowManager.instance.escapeableWindowStack.Count == 0 && Player.instance.enabled == true) {
 				GameInputLogic.PlayerShowWindow(WindowPanel.PauseMenu);
