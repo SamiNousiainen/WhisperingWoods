@@ -14,7 +14,6 @@ public class PauseMenu : WindowBase {
 	//public PauseMenuMode mode;
 
 	private void Awake() {
-
 	}
 
 	public override void Init(object parameters) {
@@ -45,7 +44,6 @@ public class PauseMenu : WindowBase {
 	}
 
 	protected override void Destroying() {
-
 	}
 
 }

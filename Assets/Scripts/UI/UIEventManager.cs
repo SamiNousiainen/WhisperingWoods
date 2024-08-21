@@ -167,7 +167,8 @@ public class UIEventManager : MonoBehaviour {
 
 			//AudioManager.instance.ParentAudioListenerToObject(GameManager.instance.gameObject);
             SceneLoader.instance.LoadScene("MainMenu");
-        };
+			Time.timeScale = 1;
+		};
 
         eventHandlers[(int)MessageID.StartGame] = (arg1, callerTransform) => {
 
