@@ -30,10 +30,10 @@ public class Parallax : MonoBehaviour {
             startPosX -= length;
         }
 
-        if (camDisplacementY > startPosY + length) {
-            startPosY += length;
-        } else if (camDisplacementY < startPosY - length) {
-            startPosY -= length;
-        }
+        //if (camDisplacementY > startPosY + length) {
+        //    startPosY += length;
+        //} else if (camDisplacementY < startPosY - length) {
+        //    startPosY -= length;
+        //}
     }
 }
