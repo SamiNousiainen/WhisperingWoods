@@ -14,7 +14,7 @@ public class CameraManager : MonoBehaviour {
 	private float fallYPanTime = 0.35f;
 	public float fallSpeedYDampingChangeTreshold = -15f;
 
-	private CinemachineVirtualCamera currentCamera;
+	public CinemachineVirtualCamera currentCamera;
 	private CinemachineFramingTransposer framingTransposer;
 
 	private float normalYPanAmount;

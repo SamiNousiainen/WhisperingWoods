@@ -55,7 +55,7 @@ public class Player : MonoBehaviour {
 	public Transform attackPoint;
 	public Transform attackPointDown;
 	public Transform attackPointUp;
-	private float attackRange = 1.1f;
+	private float attackRadius = 2.2f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
 	private float knockbackForceX = 7f;
@@ -221,7 +221,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void DecreaseYVelocity() {
-		//variable jump height
+		//used for variable jump height and pogo jump
 		if (rb.velocity.y > 0f && Grounded() == false) {
 			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 		}
@@ -258,7 +258,7 @@ public class Player : MonoBehaviour {
 		isAttacking = true;
 		jumpTimer = 0.24f;
 
-		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRange, enemyLayer);
+		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRadius, enemyLayer);
 
 		foreach (Collider2D hitEnemy in hitEnemies) {
 			if (hitEnemy != null) {
@@ -284,7 +284,7 @@ public class Player : MonoBehaviour {
 
 		isAttacking = true;
 
-		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
 
 		while (isAttacking == true) {
 			foreach (Collider2D hitEnemy in hitEnemies) {
@@ -304,7 +304,7 @@ public class Player : MonoBehaviour {
 
 		isAttacking = true;
 
-		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointUp.position, attackRange, enemyLayer);
+		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointUp.position, attackRadius, enemyLayer);
 
 		while (isAttacking == true) {
 			foreach (Collider2D hitEnemy in hitEnemies) {
@@ -344,9 +344,9 @@ public class Player : MonoBehaviour {
 
 		Vector2 knockbackDirection = (transform.position - damageSource.position).normalized;
 		knockbackDirection.y = 1;
-		rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY)/*, ForceMode2D.Impulse)*/;
+		rb.velocity = new Vector2(knockbackDirection.x * knockbackForceX, knockbackDirection.y * knockbackForceY);
 
-		StartCoroutine(FreezeFrame());
+		//StartCoroutine(FreezeFrame());
 	}
 
 	public IEnumerator FreezeFrame() {
@@ -407,8 +407,8 @@ public class Player : MonoBehaviour {
 	private void OnDrawGizmos() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireCube(groundCheck.transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
-		Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-		Gizmos.DrawWireSphere(attackPointDown.position, attackRange);
-		Gizmos.DrawWireSphere(attackPointUp.position, attackRange);
+		Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+		Gizmos.DrawWireSphere(attackPointDown.position, attackRadius);
+		Gizmos.DrawWireSphere(attackPointUp.position, attackRadius);
 	}
 }
