@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
 	private float moveInputX;
 	[SerializeField]
 	private float moveInputY;
-	public float maxFallSpeed = -15f;
+	private float maxFallSpeed = -25f;
 	public bool canMove;
 
 	public float jumpBufferTime = 0.1f;
