@@ -74,8 +74,7 @@ public class SceneLoader : MonoBehaviour {
 					Debug.Log("checkpoint found");
 				}
 				else {
-					//Debug.Log("checkpoint not found");
-					//SceneSwapManager.instance.FindSpawnPoint(spawnPoint);
+					Debug.Log("checkpoint not found");
 				}
 				Object.DontDestroyOnLoad(persistentObject);
 				UserProfile.SaveCurrent();
@@ -87,7 +86,6 @@ public class SceneLoader : MonoBehaviour {
 				}
 				else {
 					Debug.Log("checkpoint not found");
-					//SceneSwapManager.instance.FindSpawnPoint(spawnPoint);
 				}
 				UserProfile.SaveCurrent();
 			}

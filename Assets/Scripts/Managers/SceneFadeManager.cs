@@ -58,6 +58,7 @@ public class SceneFadeManager : MonoBehaviour {
 
 	public void StartFadeIn() {
 		if (fadeOutImage.color.a >= 1f) {
+			WindowManager.instance.ShowWindow(ProjectEnums.WindowPanel.GameUI);
 			fadeOutImage.color = fadeOutStartColor;
 			isFadingIn = true;
 			Debug.Log("fading in");
