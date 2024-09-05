@@ -6,14 +6,12 @@ public class Parallax : MonoBehaviour {
 	private float startPosX;
 	private float startPosY;
 	public Camera cam;
-	//public CinemachineVirtualCamera cam;
 	public float parallaxEffectAmount;
 
 	void Start() {
 		startPosX = transform.position.x;
 		startPosY = transform.position.y;
 
-		//cam = CameraManager.instance.currentCamera;
 		cam = Camera.main;
 		length = GetComponent<SpriteRenderer>().bounds.size.x;
 	}
@@ -34,10 +32,11 @@ public class Parallax : MonoBehaviour {
 			startPosX -= length;
 		}
 
-		//if (camDisplacementY > startPosY + length) {
-		//    startPosY += length;
-		//} else if (camDisplacementY < startPosY - length) {
-		//    startPosY -= length;
-		//}
+		if (camDisplacementY > startPosY + length) {
+			startPosY += length;
+		}
+		if (camDisplacementY < startPosY - length) {
+			startPosY -= length;
+		}
 	}
 }
