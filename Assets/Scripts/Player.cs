@@ -205,8 +205,14 @@ public class Player : MonoBehaviour {
 				rb.velocity = Vector2.zero;
 			}
 			else {
+				if (moveInputX >= 0.1f) {
+					rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+				}
+				if (moveInputX <= -0.1f) {
+					rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+				}
 				// Set the player's velocity based on input
-				rb.velocity = new Vector2(moveInputX * moveSpeed, rb.velocity.y);
+				//rb.velocity = new Vector2(moveInputX * moveSpeed, rb.velocity.y);
 			}
 		}
 	}
