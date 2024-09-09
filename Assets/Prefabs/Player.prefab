@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 1348319661718690007}
   - component: {fileID: 6751860548379643205}
   - component: {fileID: 8288913583060143638}
+  - component: {fileID: 3766206526517976910}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -173,7 +174,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1550573191
-  m_SortingLayer: 1
+  m_SortingLayer: 6
   m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 3d343f9758845ee4ca13de13d9e3d2e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -357,6 +358,46 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.26, y: 3.25}
   m_EdgeRadius: 0
+--- !u!114 &3766206526517976910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7654248708343260500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 000000007d5ec8a9e1534ee96d06bf0d851b991eaf6be73b87de6b5c
+  m_ShapePath:
+  - {x: -0.49954748, y: -1.9152448, z: 0}
+  - {x: -0.5538945, y: -1.5707263, z: 0}
+  - {x: -1.0503074, y: -1.0007708, z: 0}
+  - {x: -0.9514663, y: -0.25428843, z: 0}
+  - {x: -0.9092045, y: 0.497971, z: 0}
+  - {x: -0.94753146, y: 0.85550183, z: 0}
+  - {x: -0.7940244, y: 1.3799846, z: 0}
+  - {x: -0.06486494, y: 1.9044673, z: 0}
+  - {x: 0.40274215, y: 1.9254498, z: 0}
+  - {x: 0.99161434, y: 1.4521363, z: 0}
+  - {x: 0.91695976, y: 0.3321914, z: 0}
+  - {x: 1.2295163, y: -0.99157774, z: 0}
+  - {x: 1.0272739, y: -1.3500981, z: 0}
+  - {x: 0.8764539, y: -1.9060521, z: 0}
+  m_ShapePathHash: -431431614
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 72888
+  m_LocalBounds:
+    m_Center: {x: 0.0896045, y: 0.005102515, z: 0}
+    m_Extent: {x: 1.1399119, y: 1.9203473, z: 0}
 --- !u!1 &8001497269847744011
 GameObject:
   m_ObjectHideFlags: 0
