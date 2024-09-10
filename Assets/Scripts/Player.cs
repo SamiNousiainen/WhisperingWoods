@@ -142,7 +142,7 @@ public class Player : MonoBehaviour {
 					DecreaseYVelocity();
 				}
 
-				if (moveInputX > 0f || moveInputX < 0f) {
+				if (moveInputX > 0.1f || moveInputX < -0.1f) {
 					FlipCheck();
 				}
 
