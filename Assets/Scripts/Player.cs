@@ -142,7 +142,7 @@ public class Player : MonoBehaviour {
 					DecreaseYVelocity();
 				}
 
-				if (moveInputX > 0f || moveInputX < 0f) {
+				if (moveInputX > 0.1f || moveInputX < -0.1f) {
 					FlipCheck();
 				}
 
@@ -205,8 +205,17 @@ public class Player : MonoBehaviour {
 				rb.velocity = Vector2.zero;
 			}
 			else {
+				if (moveInputX >= 0.1f) {
+					rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+				}
+				if (moveInputX <= -0.1f) {
+					rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+				}
+				if (moveInputX == 0f) {
+					rb.velocity = new Vector2(0f, rb.velocity.y);
+				}
 				// Set the player's velocity based on input
-				rb.velocity = new Vector2(moveInputX * moveSpeed, rb.velocity.y);
+				//rb.velocity = new Vector2(moveInputX * moveSpeed, rb.velocity.y);
 			}
 		}
 	}
@@ -395,6 +404,7 @@ public class Player : MonoBehaviour {
 	}
 
 	private void SlopeCheck() {
+		//WIP, might not need this feature
 		//Vector2 checkPosition = transform.position - new Vector3(0f, colliderSize.y / 2);
 		if (moveInputX == 0f && Grounded() == true) {
 			boxCollider.sharedMaterial = fullFriction;
