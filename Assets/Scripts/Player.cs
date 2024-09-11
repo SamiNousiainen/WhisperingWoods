@@ -300,6 +300,7 @@ public class Player : MonoBehaviour {
 				if (hitEnemy != null) {
 					Enemy enemy = hitEnemy.GetComponent<Enemy>();
 					if (enemy.hasTakenDamage == false) {
+						StartCoroutine(FreezeFrame());
 						enemy.TakeDamage(attackDamage);
 						damagedEnemies.Add(enemy);
 					}
