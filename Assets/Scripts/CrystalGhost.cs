@@ -11,4 +11,8 @@ public class CrystalGhost : Enemy {
 	public override void TakeDamage(float damage) {
 		base.TakeDamage(damage);
 	}
+
+	public override void DealDamage() {
+		base.DealDamage();
+	}
 }

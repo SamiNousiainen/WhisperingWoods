@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void DealDamage() {
+	public virtual void DealDamage() {
 		if (Player.instance != null) {
 			Player.instance.TakeDamage(damage, transform);
 		}
