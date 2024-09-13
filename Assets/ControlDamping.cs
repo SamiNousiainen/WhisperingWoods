@@ -18,7 +18,7 @@ public class ControlDamping : MonoBehaviour {
 	}
 
 	private IEnumerator AddDamping() {
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(1f);
 		confiner.m_Damping = 2f;
 	}
 }
