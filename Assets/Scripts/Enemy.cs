@@ -3,41 +3,35 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-	private float health = 50f;
+	public float health = 50f;
 	private float damage = 10f;
-	public float damageCooldownTimer = 0f;
-	private float damageCooldownTime = 0.2f;
 	public bool hasTakenDamage;
+	[SerializeField]
 	private SpriteRenderer spriteRenderer;
 	private Color originalColor;
 
-	void Start() {
+	void Awake() {
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		originalColor = spriteRenderer.color;
 	}
 
 	void Update() {
-		//damageCooldownTimer -= Time.deltaTime;
-		//if (damageCooldownTimer <= 0) {
-		//	hasTakenDamage = false;
-		//}
+
 	}
 
-	public void TakeDamage(float damage) {
+	public virtual void TakeDamage(float damage) {
 		hasTakenDamage = true;
 		health -= damage;
-		Debug.Log(damage);
-		//damageCooldownTimer = damageCooldownTime;
+		Debug.Log(health);
 		//play damage animation
-		StartCoroutine(Player.instance.FreezeFrame());
 		StartCoroutine(FlashRed());
 		if (health <= 0) {
 			Debug.Log("enemy dead");
-			//Destroy(gameObject);
+			Destroy(gameObject);
 		}
 	}
 
-	public void DealDamage() {
+	public virtual void DealDamage() {
 		if (Player.instance != null) {
 			Player.instance.TakeDamage(damage, transform);
 		}
