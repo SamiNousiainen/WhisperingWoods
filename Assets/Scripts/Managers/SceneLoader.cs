@@ -1,7 +1,7 @@
+using ProjectEnums;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using ProjectEnums;
 
 public class SceneLoader : MonoBehaviour {
 
@@ -78,7 +78,8 @@ public class SceneLoader : MonoBehaviour {
 				}
 				Object.DontDestroyOnLoad(persistentObject);
 				UserProfile.SaveCurrent();
-			} else {
+			}
+			else {
 				if (UserProfile.CurrentProfile.currentCheckpoint != Checkpoint.CheckpointNumber.None) {
 					checkpoint = UserProfile.CurrentProfile.currentCheckpoint; // Retrieve saved checkpoint
 					SceneSwapManager.instance.FindCheckpoint(checkpoint);
