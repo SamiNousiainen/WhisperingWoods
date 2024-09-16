@@ -1,7 +1,12 @@
+using UnityEngine;
+
 public class CrystalGhost : Enemy {
 
+	[SerializeField]
+	private GameObject lightningPrefab;
+
 	void Start() {
-		health = 100f;
+		health = 500f;
 	}
 
 	void Update() {
@@ -10,6 +15,9 @@ public class CrystalGhost : Enemy {
 
 	public override void TakeDamage(float damage) {
 		base.TakeDamage(damage);
+		Instantiate(lightningPrefab, BossArena.instance.attackTest1.position, Quaternion.identity);
+		Instantiate(lightningPrefab, BossArena.instance.attackTest2.position, Quaternion.identity);
+
 	}
 
 	public override void DealDamage() {
