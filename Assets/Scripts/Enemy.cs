@@ -27,8 +27,12 @@ public class Enemy : MonoBehaviour {
 		StartCoroutine(FlashRed());
 		if (health <= 0) {
 			Debug.Log("enemy dead");
-			Destroy(gameObject);
+			Die();
 		}
+	}
+
+	public virtual void Die() {
+		Destroy(gameObject);
 	}
 
 	public virtual void DealDamage() {
