@@ -15,4 +15,9 @@ public class CrystalGhost : Enemy {
 	public override void DealDamage() {
 		base.DealDamage();
 	}
+
+	public override void Die() {
+		//Play death anim
+		Destroy(gameObject);
+	}
 }
