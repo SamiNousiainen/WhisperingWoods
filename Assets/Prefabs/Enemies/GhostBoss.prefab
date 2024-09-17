@@ -221,6 +221,7 @@ MonoBehaviour:
   hasTakenDamage: 0
   spriteRenderer: {fileID: 0}
   lightningPrefab: {fileID: 8019729156119395257, guid: a02666d319b140940915645a3a0a5a73, type: 3}
+  crystalPrefab: {fileID: 1999892419433337578, guid: f3d6404591e72eb4895c2a4f24a2d3b1, type: 3}
 --- !u!95 &5768129268134962858
 Animator:
   serializedVersion: 5
