@@ -16,8 +16,12 @@ public class LightningStrike : MonoBehaviour {
 	}
 
 	public void ActivateDamageCollider() {
-		coll.enabled = true;
-		spriteRenderer.color = Color.red; //temp solution for testing
+		if (coll != null) {
+			coll.enabled = true;
+		}
+		if (spriteRenderer != null) {
+			spriteRenderer.color = Color.red; //temp solution for testing
+		}
 	}
 
 
