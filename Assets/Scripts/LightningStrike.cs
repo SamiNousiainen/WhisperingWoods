@@ -4,9 +4,11 @@ public class LightningStrike : MonoBehaviour {
 
 	float damage = 10f;
 	private Collider2D coll;
+	private SpriteRenderer spriteRenderer;
 
 	void Start() {
 		coll = GetComponent<Collider2D>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
 	void Update() {
@@ -15,6 +17,7 @@ public class LightningStrike : MonoBehaviour {
 
 	public void ActivateDamageCollider() {
 		coll.enabled = true;
+		spriteRenderer.color = Color.red; //temp solution for testing
 	}
 
 
