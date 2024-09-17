@@ -9,28 +9,36 @@ public class CrystalGhost : Enemy {
 	[SerializeField]
 	private GameObject crystalPrefab;
 	private List<GameObject> attacks;
-	private float burstAmount = 5f;
+	private float fallingCrystalsAmount = 5f;
 	private float projectileInterval = 0.7f;
+	private float attackTimer = 0f;
+	private float attackTime = 5f;
 
 	void Start() {
 		health = 500f;
 	}
 
 	void Update() {
-
+		attackTimer -= Time.deltaTime;
 	}
 
 	public override void TakeDamage(float damage) {
 		base.TakeDamage(damage);
-		//StartCoroutine(CrystalAttack());
-		StartCoroutine(LightningAttack());
+		if (attackTimer <= 0f) {
+			//StartCoroutine(CrystalAttack());
+			StartCoroutine(LightningAttack());
+		}
 	}
 
 	private IEnumerator LightningAttack() {
 		if (lightningPrefab != null) {
+			attackTimer = attackTime;
 			GameObject lightning = Instantiate(lightningPrefab, BossArena.instance.transform.position, Quaternion.identity);
-			yield return new WaitForSeconds(2);
+			yield return new WaitForSeconds(1);
+			GameObject lightning2 = Instantiate(lightningPrefab, new Vector2(BossArena.instance.transform.position.x + 2.5f, BossArena.instance.transform.position.y), Quaternion.identity);
 			Destroy(lightning);
+			yield return new WaitForSeconds(1);
+			Destroy(lightning2);
 		}
 	}
 
@@ -44,7 +52,7 @@ public class CrystalGhost : Enemy {
 	private IEnumerator CrystalAttack() {
 		//attackTimer = attackTime;
 
-		for (int i = 0; i < burstAmount; i++) {
+		for (int i = 0; i < fallingCrystalsAmount; i++) {
 			FallingCrystals();
 
 			yield return new WaitForSeconds(projectileInterval);

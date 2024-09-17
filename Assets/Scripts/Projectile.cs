@@ -13,7 +13,6 @@ public class Projectile : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
-		Debug.Log("hit");
 		Player player = collision.gameObject.GetComponent<Player>();
 		if (player != null && Player.instance.damageCooldownTimer < 0f) {
 			Player.instance.TakeDamage(damage, transform);
