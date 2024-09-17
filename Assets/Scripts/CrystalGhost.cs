@@ -22,8 +22,8 @@ public class CrystalGhost : Enemy {
 
 	public override void TakeDamage(float damage) {
 		base.TakeDamage(damage);
-		StartCoroutine(CrystalAttack());
-		//StartCoroutine(LightningAttack());
+		//StartCoroutine(CrystalAttack());
+		StartCoroutine(LightningAttack());
 	}
 
 	private IEnumerator LightningAttack() {
