@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2724838065853573864}
   - component: {fileID: 7261305986060310263}
   - component: {fileID: 3531080707827911905}
+  - component: {fileID: 5768129268134962858}
   m_Layer: 7
   m_Name: GhostBoss
   m_TagString: Untagged
@@ -219,4 +220,25 @@ MonoBehaviour:
   health: 50
   hasTakenDamage: 0
   spriteRenderer: {fileID: 0}
-  lightningPrefab: {fileID: 7953604484413601869, guid: 452a2aa105fc78c408842c4384621be1, type: 3}
+  lightningPrefab: {fileID: 8019729156119395257, guid: a02666d319b140940915645a3a0a5a73, type: 3}
+--- !u!95 &5768129268134962858
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266194672428274003}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7638f2d8ce5362341a4c3c611b3fbe13, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

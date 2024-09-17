@@ -15,8 +15,7 @@ public class CrystalGhost : Enemy {
 
 	public override void TakeDamage(float damage) {
 		base.TakeDamage(damage);
-		Instantiate(lightningPrefab, BossArena.instance.attackTest1.position, Quaternion.identity);
-		Instantiate(lightningPrefab, BossArena.instance.attackTest2.position, Quaternion.identity);
+		Instantiate(lightningPrefab, new Vector2(BossArena.instance.transform.position.x, 7), Quaternion.identity);
 
 	}
 
