@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2724838065853573864}
   - component: {fileID: 7261305986060310263}
   - component: {fileID: 3531080707827911905}
+  - component: {fileID: -3882549471956077466}
   - component: {fileID: 5768129268134962858}
   m_Layer: 7
   m_Name: GhostBoss
@@ -222,6 +223,19 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   lightningPrefab: {fileID: 8019729156119395257, guid: a02666d319b140940915645a3a0a5a73, type: 3}
   crystalPrefab: {fileID: 1999892419433337578, guid: f3d6404591e72eb4895c2a4f24a2d3b1, type: 3}
+--- !u!114 &-3882549471956077466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266194672428274003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d707545a3b38d24a9b110a365a645ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
 --- !u!95 &5768129268134962858
 Animator:
   serializedVersion: 5
