@@ -41,12 +41,12 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision) {
-		Player player = collision.gameObject.GetComponent<Player>();
-		if (player != null && Player.instance.damageCooldownTimer < 0f) {
-			DealDamage();
-		}
-	}
+	//private void OnCollisionEnter2D(Collision2D collision) {
+	//	Player player = collision.gameObject.GetComponent<Player>();
+	//	if (player != null && Player.instance.damageCooldownTimer < 0f) {
+	//		DealDamage();
+	//	}
+	//}
 
 	private IEnumerator FlashRed() {
 		spriteRenderer.color = Color.red; // Change to red

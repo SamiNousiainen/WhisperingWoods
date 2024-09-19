@@ -50,7 +50,7 @@ public class Player : MonoBehaviour {
 	//combat
 	public float damageCooldownTimer = 0f;
 	private float damageCooldownTime = 0.5f;
-	private float attackRate = 0.35f;
+	private float attackRate = 0.3f;
 	public float attackCooldownTimer = 0f;
 	public Transform attackPoint;
 	public Transform attackPointDown;
@@ -58,8 +58,8 @@ public class Player : MonoBehaviour {
 	private float attackRadius = 2.2f;
 	private float attackDamage = 10f;
 	public LayerMask enemyLayer;
-	private float knockbackForceX = 7f;
-	private float knockbackForceY = 12f;
+	private float knockbackForceX = 14f;
+	private float knockbackForceY = 24f;
 	//private bool takingDamage;
 	public bool isAttacking { get; private set; } = false;
 
@@ -117,15 +117,6 @@ public class Player : MonoBehaviour {
 				else {
 					canMove = false;
 				}
-				//if (damageCooldownTimer <= 0 && Grounded() == true) {
-				//	takingDamage = false;
-				//}
-				//if (takingDamage == true) {
-				//	canMove = false;
-				//}
-				//else {
-				//	canMove = true;
-				//}
 				attackCooldownTimer -= Time.deltaTime;
 				damageCooldownTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
@@ -346,10 +337,10 @@ public class Player : MonoBehaviour {
 	}
 
 	public void TakeDamage(float damage, Transform damageSource) {
-		//takingDamage = true;
 		playerCurrentHealth -= damage;
 		damageCooldownTimer = damageCooldownTime;
 		attackCooldownTimer = damageCooldownTime;
+		isAttacking = false;
 		Debug.Log("damage taken = " + damage);
 
 		Vector2 knockbackDirection = (transform.position - damageSource.position).normalized;

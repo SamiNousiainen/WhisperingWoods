@@ -32,9 +32,9 @@ AnimationClip:
       value: {fileID: 21300000, guid: aee19fcf35ce8fe42bc4c4f9cea32898, type: 3}
     - time: 0.3
       value: {fileID: 21300000, guid: 3cf18e44fd595a74caf444f33900576c, type: 3}
-    - time: 0.35
+    - time: 0.33333334
       value: {fileID: 21300000, guid: 19b65bfbd89c5cc4fa22873c1d4eb986, type: 3}
-    - time: 0.4
+    - time: 0.35
       value: {fileID: 21300000, guid: 19b65bfbd89c5cc4fa22873c1d4eb986, type: 3}
     attribute: m_Sprite
     path: 
@@ -71,7 +71,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.4166667
+    m_StopTime: 0.36666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -98,7 +98,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.31666666
+  - time: 0.33333334
     functionName: StopAttacking
     data: 
     objectReferenceParameter: {fileID: 0}

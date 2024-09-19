@@ -92,7 +92,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6061652630025478156}
   - component: {fileID: 2724838065853573864}
-  - component: {fileID: 7261305986060310263}
+  - component: {fileID: 8925408541223789979}
+  - component: {fileID: 1407858287934021744}
   - component: {fileID: 3531080707827911905}
   - component: {fileID: -3882549471956077466}
   - component: {fileID: 5768129268134962858}
@@ -171,8 +172,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &7261305986060310263
-CapsuleCollider2D:
+--- !u!50 &8925408541223789979
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266194672428274003}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!60 &1407858287934021744
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -203,9 +231,33 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.088142395, y: -0.16747522}
-  m_Size: {x: 3.535141, y: 6.3541174}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 6.25, y: 7.5}
+    newSize: {x: 6.25, y: 7.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.0522842, y: 2.5071244}
+      - {x: -2.8003235, y: 2.5644765}
+      - {x: -1.7777481, y: 0.024371624}
+      - {x: -2.5860062, y: -2.0750315}
+      - {x: -2.5635757, y: -3.194377}
+      - {x: -1.0314407, y: -2.9273088}
+      - {x: -0.02368164, y: -3.5648317}
+      - {x: 0.84576416, y: -2.9679492}
+      - {x: 2.4491653, y: -3.361124}
+      - {x: 2.481575, y: -2.1200962}
+      - {x: 1.5358429, y: 0.04558897}
+      - {x: 2.835205, y: 2.5619493}
+      - {x: 1.1281204, y: 2.4595616}
+      - {x: 0.0341568, y: 3.3467045}
+  m_UseDelaunayMesh: 0
 --- !u!114 &3531080707827911905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d707545a3b38d24a9b110a365a645ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
 --- !u!95 &5768129268134962858
 Animator:
   serializedVersion: 5
