@@ -74,7 +74,7 @@ public class Player : MonoBehaviour {
 	Animator animator;
 
 	//player character colliders
-	BoxCollider2D boxCollider;
+	BoxCollider2D characterCollider;
 	Vector2 colliderSize;
 
 
@@ -99,8 +99,8 @@ public class Player : MonoBehaviour {
 		isFacingRight = true;
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
-		boxCollider = GetComponent<BoxCollider2D>();
-		colliderSize = boxCollider.size;
+		characterCollider = GetComponent<BoxCollider2D>();
+		colliderSize = characterCollider.size;
 
 	}
 
@@ -399,10 +399,10 @@ public class Player : MonoBehaviour {
 		//WIP, might not need this feature
 		//Vector2 checkPosition = transform.position - new Vector3(0f, colliderSize.y / 2);
 		if (moveInputX == 0f && Grounded() == true) {
-			boxCollider.sharedMaterial = fullFriction;
+			characterCollider.sharedMaterial = fullFriction;
 		}
 		else {
-			boxCollider.sharedMaterial = noFriction;
+			characterCollider.sharedMaterial = noFriction;
 		}
 	}
 

@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour {
 		hasTakenDamage = true;
 		health -= damage;
 		Debug.Log(health);
-		//play damage animation
 		StartCoroutine(FlashRed());
 		if (health <= 0) {
 			Debug.Log("enemy dead");
@@ -41,12 +40,12 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	//private void OnCollisionEnter2D(Collision2D collision) {
-	//	Player player = collision.gameObject.GetComponent<Player>();
-	//	if (player != null && Player.instance.damageCooldownTimer < 0f) {
-	//		DealDamage();
-	//	}
-	//}
+	private void OnCollisionEnter2D(Collision2D collision) {
+		Player player = collision.gameObject.GetComponent<Player>();
+		if (player != null && Player.instance.damageCooldownTimer < 0f) {
+			DealDamage();
+		}
+	}
 
 	private IEnumerator FlashRed() {
 		spriteRenderer.color = Color.red; // Change to red

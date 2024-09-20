@@ -5,8 +5,7 @@ public class BossArena : MonoBehaviour {
 	public static BossArena instance;
 
 	public Transform spawnPoint;
-	//public Transform attackTest1;
-	//public Transform attackTest2;
+	public Collider2D arenaBoundaries;
 
 	private void Awake() {
 		if (instance == null) {
