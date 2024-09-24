@@ -16,6 +16,7 @@ public class CrystalGhost : Enemy {
 
 	private Rigidbody2D rb;
 	private Animator animator;
+	[System.NonSerialized]
 	private SpriteRenderer spriteRenderer;
 	private Light2D spotLight;
 
