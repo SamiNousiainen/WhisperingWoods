@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
 	private float moveInputX;
 	[SerializeField]
 	private float moveInputY;
-	private float maxFallSpeed = -25f;
+	private float maxFallSpeed = -30f;
 	public bool canMove;
 
 	public float jumpBufferTime = 0.1f;
@@ -223,7 +223,7 @@ public class Player : MonoBehaviour {
 	public void DecreaseYVelocity() {
 		//used for variable jump height and pogo jump
 		if (rb.velocity.y > 0f && Grounded() == false) {
-			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.4f);
 		}
 	}
 

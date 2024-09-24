@@ -257,7 +257,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1550573191
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 3d343f9758845ee4ca13de13d9e3d2e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -286,8 +286,8 @@ MonoBehaviour:
   playerCurrentHealth: 100
   playerMaxMana: 100
   playerCurrentMana: 100
-  moveSpeed: 16
-  jumpForce: 31
+  moveSpeed: 18
+  jumpForce: 34
   moveInputX: 0
   moveInputY: 0
   canMove: 0
@@ -328,7 +328,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 7
+  m_GravityScale: 8
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -477,7 +477,7 @@ MonoBehaviour:
   - {x: 0.8764539, y: -1.9060521, z: 0}
   m_ShapePathHash: -431431614
   m_Mesh: {fileID: 0}
-  m_InstanceId: 60092
+  m_InstanceId: 51618
   m_LocalBounds:
     m_Center: {x: 0.0896045, y: 0.005102515, z: 0}
     m_Extent: {x: 1.1399119, y: 1.9203473, z: 0}

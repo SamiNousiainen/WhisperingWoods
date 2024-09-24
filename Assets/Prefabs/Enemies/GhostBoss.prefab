@@ -147,7 +147,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -218,6 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   hasTakenDamage: 0
+  spriteRenderer: {fileID: 0}
   lightningPrefab: {fileID: 8019729156119395257, guid: a02666d319b140940915645a3a0a5a73, type: 3}
   crystalPrefab: {fileID: 1999892419433337578, guid: f3d6404591e72eb4895c2a4f24a2d3b1, type: 3}
   teleportParticles: {fileID: 5161120994710866217, guid: 40af7d11503a79f478842773f4740036, type: 3}
