@@ -62212,6 +62212,10 @@ PrefabInstance:
       value: 230622829
       objectReference: {fileID: 0}
     - target: {fileID: 764034414923266102, guid: c1ab07bd403094f46b211779d6a4bc2f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 336ad11c5d302234dab33365f6df5582, type: 3}
+    - target: {fileID: 764034414923266102, guid: c1ab07bd403094f46b211779d6a4bc2f, type: 3}
       propertyPath: m_Color.b
       value: 0.47058824
       objectReference: {fileID: 0}
@@ -110908,6 +110912,10 @@ PrefabInstance:
       value: 230622829
       objectReference: {fileID: 0}
     - target: {fileID: 764034414923266102, guid: c1ab07bd403094f46b211779d6a4bc2f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 336ad11c5d302234dab33365f6df5582, type: 3}
+    - target: {fileID: 764034414923266102, guid: c1ab07bd403094f46b211779d6a4bc2f, type: 3}
       propertyPath: m_Color.b
       value: 0.47058824
       objectReference: {fileID: 0}
@@ -111137,6 +111145,10 @@ PrefabInstance:
       propertyPath: m_ApplyToSortingLayers.Array.data[0]
       value: 230622829
       objectReference: {fileID: 0}
+    - target: {fileID: 764034414923266102, guid: c1ab07bd403094f46b211779d6a4bc2f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 336ad11c5d302234dab33365f6df5582, type: 3}
     - target: {fileID: 764034414923266102, guid: c1ab07bd403094f46b211779d6a4bc2f, type: 3}
       propertyPath: m_Color.b
       value: 0.47058824
