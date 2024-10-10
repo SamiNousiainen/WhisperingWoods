@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour {
 
 	private void OnCollisionEnter2D(Collision2D collision) {
 		Player player = collision.gameObject.GetComponent<Player>();
-		if (player != null && Player.instance.damageCooldownTimer < 0f) {
+		if (player != null && Player.instance.takingDamageTimer < 0f) {
 			DealDamage();
 		}
 	}

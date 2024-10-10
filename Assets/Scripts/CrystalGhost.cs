@@ -24,7 +24,7 @@ public class CrystalGhost : Enemy {
 	private float fallingCrystalsAmount = 5f;
 	private float projectileInterval = 0.7f;
 	private float attackTimer = 0f;
-	private float attackTime = 5f;
+	private float attackTime = 2f;
 	private float lightningOffset = 2.5f;
 	private float dashSpeed = 40f;
 	private bool isAttacking = false;
@@ -43,10 +43,16 @@ public class CrystalGhost : Enemy {
 		collDashing = GetComponent<CapsuleCollider2D>();
 		collFloating = GetComponent<PolygonCollider2D>();
 		targetPos = rb.position;
+		attackTimer = attackTime;
 	}
 
 	void Update() {
 		attackTimer -= Time.deltaTime;
+
+		if (attackTimer < 0f) {
+
+		}
+
 	}
 
 	private void FixedUpdate() {
@@ -57,7 +63,7 @@ public class CrystalGhost : Enemy {
 
 	public override void TakeDamage(float damage) {
 		base.TakeDamage(damage);
-		Attack();
+		//Attack();
 	}
 
 	public void SetTargetPos(Vector2 target) {
@@ -123,7 +129,7 @@ public class CrystalGhost : Enemy {
 		spriteRenderer.enabled = true;
 		spotLight.enabled = true;
 		RotationCheck();
-		animator.Play("dash");
+		animator.Play("dash"); //change this animation name to dash startup etc.
 		yield return new WaitForSeconds(0.28f);
 		if (transform.position.x < BossArena.instance.transform.position.x) {
 			animator.Play("dashing");
@@ -151,6 +157,7 @@ public class CrystalGhost : Enemy {
 		Instantiate(teleportParticles, transform.position, Quaternion.identity);
 
 		isAttacking = false;
+		attackTimer = attackTime;
 	}
 
 	private IEnumerator LightningAttack() {
@@ -215,7 +222,7 @@ public class CrystalGhost : Enemy {
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		Player player = collision.gameObject.GetComponent<Player>();
-		if (player != null && Player.instance.damageCooldownTimer < 0f) {
+		if (player != null && Player.instance.takingDamageTimer < 0f) {
 			DealDamage();
 		}
 	}

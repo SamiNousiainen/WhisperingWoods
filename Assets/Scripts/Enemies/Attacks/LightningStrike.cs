@@ -27,7 +27,7 @@ public class LightningStrike : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		Player player = collision.gameObject.GetComponent<Player>();
-		if (player != null && Player.instance.damageCooldownTimer < 0f) {
+		if (player != null && Player.instance.takingDamageTimer < 0f) {
 			Player.instance.TakeDamage(damage, transform);
 		}
 	}

@@ -15,6 +15,11 @@ public class Player : MonoBehaviour {
 	public float playerCurrentMana = 100;
 	public float moveSpeed = 3f;
 	public float jumpForce = 6f;
+	private float dashSpeed = 40f;
+	private float dashDuration = 0.15f;
+	private bool isDashing;
+	private float dashCooldownTimer = 0f;
+	private float dashCooldownTime = 0.5f;
 
 	[Header("Other")]
 	[SerializeField]
@@ -48,8 +53,10 @@ public class Player : MonoBehaviour {
 
 	[Header("Combat")]
 	//combat
-	public float damageCooldownTimer = 0f;
-	private float damageCooldownTime = 0.5f;
+	public float takingDamageTimer = 0f;
+	private float takingDamageTime = 0.5f;
+	private float immunityTimer = 0f;
+	private float immunityTime = 1.5f;
 	private float attackRate = 0.3f;
 	public float attackCooldownTimer = 0f;
 	public Transform attackPoint;
@@ -60,7 +67,6 @@ public class Player : MonoBehaviour {
 	public LayerMask enemyLayer;
 	private float knockbackForceX = 14f;
 	private float knockbackForceY = 24f;
-	//private bool takingDamage;
 	public bool isAttacking { get; private set; } = false;
 
 	private List<Enemy> damagedEnemies = new List<Enemy>();
@@ -111,16 +117,26 @@ public class Player : MonoBehaviour {
 				fallSpeedYDampingChangeTreshold = CameraManager.instance.fallSpeedYDampingChangeTreshold;
 			}
 			if (interactionEnabled == true) {
-				if (damageCooldownTimer <= 0) {
-					canMove = true;
-				}
-				else {
+				if (takingDamageTimer > 0 || isDashing == true) {
 					canMove = false;
 				}
+				else {
+					canMove = true;
+				}
+
+				if (immunityTimer > 0 || isDashing == true) {
+					Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+				}
+				else {
+					Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+				}
+
 				attackCooldownTimer -= Time.deltaTime;
-				damageCooldownTimer -= Time.deltaTime;
+				takingDamageTimer -= Time.deltaTime;
+				immunityTimer -= Time.deltaTime;
 				jumpBufferTimer -= Time.deltaTime;
 				jumpTimer -= Time.deltaTime;
+				dashCooldownTimer -= Time.deltaTime;
 
 				if (Grounded() == true) {
 					coyoteTimeTimer = coyoteTime;
@@ -129,7 +145,7 @@ public class Player : MonoBehaviour {
 					coyoteTimeTimer -= Time.deltaTime;
 				}
 
-				if (jumpTimer <= 0f && Input.GetButton("Jump") == false && damageCooldownTimer <= 0f) {
+				if (jumpTimer <= 0f && Input.GetButton("Jump") == false && takingDamageTimer <= 0f) {
 					DecreaseYVelocity();
 				}
 
@@ -172,7 +188,13 @@ public class Player : MonoBehaviour {
 			animator.SetBool("isJumping", false);
 		}
 		Move();
-		SlopeCheck();
+		//SlopeCheck();
+		if (isDashing == true || moveInputX != 0f) {
+			characterCollider.sharedMaterial = noFriction;
+		}
+		else {
+			characterCollider.sharedMaterial = fullFriction;
+		}
 	}
 
 	public void StopPlayer(bool stopPlayer) {
@@ -188,7 +210,6 @@ public class Player : MonoBehaviour {
 
 	void Move() {
 		if (canMove == true) {
-			// Get the horizontal input (A/D keys or Left/Right arrow keys)
 			moveInputX = Input.GetAxisRaw("Horizontal");
 			moveInputY = Input.GetAxis("Vertical");
 
@@ -205,10 +226,35 @@ public class Player : MonoBehaviour {
 				if (moveInputX == 0f) {
 					rb.velocity = new Vector2(0f, rb.velocity.y);
 				}
-				// Set the player's velocity based on input
-				//rb.velocity = new Vector2(moveInputX * moveSpeed, rb.velocity.y);
 			}
 		}
+	}
+
+	public void Dash() {
+		if (dashCooldownTimer <= 0) {
+			StartCoroutine(StartDash());
+		}
+	}
+
+	private IEnumerator StartDash() {
+		isDashing = true;
+		dashCooldownTimer = dashCooldownTime;
+		if (Grounded() == false) {
+			rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+		}
+		else {
+			rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
+		if (isFacingRight == true) {
+			rb.velocity = new Vector2(dashSpeed, 0f);
+		}
+		else {
+			rb.velocity = new Vector2(-dashSpeed, 0f);
+		}
+		yield return new WaitForSeconds(dashDuration);
+		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		rb.velocity = Vector2.zero;
+		isDashing = false;
 	}
 
 	public void Jump() {
@@ -231,6 +277,7 @@ public class Player : MonoBehaviour {
 
 	public void Attack() {
 		if (attackCooldownTimer <= 0f) {
+			//dealing damage is started and stopped with animation triggers
 			animator.SetBool("isAttacking", true);
 			if (moveInputY <= -0.5f && Grounded() == false) {
 				animator.Play("LongswordDown");
@@ -239,7 +286,7 @@ public class Player : MonoBehaviour {
 				animator.Play("LongswordUp"); //mid air upward slash
 			}
 			else if (moveInputY >= 0.5f && Grounded() == true) {
-				animator.Play("LongswordUp2"); //upward slash while grounded (retarded animation names fr)
+				animator.Play("LongswordUp2"); //upward slash while grounded 
 			}
 			else {
 				if (Grounded() == false) {
@@ -338,8 +385,9 @@ public class Player : MonoBehaviour {
 
 	public void TakeDamage(float damage, Transform damageSource) {
 		playerCurrentHealth -= damage;
-		damageCooldownTimer = damageCooldownTime;
-		attackCooldownTimer = damageCooldownTime;
+		takingDamageTimer = takingDamageTime;
+		attackCooldownTimer = takingDamageTime;
+		immunityTimer = immunityTime;
 		isAttacking = false;
 		Debug.Log("damage taken = " + damage);
 

@@ -10,8 +10,8 @@ public static class GameInputLogic {
 		Player.instance.Jump();
 	}
 
-	public static void PlayerDecreaseYVelocity() {
-		//Player.instance.DecreaseYVelocity();
+	public static void PlayerDash() {
+		Player.instance.Dash();
 	}
 
 	public static void PlayerShowWindow(WindowPanel panel, object parameters = null) {
