@@ -260,7 +260,7 @@ public class Player : MonoBehaviour {
 	public void Jump() {
 		if (canMove == true && coyoteTimeTimer > 0f && isAttacking == false) {
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-			jumpBufferTimer = 0f; // Reset the jump buffer timer
+			jumpBufferTimer = 0f;
 			coyoteTimeTimer = 0f;
 			jumpTimer = 0.1f;
 		}
