@@ -47,12 +47,14 @@ public class CrystalGhost : Enemy {
 		collDashing = GetComponent<CapsuleCollider2D>();
 		collFloating = GetComponent<PolygonCollider2D>();
 		targetPos = rb.position;
-		attackTimer = attackCooldown;
+		//attackTimer = attackCooldown;
 	}
 
 	void Update() {
 
-		attackTimer -= Time.deltaTime;
+		if (currentState == BossState.Idle) {
+			attackTimer -= Time.deltaTime;
+		}
 
 		switch (currentState) {
 			case BossState.Idle:
@@ -157,12 +159,11 @@ public class CrystalGhost : Enemy {
 			rb.velocity = new Vector2(-dashSpeed, 0f);
 		}
 
-
+		attackTimer = attackCooldown;
 		yield return new WaitForSeconds(1f);
 		StartCoroutine(TeleportToCenter());
 
 		isAttacking = false;
-		attackTimer = attackCooldown;
 	}
 
 	private IEnumerator TeleportToCenter() {
