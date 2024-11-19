@@ -24,7 +24,7 @@ public class CrystalGhost : Enemy {
 	private float fallingCrystalsAmount = 5f;
 	private float projectileInterval = 0.7f;
 	private float attackTimer = 0f;
-	private float attackTime = 2f;
+	private float attackCooldown = 3f;
 	private float lightningOffset = 2.5f;
 	private float dashSpeed = 40f;
 	private bool isAttacking = false;
@@ -33,6 +33,10 @@ public class CrystalGhost : Enemy {
 	private bool isMoving = false;
 	private Vector2 targetPos;
 	float moveSpeed = 15f;
+
+	enum BossState { Idle, Moving, Attacking, Teleporting }
+
+	BossState currentState = BossState.Idle;
 
 	void Start() {
 		spotLight = GetComponent<Light2D>();
@@ -43,14 +47,29 @@ public class CrystalGhost : Enemy {
 		collDashing = GetComponent<CapsuleCollider2D>();
 		collFloating = GetComponent<PolygonCollider2D>();
 		targetPos = rb.position;
-		attackTimer = attackTime;
+		attackTimer = attackCooldown;
 	}
 
 	void Update() {
+
 		attackTimer -= Time.deltaTime;
 
-		if (attackTimer < 0f) {
-
+		switch (currentState) {
+			case BossState.Idle:
+				//Trigger a transition to an attack or movement after a delay
+				if (attackTimer < 0f && isAttacking == false) {
+					currentState = BossState.Attacking;
+				}
+				break;
+			case BossState.Moving:
+				MoveToTarget();
+				//if (isAtTargetPosition) currentState = BossState.Attacking;
+				break;
+			case BossState.Attacking:
+				Attack();
+				currentState = BossState.Idle;
+				break;
+				//Add other states with similar transitions
 		}
 
 	}
@@ -84,26 +103,24 @@ public class CrystalGhost : Enemy {
 	}
 
 	private void Attack() {
-		float randomValue = Random.value;
-		if (attackTimer <= 0f && isAttacking == false) {
-			isAttacking = true;
-			if (randomValue > 0.66f) {
-				animator.Play("range_attack");
-				StartCoroutine(CrystalAttack());
-			}
-			if (randomValue > 0.33f && randomValue <= 0.66f) {
-				animator.Play("range_attack");
-				StartCoroutine(LightningAttack());
-			}
-			if (randomValue <= 0.33f) {
-				Instantiate(teleportParticles, transform.position, Quaternion.identity);
-				StartCoroutine(Teleport());
-			}
-			Debug.Log(randomValue);
+		isAttacking = true;
+		int attackRoll = Random.Range(0, 3);
+		if (attackRoll == 0) {
+			animator.Play("range_attack");
+			StartCoroutine(CrystalAttack());
 		}
+		if (attackRoll == 1) {
+			animator.Play("range_attack");
+			StartCoroutine(LightningAttack());
+		}
+		if (attackRoll == 2) {
+			Instantiate(teleportParticles, transform.position, Quaternion.identity);
+			StartCoroutine(TeleportToDash());
+		}
+		Debug.Log(attackRoll);
 	}
 
-	private IEnumerator Teleport() {
+	private IEnumerator TeleportToDash() {
 		Vector2 center = BossArena.instance.transform.position;
 		Vector2 playerPos = Player.instance.transform.position;
 		collFloating.enabled = false;
@@ -142,6 +159,13 @@ public class CrystalGhost : Enemy {
 
 
 		yield return new WaitForSeconds(1f);
+		StartCoroutine(TeleportToCenter());
+
+		isAttacking = false;
+		attackTimer = attackCooldown;
+	}
+
+	private IEnumerator TeleportToCenter() {
 		rb.velocity = Vector2.zero;
 		spriteRenderer.enabled = false;
 		spotLight.enabled = false;
@@ -155,14 +179,11 @@ public class CrystalGhost : Enemy {
 		spotLight.enabled = true;
 		animator.Play("idle_1");
 		Instantiate(teleportParticles, transform.position, Quaternion.identity);
-
-		isAttacking = false;
-		attackTimer = attackTime;
 	}
 
 	private IEnumerator LightningAttack() {
 		if (lightningPrefab != null) {
-			attackTimer = attackTime;
+			attackTimer = attackCooldown;
 
 			GameObject lightning = Instantiate(lightningPrefab, BossArena.instance.transform.position, Quaternion.identity);
 
@@ -188,7 +209,7 @@ public class CrystalGhost : Enemy {
 	}
 
 	private IEnumerator CrystalAttack() {
-		attackTimer = attackTime;
+		attackTimer = attackCooldown;
 
 		for (int i = 0; i < fallingCrystalsAmount; i++) {
 			FallingCrystals();
