@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour {
@@ -25,69 +24,68 @@ public class EnemyPatrol : MonoBehaviour {
 	private float waitCounter;
 	private bool isWaiting = false;
 
-	Animator animator;
+	enum State { Idle, Patrolling, Attacking, Chasing }
+	State currentState = State.Idle;
 
-	[Header("Direction")]
-	private bool facingRight = true;
+	Animator animator;
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
-
-		// Validate references
-		if (rb == null)
-			Debug.LogError("Rigidbody2D component is missing!");
+		animator = GetComponent<Animator>();
 
 		// Initialize wait counter if patrol points exist
 		if (patrolPoints.Length > 0)
 			waitCounter = waitTime;
 
-		animator = GetComponent<Animator>();
+
 	}
 
 	void Update() {
-		// Ensure Player.instance exists before doing any checks
 		if (Player.instance != null) {
-			float distanceToPlayer = Mathf.Abs(Player.instance.transform.position.x - transform.position.x);
 
-			if (distanceToPlayer <= attackRange) {
-				AttackPlayer();
+			switch (currentState) {
+				case State.Idle:
+					currentState = State.Patrolling;
+					break;
+				case State.Patrolling:
+					Patrol();
+					break;
+				case State.Attacking:
+					AttackPlayer();
+					break;
+				case State.Chasing:
+					ChasePlayer();
+					break;
 			}
-			else if (distanceToPlayer <= detectionRange) {
-				ChasePlayer();
-			}
-			else {
-				Patrol();
-			}
-		}
-		else {
-			Patrol();
 		}
 	}
 
 
 	void ChasePlayer() {
-		if (Player.instance == null) return;
 
-		// Determine direction to player
-		float directionToPlayer = Player.instance.transform.position.x > transform.position.x ? 1 : -1;
+		float direction = Mathf.Sign(Player.instance.transform.position.x - transform.position.x);
 
-		// Check if we should stop
-		if (Mathf.Abs(Player.instance.transform.position.x - transform.position.x) > stoppingDistance) {
-			// Move towards player
-			rb.velocity = new Vector2(directionToPlayer * moveSpeed, rb.velocity.y);
+		// Set the enemy velocity to move towards the player
+		rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
 
-			// Flip sprite based on movement direction
-			Flip(directionToPlayer > 0);
+		// Play the walk animation if not already playing
+		if (rb.velocity.x != 0) {
+			animator.Play("lisko_walk");
 		}
-		else {
-			// Stop moving when close to player
-			rb.velocity = new Vector2(0, rb.velocity.y);
+
+		if (Vector2.Distance(Player.instance.transform.position, transform.position) <= attackRange) {
+			currentState = State.Attacking;
 		}
+
+		if (Vector2.Distance(Player.instance.transform.position, transform.position) > detectionRange) {
+
+			currentState = State.Patrolling;
+		}
+		RotationCheck();
+		Debug.Log("chasing");
 	}
 
 	void AttackPlayer() {
-		if (Player.instance == null) return;
-
 		// Stop moving when attacking
 		rb.velocity = new Vector2(0, rb.velocity.y);
 
@@ -95,9 +93,16 @@ public class EnemyPatrol : MonoBehaviour {
 		animator.Play("lisko_attack");
 
 		Debug.Log("Attacking player");
+
+		if (Vector2.Distance(Player.instance.transform.position, transform.position) > attackRange) {
+			currentState = State.Patrolling;
+		}
+
+		RotationCheck();
 	}
 
 	void Patrol() {
+
 		// Skip if no patrol points
 		if (patrolPoints.Length == 0) return;
 
@@ -110,7 +115,6 @@ public class EnemyPatrol : MonoBehaviour {
 			}
 			return;
 
-			
 		}
 
 		// Move towards current patrol point
@@ -119,12 +123,9 @@ public class EnemyPatrol : MonoBehaviour {
 
 		// Move
 		rb.velocity = new Vector2(directionToPoint * moveSpeed, rb.velocity.y);
-		if(rb.velocity.x != 0) {
+		if (rb.velocity.x != 0) {
 			animator.Play("lisko_walk");
 		}
-
-		// Flip sprite based on movement direction
-		Flip(directionToPoint > 0);
 
 		// Check if reached patrol point
 		if (Mathf.Abs(transform.position.x - targetPoint.position.x) < 0.5f) {
@@ -132,14 +133,35 @@ public class EnemyPatrol : MonoBehaviour {
 			isWaiting = true;
 			waitCounter = waitTime;
 		}
+
+		if (Vector2.Distance(Player.instance.transform.position, transform.position) <= detectionRange) {
+			currentState = State.Chasing;
+		}
+
+		RotationCheck();
 	}
 
-	void Flip(bool lookingRight) {
-		// Only flip if facing the wrong way
-		if (facingRight != lookingRight) {
-			// Flip the sprite
-			transform.Rotate(0f, 180f, 0f);
-			facingRight = lookingRight;
+	void RotationCheck() {
+		if (currentState == State.Chasing || currentState == State.Attacking) {
+			if (transform.position.x <= Player.instance.transform.position.x) {
+				Vector3 rotator = new Vector3(transform.rotation.x, 0, transform.rotation.z);
+				transform.rotation = Quaternion.Euler(rotator);
+			}
+			if (transform.position.x > Player.instance.transform.position.x) {
+				Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+				transform.rotation = Quaternion.Euler(rotator);
+			}
+		}
+
+		if (currentState == State.Patrolling) {
+			if (rb.velocity.x >= 0) {
+				Vector3 rotator = new Vector3(transform.rotation.x, 0, transform.rotation.z);
+				transform.rotation = Quaternion.Euler(rotator);
+			}
+			if (rb.velocity.x < 0) {
+				Vector3 rotator = new Vector3(transform.rotation.x, 180, transform.rotation.z);
+				transform.rotation = Quaternion.Euler(rotator);
+			}
 		}
 	}
 

@@ -133,23 +133,25 @@ public class CrystalGhost : Enemy {
 		if (playerPos.x <= center.x) {
 			transform.position = new Vector2(BossArena.instance.arenaBoundaries.bounds.max.x, BossArena.instance.spawnPoint.transform.position.y);
 			Instantiate(teleportParticles, transform.position, Quaternion.identity);
-			StartCoroutine(Dash());
+			Dash();
 		}
 		if (playerPos.x > center.x) {
 			transform.position = new Vector2(BossArena.instance.arenaBoundaries.bounds.min.x, BossArena.instance.spawnPoint.transform.position.y);
 			Instantiate(teleportParticles, transform.position, Quaternion.identity);
-			StartCoroutine(Dash());
+			Dash();
 		}
-
 	}
 
-	private IEnumerator Dash() {
+	private void Dash() {
 		collDashing.enabled = true;
 		spriteRenderer.enabled = true;
 		spotLight.enabled = true;
 		RotationCheck();
-		animator.Play("dash"); //change this animation name to dash startup etc.
-		yield return new WaitForSeconds(0.28f);
+		animator.Play("dash"); //change this animation name to dash startup etc.	
+	}
+
+	private IEnumerator DashAttack() {
+
 		if (transform.position.x < BossArena.instance.transform.position.x) {
 			animator.Play("dashing");
 			rb.velocity = new Vector2(dashSpeed, 0f);
