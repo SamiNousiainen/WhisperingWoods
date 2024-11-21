@@ -9,6 +9,7 @@ public class EnemyPatrol : MonoBehaviour {
 
 	public float attackRange = 2f;
 
+
 	[Header("Ground Check")]
 	public Transform groundCheckPoint;
 	public float groundCheckRadius = 0.2f;
@@ -55,11 +56,12 @@ public class EnemyPatrol : MonoBehaviour {
 				Patrol();
 			}
 		}
+		else if (Player.instance.transform.position.x - transform.position.x <= attackRange) {
+			AttackPlayer();
+		}
 		else {
 			Patrol();
-		}
-		if (Player.instance.transform.position.x - transform.position.x <= attackRange) {
-			AttackPlayer();
+
 		}
 	}
 
@@ -84,9 +86,20 @@ public class EnemyPatrol : MonoBehaviour {
 	}
 
 	void AttackPlayer() {
-		if (Player.instance.transform.position.x  - transform.position.x <= attackRange) {
+
+		float distanceToPlayer = Mathf.Abs(Player.instance.transform.position.x - transform.position.x);
+
+		if (Player.instance.transform.position.x - transform.position.x <= attackRange) {
 			animator.Play("lisko_attack");
+
+			// Stop moving when close to player
+			rb.velocity = new Vector2(0, rb.velocity.y);
+			Debug.Log("perkele");
+
 		}
+
+		
+
 	}
 
 	void Patrol() {
