@@ -45,25 +45,25 @@ public class EnemyPatrol : MonoBehaviour {
 	}
 
 	void Update() {
-		// Check if player is in detection range
+		// Ensure Player.instance exists before doing any checks
 		if (Player.instance != null) {
 			float distanceToPlayer = Mathf.Abs(Player.instance.transform.position.x - transform.position.x);
 
-			if (distanceToPlayer <= detectionRange) {
+			if (distanceToPlayer <= attackRange) {
+				AttackPlayer();
+			}
+			else if (distanceToPlayer <= detectionRange) {
 				ChasePlayer();
 			}
 			else {
 				Patrol();
 			}
 		}
-		else if (Player.instance.transform.position.x - transform.position.x <= attackRange) {
-			AttackPlayer();
-		}
 		else {
 			Patrol();
-
 		}
 	}
+
 
 	void ChasePlayer() {
 		if (Player.instance == null) return;
@@ -86,20 +86,15 @@ public class EnemyPatrol : MonoBehaviour {
 	}
 
 	void AttackPlayer() {
+		if (Player.instance == null) return;
 
-		float distanceToPlayer = Mathf.Abs(Player.instance.transform.position.x - transform.position.x);
+		// Stop moving when attacking
+		rb.velocity = new Vector2(0, rb.velocity.y);
 
-		if (Player.instance.transform.position.x - transform.position.x <= attackRange) {
-			animator.Play("lisko_attack");
+		// Play attack animation
+		animator.Play("lisko_attack");
 
-			// Stop moving when close to player
-			rb.velocity = new Vector2(0, rb.velocity.y);
-			Debug.Log("perkele");
-
-		}
-
-		
-
+		Debug.Log("Attacking player");
 	}
 
 	void Patrol() {
