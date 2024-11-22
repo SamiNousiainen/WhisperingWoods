@@ -113,12 +113,12 @@ TextureImporter:
       name: lisko_idle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 988
+        x: 2
+        y: 997
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -135,11 +135,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 133
-        y: 988
+        y: 997
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -156,11 +156,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 266
-        y: 988
+        y: 997
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -177,11 +177,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 399
-        y: 988
+        y: 997
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -197,12 +197,12 @@ TextureImporter:
       name: lisko_idle_4
       rect:
         serializedVersion: 2
-        x: 532
-        y: 988
+        x: 530
+        y: 997
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -219,11 +219,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 665
-        y: 988
+        y: 997
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -239,12 +239,12 @@ TextureImporter:
       name: lisko_idle_6
       rect:
         serializedVersion: 2
-        x: 799
-        y: 988
+        x: 794
+        y: 997
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -260,12 +260,12 @@ TextureImporter:
       name: lisko_idle_7
       rect:
         serializedVersion: 2
-        x: 931
-        y: 988
+        x: 926
+        y: 997
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -282,11 +282,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 855
+        y: 864
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -302,12 +302,12 @@ TextureImporter:
       name: lisko_idle_9
       rect:
         serializedVersion: 2
-        x: 134
-        y: 855
+        x: 133
+        y: 864
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -324,11 +324,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 266
-        y: 855
+        y: 864
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -345,11 +345,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 399
-        y: 855
+        y: 864
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -365,12 +365,12 @@ TextureImporter:
       name: lisko_idle_12
       rect:
         serializedVersion: 2
-        x: 532
-        y: 855
+        x: 530
+        y: 864
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -387,11 +387,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 662
-        y: 855
+        y: 864
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -407,12 +407,12 @@ TextureImporter:
       name: lisko_idle_14
       rect:
         serializedVersion: 2
-        x: 793
-        y: 855
+        x: 794
+        y: 864
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -428,12 +428,12 @@ TextureImporter:
       name: lisko_idle_15
       rect:
         serializedVersion: 2
-        x: 925
-        y: 855
+        x: 926
+        y: 864
         width: 133
-        height: 76
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -450,11 +450,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 724
+        y: 731
         width: 133
-        height: 75
+        height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -470,12 +470,12 @@ TextureImporter:
       name: lisko_idle_17
       rect:
         serializedVersion: 2
-        x: 134
-        y: 724
+        x: 133
+        y: 731
         width: 133
-        height: 76
+        height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -492,11 +492,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 266
-        y: 724
+        y: 731
         width: 133
-        height: 76
+        height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -512,12 +512,12 @@ TextureImporter:
       name: lisko_idle_19
       rect:
         serializedVersion: 2
-        x: 398
-        y: 724
+        x: 399
+        y: 731
         width: 133
-        height: 76
+        height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -534,11 +534,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 530
-        y: 724
+        y: 731
         width: 133
-        height: 76
+        height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -555,11 +555,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 662
-        y: 724
+        y: 731
         width: 133
-        height: 76
+        height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -576,11 +576,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 794
-        y: 724
+        y: 731
         width: 133
-        height: 76
+        height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -597,11 +597,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 926
-        y: 724
+        y: 731
         width: 133
-        height: 76
+        height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -618,11 +618,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 592
+        y: 598
         width: 133
-        height: 76
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -638,12 +638,12 @@ TextureImporter:
       name: lisko_idle_25
       rect:
         serializedVersion: 2
-        x: 134
-        y: 592
+        x: 133
+        y: 598
         width: 133
-        height: 76
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -660,11 +660,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 266
-        y: 592
+        y: 598
         width: 133
-        height: 76
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -681,11 +681,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 399
-        y: 592
+        y: 598
         width: 133
-        height: 76
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -702,11 +702,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 530
-        y: 592
+        y: 598
         width: 133
-        height: 76
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -723,11 +723,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 662
-        y: 592
+        y: 598
         width: 133
-        height: 76
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -744,11 +744,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 794
-        y: 592
+        y: 598
         width: 133
-        height: 76
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -765,11 +765,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 926
-        y: 592
+        y: 598
         width: 133
-        height: 76
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -786,11 +786,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 453
+        y: 465
         width: 133
-        height: 86
+        height: 73
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
