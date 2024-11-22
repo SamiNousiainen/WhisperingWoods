@@ -176,9 +176,8 @@ public class EnemyPatrol : MonoBehaviour {
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, detectionRange);
 
-		// Draw stopping distance
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, stoppingDistance);
+		Gizmos.DrawWireSphere(transform.position, attackRange);
 	}
 
 }
