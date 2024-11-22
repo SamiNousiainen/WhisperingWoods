@@ -41,13 +41,13 @@ public class CrystalGhost : Enemy {
 	void Start() {
 		spotLight = GetComponent<Light2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
-		health = 500f;
+		health = 300f;
 		animator = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody2D>();
 		collDashing = GetComponent<CapsuleCollider2D>();
 		collFloating = GetComponent<PolygonCollider2D>();
 		targetPos = rb.position;
-		//attackTimer = attackCooldown;
+		attackTimer = attackCooldown;
 	}
 
 	void Update() {

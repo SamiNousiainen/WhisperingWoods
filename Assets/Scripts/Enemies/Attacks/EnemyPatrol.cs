@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyPatrol : MonoBehaviour {
+public class EnemyPatrol : Enemy {
 	[Header("Movement Settings")]
 	public float moveSpeed = 3f;
 	public float detectionRange = 10f;
@@ -25,7 +25,7 @@ public class EnemyPatrol : MonoBehaviour {
 	private bool isWaiting = false;
 
 	enum State { Idle, Patrolling, Attacking, Chasing }
-	State currentState = State.Idle;
+	State currentState = State.Patrolling;
 
 	Animator animator;
 
@@ -60,6 +60,19 @@ public class EnemyPatrol : MonoBehaviour {
 		}
 	}
 
+	private void FixedUpdate() {
+		if (rb.velocity.x != 0 && (currentState == State.Patrolling || currentState == State.Chasing)) {
+			animator.Play("lisko_walk");
+		}
+		if (rb.velocity.x == 0 && currentState == State.Idle) {
+			animator.Play("lisko_idle");
+		}
+		if (currentState == State.Attacking) {
+			animator.Play("lisko_attack");
+		}
+
+	}
+
 
 	void ChasePlayer() {
 
@@ -69,9 +82,6 @@ public class EnemyPatrol : MonoBehaviour {
 		rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
 
 		// Play the walk animation if not already playing
-		if (rb.velocity.x != 0) {
-			animator.Play("lisko_walk");
-		}
 
 		if (Vector2.Distance(Player.instance.transform.position, transform.position) <= attackRange) {
 			currentState = State.Attacking;
@@ -90,7 +100,6 @@ public class EnemyPatrol : MonoBehaviour {
 		rb.velocity = new Vector2(0, rb.velocity.y);
 
 		// Play attack animation
-		animator.Play("lisko_attack");
 
 		Debug.Log("Attacking player");
 
@@ -109,8 +118,10 @@ public class EnemyPatrol : MonoBehaviour {
 		// Waiting state
 		if (isWaiting) {
 			waitCounter -= Time.deltaTime;
+			currentState = State.Idle;
 			if (waitCounter <= 0) {
 				isWaiting = false;
+				currentState = State.Patrolling;
 				currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
 			}
 			return;
@@ -123,9 +134,6 @@ public class EnemyPatrol : MonoBehaviour {
 
 		// Move
 		rb.velocity = new Vector2(directionToPoint * moveSpeed, rb.velocity.y);
-		if (rb.velocity.x != 0) {
-			animator.Play("lisko_walk");
-		}
 
 		// Check if reached patrol point
 		if (Mathf.Abs(transform.position.x - targetPoint.position.x) < 0.5f) {
@@ -163,6 +171,12 @@ public class EnemyPatrol : MonoBehaviour {
 				transform.rotation = Quaternion.Euler(rotator);
 			}
 		}
+	}
+
+	public override void Die() {
+		base.Die();
+		//death anim
+
 	}
 
 	// Optional ground check (useful for platformers)
