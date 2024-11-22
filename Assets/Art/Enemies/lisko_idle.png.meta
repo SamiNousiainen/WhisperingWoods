@@ -113,10 +113,10 @@ TextureImporter:
       name: lisko_idle_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 982.1539
-        width: 132.75
-        height: 81.84615
+        x: 0
+        y: 988
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: lisko_idle_1
       rect:
         serializedVersion: 2
-        x: 134
-        y: 982.1539
-        width: 132.75
-        height: 81.84615
+        x: 133
+        y: 988
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,9 +156,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 266
-        y: 982.1539
-        width: 132.75
-        height: 81.84615
+        y: 988
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,10 +176,10 @@ TextureImporter:
       name: lisko_idle_3
       rect:
         serializedVersion: 2
-        x: 398
-        y: 982.1539
-        width: 132.75
-        height: 81.84615
+        x: 399
+        y: 988
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +197,10 @@ TextureImporter:
       name: lisko_idle_4
       rect:
         serializedVersion: 2
-        x: 530
-        y: 982.1539
-        width: 132.75
-        height: 81.84615
+        x: 532
+        y: 988
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,10 +218,10 @@ TextureImporter:
       name: lisko_idle_5
       rect:
         serializedVersion: 2
-        x: 662
-        y: 982.1539
-        width: 132.75
-        height: 81.84615
+        x: 665
+        y: 988
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,10 +239,10 @@ TextureImporter:
       name: lisko_idle_6
       rect:
         serializedVersion: 2
-        x: 794
-        y: 982.1539
-        width: 132.75
-        height: 81.84615
+        x: 799
+        y: 988
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,10 +260,10 @@ TextureImporter:
       name: lisko_idle_7
       rect:
         serializedVersion: 2
-        x: 926
-        y: 982.1539
-        width: 132.75
-        height: 81.84615
+        x: 931
+        y: 988
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -282,9 +282,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 901.1539
-        width: 132.75
-        height: 81.84615
+        y: 855
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -303,9 +303,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 134
-        y: 901.1539
-        width: 132.75
-        height: 81.84615
+        y: 855
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,9 +324,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 266
-        y: 901.1539
-        width: 132.75
-        height: 81.84615
+        y: 855
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -344,10 +344,10 @@ TextureImporter:
       name: lisko_idle_11
       rect:
         serializedVersion: 2
-        x: 398
-        y: 901.1539
-        width: 132.75
-        height: 81.84615
+        x: 399
+        y: 855
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -365,10 +365,10 @@ TextureImporter:
       name: lisko_idle_12
       rect:
         serializedVersion: 2
-        x: 530
-        y: 901.1539
-        width: 132.75
-        height: 81.84615
+        x: 532
+        y: 855
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -387,9 +387,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 662
-        y: 901.1539
-        width: 132.75
-        height: 81.84615
+        y: 855
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -407,10 +407,10 @@ TextureImporter:
       name: lisko_idle_14
       rect:
         serializedVersion: 2
-        x: 794
-        y: 901.1539
-        width: 132.75
-        height: 81.84615
+        x: 793
+        y: 855
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -428,10 +428,10 @@ TextureImporter:
       name: lisko_idle_15
       rect:
         serializedVersion: 2
-        x: 926
-        y: 901.1539
-        width: 132.75
-        height: 81.84615
+        x: 925
+        y: 855
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -450,9 +450,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 820.1539
-        width: 132.75
-        height: 81.84615
+        y: 724
+        width: 133
+        height: 75
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -471,9 +471,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 134
-        y: 820.1539
-        width: 132.75
-        height: 81.84615
+        y: 724
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -492,9 +492,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 266
-        y: 820.1539
-        width: 132.75
-        height: 81.84615
+        y: 724
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -513,9 +513,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 398
-        y: 820.1539
-        width: 132.75
-        height: 81.84615
+        y: 724
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -534,9 +534,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 530
-        y: 820.1539
-        width: 132.75
-        height: 81.84615
+        y: 724
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -555,9 +555,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 662
-        y: 820.1539
-        width: 132.75
-        height: 81.84615
+        y: 724
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -576,9 +576,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 794
-        y: 820.1539
-        width: 132.75
-        height: 81.84615
+        y: 724
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -597,9 +597,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 926
-        y: 820.1539
-        width: 132.75
-        height: 81.84615
+        y: 724
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -618,9 +618,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 739.1539
-        width: 132.75
-        height: 81.84615
+        y: 592
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -639,9 +639,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 134
-        y: 739.1539
-        width: 132.75
-        height: 81.84615
+        y: 592
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -660,9 +660,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 266
-        y: 739.1539
-        width: 132.75
-        height: 81.84615
+        y: 592
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -680,10 +680,10 @@ TextureImporter:
       name: lisko_idle_27
       rect:
         serializedVersion: 2
-        x: 398
-        y: 739.1539
-        width: 132.75
-        height: 81.84615
+        x: 399
+        y: 592
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -702,9 +702,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 530
-        y: 739.1539
-        width: 132.75
-        height: 81.84615
+        y: 592
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -723,9 +723,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 662
-        y: 739.1539
-        width: 132.75
-        height: 81.84615
+        y: 592
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -744,9 +744,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 794
-        y: 739.1539
-        width: 132.75
-        height: 81.84615
+        y: 592
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -765,9 +765,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 926
-        y: 739.1539
-        width: 132.75
-        height: 81.84615
+        y: 592
+        width: 133
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -786,9 +786,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 658.1539
-        width: 132.75
-        height: 81.84615
+        y: 453
+        width: 133
+        height: 86
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -840,6 +840,7 @@ TextureImporter:
       lisko_idle_30: 1837759030
       lisko_idle_31: 2143241707
       lisko_idle_32: 977137921
+      lisko_idle_33: 370003940
       lisko_idle_4: 1109967319
       lisko_idle_5: -1130849099
       lisko_idle_6: 1467086730
