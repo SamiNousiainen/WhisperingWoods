@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4441634657249443909}
   - component: {fileID: 5289102313818708839}
-  - component: {fileID: 3460304345380482778}
-  - component: {fileID: 426198868827065637}
+  - component: {fileID: 1309549118600269531}
+  - component: {fileID: 1676566226396222626}
   m_Layer: 7
-  m_Name: enemy
+  m_Name: Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.65, y: -0.43, z: 0.016355876}
-  m_LocalScale: {x: 6, y: 6, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,8 +86,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3460304345380482778
-BoxCollider2D:
+--- !u!114 &1309549118600269531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7459697746583408715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 053e360ba1e45e34db59d8c111173432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  damage: 10
+  hasTakenDamage: 0
+  spriteRenderer: {fileID: 0}
+  poisonMist: {fileID: 8795840064931080332, guid: 6724bb500a0e18d41ad03c1e907f5a73, type: 3}
+--- !u!58 &1676566226396222626
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,30 +135,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.013245985}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.47, y: 0.36}
-    newSize: {x: 0.47, y: 0.36}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.47, y: 0.38649198}
-  m_EdgeRadius: 0
---- !u!114 &426198868827065637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7459697746583408715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd0afbdfa6b59fe4a9ccf33d09731042, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageCooldownTimer: 0
-  hasTakenDamage: 0
+  m_Radius: 1.2

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3511744579567321958}
   - component: {fileID: 3540515442872398885}
   m_Layer: 7
-  m_Name: Lisko
+  m_Name: CrystalLizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

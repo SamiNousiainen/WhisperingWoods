@@ -4,7 +4,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
 	public float health = 50f;
-	private float damage = 10f;
+	public float damage = 10f;
 	public bool hasTakenDamage;
 	[SerializeField]
 	private SpriteRenderer spriteRenderer;
