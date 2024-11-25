@@ -24,10 +24,10 @@ public class EnemyPatrol : Enemy {
 	private float waitCounter;
 	private bool isWaiting = false;
 
-	enum State { Idle, Patrolling, Attacking, Chasing }
-	State currentState = State.Patrolling;
+	enum EnemyState { Idle, Patrolling, Attacking, Chasing }
+	EnemyState currentState = EnemyState.Patrolling;
 
-	Animator animator;
+	private Animator animator;
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
@@ -44,16 +44,16 @@ public class EnemyPatrol : Enemy {
 		if (Player.instance != null) {
 
 			switch (currentState) {
-				case State.Idle:
-					currentState = State.Patrolling;
+				case EnemyState.Idle:
+					currentState = EnemyState.Patrolling;
 					break;
-				case State.Patrolling:
+				case EnemyState.Patrolling:
 					Patrol();
 					break;
-				case State.Attacking:
+				case EnemyState.Attacking:
 					AttackPlayer();
 					break;
-				case State.Chasing:
+				case EnemyState.Chasing:
 					ChasePlayer();
 					break;
 			}
@@ -61,13 +61,13 @@ public class EnemyPatrol : Enemy {
 	}
 
 	private void FixedUpdate() {
-		if (rb.velocity.x != 0 && (currentState == State.Patrolling || currentState == State.Chasing)) {
+		if (rb.velocity.x != 0 && (currentState == EnemyState.Patrolling || currentState == EnemyState.Chasing)) {
 			animator.Play("lisko_walk");
 		}
-		if (rb.velocity.x == 0 && currentState == State.Idle) {
+		if (rb.velocity.x == 0 && currentState == EnemyState.Idle) {
 			animator.Play("lisko_idle");
 		}
-		if (currentState == State.Attacking) {
+		if (currentState == EnemyState.Attacking) {
 			animator.Play("lisko_attack");
 		}
 
@@ -84,12 +84,12 @@ public class EnemyPatrol : Enemy {
 		// Play the walk animation if not already playing
 
 		if (Vector2.Distance(Player.instance.transform.position, transform.position) <= attackRange) {
-			currentState = State.Attacking;
+			currentState = EnemyState.Attacking;
 		}
 
 		if (Vector2.Distance(Player.instance.transform.position, transform.position) > detectionRange) {
 
-			currentState = State.Patrolling;
+			currentState = EnemyState.Patrolling;
 		}
 		RotationCheck();
 		Debug.Log("chasing");
@@ -104,7 +104,7 @@ public class EnemyPatrol : Enemy {
 		Debug.Log("Attacking player");
 
 		if (Vector2.Distance(Player.instance.transform.position, transform.position) > attackRange) {
-			currentState = State.Patrolling;
+			currentState = EnemyState.Patrolling;
 		}
 
 		RotationCheck();
@@ -118,10 +118,10 @@ public class EnemyPatrol : Enemy {
 		// Waiting state
 		if (isWaiting) {
 			waitCounter -= Time.deltaTime;
-			currentState = State.Idle;
+			currentState = EnemyState.Idle;
 			if (waitCounter <= 0) {
 				isWaiting = false;
-				currentState = State.Patrolling;
+				currentState = EnemyState.Patrolling;
 				currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
 			}
 			return;
@@ -143,14 +143,14 @@ public class EnemyPatrol : Enemy {
 		}
 
 		if (Vector2.Distance(Player.instance.transform.position, transform.position) <= detectionRange) {
-			currentState = State.Chasing;
+			currentState = EnemyState.Chasing;
 		}
 
 		RotationCheck();
 	}
 
 	void RotationCheck() {
-		if (currentState == State.Chasing || currentState == State.Attacking) {
+		if (currentState == EnemyState.Chasing || currentState == EnemyState.Attacking) {
 			if (transform.position.x <= Player.instance.transform.position.x) {
 				Vector3 rotator = new Vector3(transform.rotation.x, 0, transform.rotation.z);
 				transform.rotation = Quaternion.Euler(rotator);
@@ -161,7 +161,7 @@ public class EnemyPatrol : Enemy {
 			}
 		}
 
-		if (currentState == State.Patrolling) {
+		if (currentState == EnemyState.Patrolling) {
 			if (rb.velocity.x >= 0) {
 				Vector3 rotator = new Vector3(transform.rotation.x, 0, transform.rotation.z);
 				transform.rotation = Quaternion.Euler(rotator);
