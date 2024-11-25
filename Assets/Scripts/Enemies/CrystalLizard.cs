@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyPatrol : Enemy {
+public class CrystalLizard : Enemy {
 	[Header("Movement Settings")]
 	public float moveSpeed = 3f;
 	public float detectionRange = 10f;
