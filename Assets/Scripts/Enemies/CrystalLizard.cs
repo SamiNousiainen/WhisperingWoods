@@ -25,7 +25,7 @@ public class CrystalLizard : Enemy {
 	private bool isWaiting = false;
 
 	enum EnemyState { Idle, Patrolling, Attacking, Chasing }
-	EnemyState currentState = EnemyState.Patrolling;
+	EnemyState currentState = EnemyState.Idle;
 
 	private Animator animator;
 

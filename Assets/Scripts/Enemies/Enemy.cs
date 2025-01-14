@@ -15,10 +15,6 @@ public class Enemy : MonoBehaviour {
 		originalColor = spriteRenderer.color;
 	}
 
-	void Update() {
-
-	}
-
 	public virtual void TakeDamage(float damage) {
 		hasTakenDamage = true;
 		health -= damage;

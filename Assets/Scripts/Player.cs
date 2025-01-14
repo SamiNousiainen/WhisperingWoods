@@ -62,8 +62,11 @@ public class Player : MonoBehaviour {
 	public Transform attackPoint;
 	public Transform attackPointDown;
 	public Transform attackPointUp;
+	public Collider2D attackCollFwd;
+	public Collider2D attackCollUp;
+	public Collider2D attackCollDown;
 	private float attackRadius = 2.2f;
-	private float attackDamage = 10f;
+	public float attackDamage = 10f;
 	public LayerMask enemyLayer;
 	private float knockbackForceX = 14f;
 	private float knockbackForceY = 24f;
@@ -170,6 +173,7 @@ public class Player : MonoBehaviour {
 		if (WindowManager.instance.escapeableWindowStack.Count > 0 && Grounded() == true) {
 			rb.velocity = new Vector2(0, 0);
 		}
+
 	}
 
 
@@ -304,75 +308,83 @@ public class Player : MonoBehaviour {
 
 		isAttacking = true;
 		jumpTimer = 0.24f;
+		attackCollDown.enabled = true;
 
-		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRadius, enemyLayer);
+		//Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRadius, enemyLayer);
 
-		foreach (Collider2D hitEnemy in hitEnemies) {
-			if (hitEnemy != null) {
-				rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
-			}
-		}
+		//foreach (Collider2D hitEnemy in hitEnemies) {
+		//	if (hitEnemy != null) {
+		//		rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
+		//	}
+		//}
 
-		while (isAttacking == true) {
-			foreach (Collider2D hitEnemy in hitEnemies) {
-				if (hitEnemy != null) {
-					Enemy enemy = hitEnemy.GetComponent<Enemy>();
-					if (enemy.hasTakenDamage == false) {
-						StartCoroutine(FreezeFrame());
-						enemy.TakeDamage(attackDamage);
-						damagedEnemies.Add(enemy);
-					}
-				}
-			}
-			yield return null;
-		}
+		//while (isAttacking == true) {
+		//	foreach (Collider2D hitEnemy in hitEnemies) {
+		//		if (hitEnemy != null) {
+		//			Enemy enemy = hitEnemy.GetComponent<Enemy>();
+		//			if (enemy.hasTakenDamage == false) {
+		//				StartCoroutine(FreezeFrame());
+		//				enemy.TakeDamage(attackDamage);
+		//				damagedEnemies.Add(enemy);
+		//			}
+		//		}
+		//	}
+		yield return null;
+		//}
 	}
 
 	public IEnumerator DealDamageForward() {
 
 		isAttacking = true;
+		attackCollFwd.enabled = true;
 
-		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
+		//Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
 
-		while (isAttacking == true) {
-			foreach (Collider2D hitEnemy in hitEnemies) {
-				if (hitEnemy != null) {
-					Enemy enemy = hitEnemy.GetComponent<Enemy>();
-					if (enemy.hasTakenDamage == false) {
-						StartCoroutine(FreezeFrame());
-						enemy.TakeDamage(attackDamage);
-						damagedEnemies.Add(enemy);
-					}
-				}
-			}
-			yield return null;
-		}
+		//while (isAttacking == true) {
+		//	foreach (Collider2D hitEnemy in hitEnemies) {
+		//		if (hitEnemy != null) {
+		//			Enemy enemy = hitEnemy.GetComponent<Enemy>();
+		//			if (enemy.hasTakenDamage == false) {
+		//				StartCoroutine(FreezeFrame());
+		//				enemy.TakeDamage(attackDamage);
+		//				damagedEnemies.Add(enemy);
+		//			}
+		//		}
+		//	}
+		//	yield return null;
+
+		//}
+		yield return null;
 	}
 
 	public IEnumerator DealDamageUp() {
 
 		isAttacking = true;
+		attackCollUp.enabled = true;
 
-		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointUp.position, attackRadius, enemyLayer);
+		//Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointUp.position, attackRadius, enemyLayer);
 
-		while (isAttacking == true) {
-			foreach (Collider2D hitEnemy in hitEnemies) {
-				if (hitEnemy != null) {
-					Enemy enemy = hitEnemy.GetComponent<Enemy>();
-					if (enemy.hasTakenDamage == false) {
-						StartCoroutine(FreezeFrame());
-						enemy.TakeDamage(attackDamage);
-						damagedEnemies.Add(enemy);
-					}
-				}
-			}
-			yield return null;
-		}
+		//while (isAttacking == true) {
+		//	foreach (Collider2D hitEnemy in hitEnemies) {
+		//		if (hitEnemy != null) {
+		//			Enemy enemy = hitEnemy.GetComponent<Enemy>();
+		//			if (enemy.hasTakenDamage == false) {
+		//				StartCoroutine(FreezeFrame());
+		//				enemy.TakeDamage(attackDamage);
+		//				damagedEnemies.Add(enemy);
+		//			}
+		//		}
+		//	}
+		yield return null;
+		//}
 	}
 
 	//stop attacking with animation trigger
 	public void StopAttacking() {
 		isAttacking = false;
+		attackCollFwd.enabled = false;
+		attackCollDown.enabled = false;
+		attackCollUp.enabled = false;
 		animator.SetBool("isAttacking", false);
 		DecreaseYVelocity();
 		ReturnEnemyToDamageable();
@@ -462,5 +474,22 @@ public class Player : MonoBehaviour {
 		Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
 		Gizmos.DrawWireSphere(attackPointDown.position, attackRadius);
 		Gizmos.DrawWireSphere(attackPointUp.position, attackRadius);
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision) {
+		if (((1 << collision.gameObject.layer) & enemyLayer) != 0) {
+			Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+			if (enemy != null) {
+				Debug.Log("hit");
+				if (enemy.hasTakenDamage == false) {
+					StartCoroutine(FreezeFrame());
+					enemy.TakeDamage(attackDamage);
+					damagedEnemies.Add(enemy);
+				}
+				if (attackCollDown.enabled == true) {
+					rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
+				}
+			}
+		}
 	}
 }
