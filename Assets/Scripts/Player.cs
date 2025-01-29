@@ -469,11 +469,11 @@ public class Player : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos() {
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireCube(groundCheck.transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
-		Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
-		Gizmos.DrawWireSphere(attackPointDown.position, attackRadius);
-		Gizmos.DrawWireSphere(attackPointUp.position, attackRadius);
+		//Gizmos.color = Color.red;
+		//Gizmos.DrawWireCube(groundCheck.transform.position - transform.up * groundCheckCastDistance, groundCheckSize);
+		//Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+		//Gizmos.DrawWireSphere(attackPointDown.position, attackRadius);
+		//Gizmos.DrawWireSphere(attackPointUp.position, attackRadius);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
