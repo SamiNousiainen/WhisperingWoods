@@ -53,6 +53,8 @@ public class Player : MonoBehaviour {
 
 	[Header("Combat")]
 	//combat
+	private float attackBufferTime = 0.1f;
+	public float attackBufferTimer;
 	public float takingDamageTimer = 0f;
 	private float takingDamageTime = 0.5f;
 	private float immunityTimer = 0f;
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour {
 	public Collider2D attackCollFwd;
 	public Collider2D attackCollUp;
 	public Collider2D attackCollDown;
-	private float attackRadius = 2.2f;
+	//private float attackRadius = 2.2f;
 	public float attackDamage = 10f;
 	public LayerMask enemyLayer;
 	private float knockbackForceX = 14f;
@@ -140,6 +142,7 @@ public class Player : MonoBehaviour {
 				jumpBufferTimer -= Time.deltaTime;
 				jumpTimer -= Time.deltaTime;
 				dashCooldownTimer -= Time.deltaTime;
+				attackBufferTimer -= Time.deltaTime;
 
 				if (Grounded() == true) {
 					coyoteTimeTimer = coyoteTime;
@@ -297,7 +300,12 @@ public class Player : MonoBehaviour {
 					animator.Play("LongswordJump");
 				}
 				else {
-					animator.Play("Longsword");
+					if (attackBufferTimer <= 0) {
+						animator.Play("Longsword");
+					}
+					else {
+						animator.Play("LongswordJump");
+					}
 				}
 			}
 			attackCooldownTimer = attackRate;
@@ -309,6 +317,8 @@ public class Player : MonoBehaviour {
 		isAttacking = true;
 		jumpTimer = 0.24f;
 		attackCollDown.enabled = true;
+
+		//old method
 
 		//Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRadius, enemyLayer);
 
@@ -337,23 +347,6 @@ public class Player : MonoBehaviour {
 
 		isAttacking = true;
 		attackCollFwd.enabled = true;
-
-		//Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
-
-		//while (isAttacking == true) {
-		//	foreach (Collider2D hitEnemy in hitEnemies) {
-		//		if (hitEnemy != null) {
-		//			Enemy enemy = hitEnemy.GetComponent<Enemy>();
-		//			if (enemy.hasTakenDamage == false) {
-		//				StartCoroutine(FreezeFrame());
-		//				enemy.TakeDamage(attackDamage);
-		//				damagedEnemies.Add(enemy);
-		//			}
-		//		}
-		//	}
-		//	yield return null;
-
-		//}
 		yield return null;
 	}
 
@@ -361,22 +354,8 @@ public class Player : MonoBehaviour {
 
 		isAttacking = true;
 		attackCollUp.enabled = true;
-
-		//Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointUp.position, attackRadius, enemyLayer);
-
-		//while (isAttacking == true) {
-		//	foreach (Collider2D hitEnemy in hitEnemies) {
-		//		if (hitEnemy != null) {
-		//			Enemy enemy = hitEnemy.GetComponent<Enemy>();
-		//			if (enemy.hasTakenDamage == false) {
-		//				StartCoroutine(FreezeFrame());
-		//				enemy.TakeDamage(attackDamage);
-		//				damagedEnemies.Add(enemy);
-		//			}
-		//		}
-		//	}
 		yield return null;
-		//}
+
 	}
 
 	//stop attacking with animation trigger
@@ -388,6 +367,11 @@ public class Player : MonoBehaviour {
 		animator.SetBool("isAttacking", false);
 		DecreaseYVelocity();
 		ReturnEnemyToDamageable();
+		attackBufferTimer = attackBufferTime;
+	}
+
+	public void StartComboTimer() {
+		//attackBufferTimer = attackBufferTime;
 	}
 
 	private void ReturnEnemyToDamageable() {
