@@ -409,6 +409,7 @@ MonoBehaviour:
   groundCheckSize: {x: 1.26, y: 0.05}
   groundCheckCastDistance: 1
   groundCheck: {fileID: 1641552483379359956}
+  attackBufferTimer: 0
   takingDamageTimer: 0
   attackCooldownTimer: 0
   attackPoint: {fileID: 9119801554769217}
@@ -592,7 +593,7 @@ MonoBehaviour:
   - {x: 0.83367467, y: -1.8710508, z: 0}
   m_ShapePathHash: 784071645
   m_Mesh: {fileID: 0}
-  m_InstanceId: 57840
+  m_InstanceId: 54286
   m_LocalBounds:
     m_Center: {x: 0.08686471, y: -0.004620075, z: 0}
     m_Extent: {x: 1.0343962, y: 1.8756232, z: 0}

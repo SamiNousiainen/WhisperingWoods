@@ -52,7 +52,6 @@ public class Player : MonoBehaviour {
 
 
 	[Header("Combat")]
-	//combat
 	private float attackBufferTime = 0.1f;
 	public float attackBufferTimer;
 	public float takingDamageTimer = 0f;
@@ -300,11 +299,12 @@ public class Player : MonoBehaviour {
 					animator.Play("LongswordJump");
 				}
 				else {
+					//keksi tähä joku parempi ratkasu
 					if (attackBufferTimer <= 0) {
 						animator.Play("Longsword");
 					}
 					else {
-						animator.Play("LongswordJump");
+						animator.Play("SwordCombo");
 					}
 				}
 			}
@@ -368,6 +368,15 @@ public class Player : MonoBehaviour {
 		DecreaseYVelocity();
 		ReturnEnemyToDamageable();
 		attackBufferTimer = attackBufferTime;
+	}
+
+	public void StopFollowUpAtk() {
+		isAttacking = false;
+		attackCollFwd.enabled = false;
+		animator.SetBool("isAttacking", false);
+		DecreaseYVelocity();
+		ReturnEnemyToDamageable();
+		attackBufferTimer = 0;
 	}
 
 	public void StartComboTimer() {
