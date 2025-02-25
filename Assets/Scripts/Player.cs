@@ -54,6 +54,11 @@ public class Player : MonoBehaviour {
 	[Header("Combat")]
 	private float attackBufferTime = 0.1f;
 	public float attackBufferTimer;
+
+	private bool isComboQueued = false;
+	private bool canCombo = false;
+	private int comboStep = 0;
+
 	public float takingDamageTimer = 0f;
 	private float takingDamageTime = 0.5f;
 	private float immunityTimer = 0f;
@@ -299,17 +304,42 @@ public class Player : MonoBehaviour {
 					animator.Play("LongswordJump");
 				}
 				else {
-					//keksi tähä joku parempi ratkasu
-					if (attackBufferTimer <= 0) {
+					// Combo logic
+					if (comboStep == 0 || canCombo == false) {
 						animator.Play("Longsword");
+						comboStep = 1;
+						isComboQueued = false;
 					}
-					else {
-						animator.Play("SwordCombo");
+					if (canCombo == true && comboStep == 1) {
+						isComboQueued = true;
 					}
 				}
 			}
 			attackCooldownTimer = attackRate;
 		}
+	}
+
+	public void EnableCombo() {
+		canCombo = true;
+	}
+
+	//trigger the combo if queued at the end of the animation
+	public void PerformCombo() {
+		if (isComboQueued == true) {
+			animator.Play("SwordCombo");
+			comboStep = 1;
+		}
+		else {
+			comboStep = 0; // Reset if no combo is queued
+		}
+		isComboQueued = false;
+		canCombo = false;
+	}
+
+	public void ResetCombo() {
+		comboStep = 0;
+		isComboQueued = false;
+		canCombo = false;
 	}
 
 	public IEnumerator DealDamageDown() {
@@ -377,10 +407,6 @@ public class Player : MonoBehaviour {
 		DecreaseYVelocity();
 		ReturnEnemyToDamageable();
 		attackBufferTimer = 0;
-	}
-
-	public void StartComboTimer() {
-		//attackBufferTimer = attackBufferTime;
 	}
 
 	private void ReturnEnemyToDamageable() {
