@@ -303,16 +303,17 @@ public class Player : MonoBehaviour {
 				if (Grounded() == false) {
 					animator.Play("LongswordJump");
 				}
-				else {
-					// Combo logic
-					if (comboStep == 0 || canCombo == false) {
-						animator.Play("Longsword");
-						comboStep = 1;
-						isComboQueued = false;
-					}
-					if (canCombo == true && comboStep == 1) {
-						isComboQueued = true;
-					}
+				else if (Grounded() == true) {
+					animator.Play("Longsword");
+					//combo logic
+					//if (comboStep == 0 || canCombo == false) {
+					//	animator.Play("Longsword");
+					//	comboStep = 1;
+					//	isComboQueued = false;
+					//}
+					//if (canCombo == true && comboStep == 1) {
+					//	isComboQueued = true;
+					//}
 				}
 			}
 			attackCooldownTimer = attackRate;
@@ -330,7 +331,7 @@ public class Player : MonoBehaviour {
 			comboStep = 1;
 		}
 		else {
-			comboStep = 0; // Reset if no combo is queued
+			comboStep = 0; //reset if no combo is queued
 		}
 		isComboQueued = false;
 		canCombo = false;
@@ -347,30 +348,8 @@ public class Player : MonoBehaviour {
 		isAttacking = true;
 		jumpTimer = 0.24f;
 		attackCollDown.enabled = true;
-
-		//old method
-
-		//Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRadius, enemyLayer);
-
-		//foreach (Collider2D hitEnemy in hitEnemies) {
-		//	if (hitEnemy != null) {
-		//		rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
-		//	}
-		//}
-
-		//while (isAttacking == true) {
-		//	foreach (Collider2D hitEnemy in hitEnemies) {
-		//		if (hitEnemy != null) {
-		//			Enemy enemy = hitEnemy.GetComponent<Enemy>();
-		//			if (enemy.hasTakenDamage == false) {
-		//				StartCoroutine(FreezeFrame());
-		//				enemy.TakeDamage(attackDamage);
-		//				damagedEnemies.Add(enemy);
-		//			}
-		//		}
-		//	}
 		yield return null;
-		//}
+
 	}
 
 	public IEnumerator DealDamageForward() {
@@ -496,6 +475,8 @@ public class Player : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
+		//tässä on joku bugi, viholliset ottaa damagea törmäyksestä vaikka lyönti meni jo
+		//pitäs varmaan laittaa melee attack scriptiin
 		if (((1 << collision.gameObject.layer) & enemyLayer) != 0) {
 			Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 			if (enemy != null) {
