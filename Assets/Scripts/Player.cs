@@ -52,7 +52,7 @@ public class Player : MonoBehaviour {
 
 
 	[Header("Combat")]
-	private float attackBufferTime = 0.1f;
+	private float attackBufferTime = 0.15f;
 	public float attackBufferTimer;
 
 	private bool isComboQueued = false;
@@ -287,7 +287,8 @@ public class Player : MonoBehaviour {
 	#region combat
 
 	public void Attack() {
-		if (attackCooldownTimer <= 0f) {
+		attackBufferTimer = attackBufferTime;
+		if (attackCooldownTimer <= 0f && isAttacking == false) {
 			//dealing damage is started and stopped with animation triggers
 			animator.SetBool("isAttacking", true);
 			if (moveInputY <= -0.5f && Grounded() == false) {
@@ -305,15 +306,6 @@ public class Player : MonoBehaviour {
 				}
 				else if (Grounded() == true) {
 					animator.Play("Longsword");
-					//combo logic
-					//if (comboStep == 0 || canCombo == false) {
-					//	animator.Play("Longsword");
-					//	comboStep = 1;
-					//	isComboQueued = false;
-					//}
-					//if (canCombo == true && comboStep == 1) {
-					//	isComboQueued = true;
-					//}
 				}
 			}
 			attackCooldownTimer = attackRate;
@@ -326,15 +318,9 @@ public class Player : MonoBehaviour {
 
 	//trigger the combo if queued at the end of the animation
 	public void PerformCombo() {
-		if (isComboQueued == true) {
+		if (attackBufferTimer > 0) {
 			animator.Play("SwordCombo");
-			comboStep = 1;
 		}
-		else {
-			comboStep = 0; //reset if no combo is queued
-		}
-		isComboQueued = false;
-		canCombo = false;
 	}
 
 	public void ResetCombo() {
@@ -376,7 +362,6 @@ public class Player : MonoBehaviour {
 		animator.SetBool("isAttacking", false);
 		DecreaseYVelocity();
 		ReturnEnemyToDamageable();
-		attackBufferTimer = attackBufferTime;
 	}
 
 	public void StopFollowUpAtk() {
@@ -475,19 +460,19 @@ public class Player : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
-		//tässä on joku bugi, viholliset ottaa damagea törmäyksestä vaikka lyönti meni jo
-		//pitäs varmaan laittaa melee attack scriptiin
-		if (((1 << collision.gameObject.layer) & enemyLayer) != 0) {
-			Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-			if (enemy != null) {
-				Debug.Log("hit");
-				if (enemy.hasTakenDamage == false) {
-					StartCoroutine(FreezeFrame());
-					enemy.TakeDamage(attackDamage);
-					damagedEnemies.Add(enemy);
-				}
-				if (attackCollDown.enabled == true) {
-					rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
+		if (isAttacking == true) {
+			if (((1 << collision.gameObject.layer) & enemyLayer) != 0) {
+				Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+				if (enemy != null) {
+					Debug.Log("hit");
+					if (enemy.hasTakenDamage == false) {
+						StartCoroutine(FreezeFrame());
+						enemy.TakeDamage(attackDamage);
+						damagedEnemies.Add(enemy);
+					}
+					if (attackCollDown.enabled == true) {
+						rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.1f);
+					}
 				}
 			}
 		}
