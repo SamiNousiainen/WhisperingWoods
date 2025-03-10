@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  damage: 10
   hasTakenDamage: 0
   spriteRenderer: {fileID: 0}
   lightningPrefab: {fileID: 8019729156119395257, guid: a02666d319b140940915645a3a0a5a73, type: 3}

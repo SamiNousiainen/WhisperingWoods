@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -48,6 +49,10 @@ public class CrystalGhost : Enemy {
 		collFloating = GetComponent<PolygonCollider2D>();
 		targetPos = rb.position;
 		attackTimer = attackCooldown;
+	}
+
+	private void OnValidate() {
+		this.ValidateRefs();
 	}
 
 	void Update() {
