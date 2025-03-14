@@ -1,4 +1,3 @@
-using KBCore.Refs;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -39,20 +38,25 @@ public class CrystalGhost : Enemy {
 
 	BossState currentState = BossState.Idle;
 
-	void Start() {
+	private void Awake() {
+		health = 300f;
+		targetPos = rb.position;
+		attackTimer = attackCooldown;
+
 		spotLight = GetComponent<Light2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
-		health = 300f;
 		animator = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody2D>();
 		collDashing = GetComponent<CapsuleCollider2D>();
-		collFloating = GetComponent<PolygonCollider2D>();
-		targetPos = rb.position;
-		attackTimer = attackCooldown;
+		collFloating = GetComponent<PolygonCollider2D>(); //korjaa t‰‰ getcomponent sp‰mmi
+	}
+
+	void Start() {
+
 	}
 
 	private void OnValidate() {
-		this.ValidateRefs();
+		//this.ValidateRefs();
 	}
 
 	void Update() {
